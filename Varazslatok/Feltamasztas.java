@@ -9,7 +9,7 @@ public class Feltamasztas extends Varazslat{
         return 50;
     }
     public  static String[] info(){
-        return new String[]{nev, "Leírás: Egy kiválasztott saját egység feltámasztása.", ("Ár: " + Integer.toString(ar)), "Mana: " + Integer.toString(mana)};
+        return new String[]{nev, "Leiras: Egy kivalasztott sajat egysag feltamasztasa.", ("Ar: " + Integer.toString(ar)), "Mana: " + Integer.toString(mana)};
     }
 
 }

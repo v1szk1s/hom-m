@@ -9,6 +9,6 @@ public class Villamcsapas extends Varazslat{
         return 30;
     }
     public  static String[] info(){
-        return new String[]{"Villámcsapás:\n", "Leírás: Egy kiválasztott ellenséges egységre (varázserő * 30) sebzés okozása\n", "Ár: ", "Mana: "};
+        return new String[]{"Villamcsapas:\n", "Leiras: Egy kivalasztott ellenseges egysegre (varazsero * 30) sebzes okozasa\n", "ar: ", "Mana: "};
     }
 }

@@ -92,7 +92,7 @@ public class Hos {
         return new int[]{tamadas, vedekezes, varazsero, tudas, moral, szerencse};
     }
     public String[] getTulStr(){
-        return new String[]{"Támadas", "Védekezés", "Varázserő", "Tudás", "Morál", "Szerencse"};
+        return new String[]{"Tamadas", "Vedekezes", "Varazserő", "Tudas", "Moral", "Szerencse"};
     }
 
 

@@ -1,6 +1,12 @@
 # Heroes of Might & Magic
 
-author: Ambrus Attila (aka v1szk1s)
+author: Ambrus Attila
+
+A Játék futtatása:
+
+A játék futtatásához Java SE Development Kit 17 szükséges (Itt tudod letolteni: https://www.oracle.com/java/technologies/downloads/#java17 )
+
+
 
 
 

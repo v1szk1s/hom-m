@@ -9,7 +9,7 @@ class Main {
     public static void main(String[] var0) {
 
 
-        int nehezseg = Display.menu("Kérlek válassz nehézségi fokozatot:", new String[]{"Könnyű", "Közepes", "Nehéz"});
+        int nehezseg = Display.menu("Kerlek valassz nehezsegi fokozatot:", new String[]{"Konnyu", "Kozepes", "Nehez"});
         Jatekos player = new Jatekos(nehezseg);
         Display display = new Display(player);
         display.levelSystem();

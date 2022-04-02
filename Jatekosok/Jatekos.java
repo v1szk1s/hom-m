@@ -1,9 +1,12 @@
 package Jatekosok;
 
+import Varazslatok.*;
+
 public class Jatekos {
     private int arany;
     private int tulajdonsagAr;
     private Hos hos;
+    Varazslat[] varazslat;
 
     public Jatekos(int szint){
         switch (szint){
@@ -19,6 +22,7 @@ public class Jatekos {
         }
         this.tulajdonsagAr = 5;
         hos = new Hos();
+        varazslat[0] = new Tuzlabda();
     }
 
     public int levelUp(int melyik){
