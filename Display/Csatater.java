@@ -1,3 +1,5 @@
+package Display;
+
 import Egysegek.Egyseg;
 
 public class Csatater {
@@ -40,8 +42,4 @@ public class Csatater {
         System.out.flush();
     }
 
-}
-class Color{
-    public static final String WHITE = "\u001B[37m";
-    public static final String RED = "\u001B[31m";
 }

@@ -1,4 +1,7 @@
+package Display;
 import java.util.Scanner;
+import Jatekosok.Jatekos;
+import Jatekosok.Hos;
 
 public class Display {
 
@@ -12,7 +15,42 @@ public class Display {
         this.player = player;
     }
 
-    public static int optionChoose(String kerdes, String[] opciok,int balMargo){
+    public static int menu(String kerdes, String[][] opciok){
+
+        String margo = " ".repeat(balMargo);
+        int valasz = -1;
+
+        while(true){
+            if(valasz >= 1  && valasz <= opciok.length){
+                err = false;
+                return valasz;
+            }
+            clear();
+            System.out.println("\n".repeat(topMargo));
+            System.out.println(margo + kerdes + "\n");
+
+            for (int i = 0; i < opciok.length; i++) {
+                for (int j = 0; i < opciok[i].length; j++) {
+                    System.out.printf(margo + "%d. %s\n", i + 1, opciok[i][j]);
+                }
+            }
+            System.out.print((err ? Color.RED + "\n" + margo + "A listából adj meg elemet [1, 2, 3...]!\n" + Color.WHITE + margo + "Válasz: " : "\n\n" + margo + "Válasz: "));
+            String most = "";
+
+            try {
+                most = sc.next();
+                if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase())||"quit".equals(most.toLowerCase()) ){
+                    return -1;
+                }
+                valasz = Integer.parseInt(most);
+            }catch (Exception e){
+                err = true;
+                continue;
+            }
+        }
+    }
+
+    public static int menu(String kerdes, String[] opciok){
 
         String margo = " ".repeat(balMargo);
         int valasz = -1;
@@ -25,6 +63,7 @@ public class Display {
                 clear();
                 System.out.println("\n".repeat(topMargo));
                 System.out.println(margo + kerdes + "\n");
+
                 for (int i = 0; i < opciok.length; i++) {
                     System.out.printf(margo + "%d. %s\n", i + 1, opciok[i]);
                 }
@@ -45,8 +84,6 @@ public class Display {
     }
 
     public void levelSystem() {
-        String penzEmoji = "\uD83E\uDE99";
-        String faceFullOfMoney = "\uD83E\uDD11";
         Hos hos = player.getHos();
         int error = 0;
         int melyik = -1;
@@ -56,9 +93,9 @@ public class Display {
             String msg = "Melyik tulajdonságot szeretnéd fejleszteni?\n";
             System.out.println("\n".repeat(topMargo));
             System.out.printf("%s%s\n", " ".repeat(balMargo-(msg.length()/2)), msg);
-            System.out.printf("%sArany:  %d %s\n", " ".repeat((int)((float)balMargo*1.5)), player.getArany(), faceFullOfMoney);
-            String tulAr = String.format("%sTulajdonság ár: %d %s\n", " ".repeat(balMargo-27), player.getTulajdonsagAr(), penzEmoji);
-            System.out.printf("%s%s\n", tulAr, " ".repeat(balMargo - (tulAr.length()/2)));
+
+            printHeader();
+
             for (int i = 0; i < hos.getTulStr().length; i++) {
                 String margo = " ".repeat(balMargo);
                 int len = hos.getTulStr()[i].length();
@@ -66,7 +103,7 @@ public class Display {
                 
                 System.out.printf("%s%d. %s %s [%d]\n", margo, i + 1, hos.getTulStr()[i], " ".repeat(len), hos.getTul()[i]);
             }
-            System.out.println("errrr:" + error);
+
             String errMsg = error(error);
             msg = "A továbblépéshez írja be hogy tovabb.\n";
             int msgMargo = balMargo- msg.length()/2;
@@ -78,6 +115,10 @@ public class Display {
                     return;
                 }
                 melyik = Integer.parseInt(most)-1;
+                if (melyik >= 6 || melyik < 0){
+                    error = 4;
+                    continue;
+                }
                 error = player.levelUp(melyik);
             }catch (Exception e){
                 error = 4;
@@ -90,7 +131,9 @@ public class Display {
     public void printHeader(){
         String penzEmoji = "\uD83E\uDE99";
         String faceFullOfMoney = "\uD83E\uDD11";
-
+        System.out.printf("%sArany:  %d %s\n", " ".repeat((int)((float)balMargo*1.5)), player.getArany(), faceFullOfMoney);
+        String tulAr = String.format("%sTulajdonság ár: %d %s\n", " ".repeat(balMargo-27), player.getTulajdonsagAr(), penzEmoji);
+        System.out.printf("%s%s\n", tulAr, " ".repeat(balMargo - (tulAr.length()/2)));
     }
 
     /**

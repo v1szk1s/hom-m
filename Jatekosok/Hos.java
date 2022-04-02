@@ -1,3 +1,5 @@
+package Jatekosok;
+
 public class Hos {
 
     private int tamadas;
@@ -97,7 +99,7 @@ public class Hos {
 
     @Override
     public String toString() {
-        return "Hos{" +
+        return "Jatekosok.Hos{" +
                 "tamadas=" + tamadas +
                 ", vedekezes=" + vedekezes +
                 ", varazsero=" + varazsero +

@@ -1,19 +1,10 @@
 package Varazslatok;
 
-public abstract class Varazslat {
-    private String nev;
-    private static int ar;
-    private static int mana;
+public class Varazslat {
+    protected static String nev;
+    protected static int ar;
+    protected static int mana;
 
-    public Varazslat(String nev, int ar, int mana) {
-        this.nev = nev;
-        this.ar = ar;
-        this.mana = mana;
-    }
-
-    public String getNev() {
-        return nev;
-    }
 
     public static int getAr() {
         return ar;
@@ -23,8 +14,8 @@ public abstract class Varazslat {
         return mana;
     }
 
-    public static String info() {
-        return "Varázslat";
+    public static String[] info() {
+        return null;
     }
 
 }

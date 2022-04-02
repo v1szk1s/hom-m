@@ -1,3 +1,5 @@
+package Jatekosok;
+
 public class Jatekos {
     private int arany;
     private int tulajdonsagAr;
