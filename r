@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make && java Main
+make && cd build && java Main

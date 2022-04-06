@@ -1,14 +1,15 @@
 package Varazslatok;
 
 public class Villamcsapas extends Varazslat{
-    public static final String nev = "Tűzlabda";
-    public static final int ar = 120;
-    public static final int mana = 6;
+ 
+    public Villamcsapas(){
+        super("Villamcsapas", 60, 5);
+    }
 
     public int getSzorzo() {
         return 30;
     }
-    public  static String[] info(){
-        return new String[]{"Villamcsapas:\n", "Leiras: Egy kivalasztott ellenseges egysegre (varazsero * 30) sebzes okozasa\n", "ar: ", "Mana: "};
+    public String[] info(){
+        return new String[]{"Villamcsapas:", "Leiras: Egy kivalasztott ellenseges egysegre (varazsero * 30) sebzes okozasa", "ar: " + ar, "Mana: " + mana};
     }
 }

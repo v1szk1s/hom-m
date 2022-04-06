@@ -88,6 +88,24 @@ public class Hos {
         return false;
     }
 
+    public int getTamadas(){
+        return tamadas;
+    }
+    public int getvedekezes(){
+        return vedekezes;
+    }
+    public int getVarazsero(){
+        return varazsero;
+    }
+    public int getMana(){
+        return tudas * 10;
+    }
+    public int getMoral(){
+        return moral;
+    }
+    public int getSzerencse(){
+        return szerencse;
+    }
     public int[] getTul(){
         return new int[]{tamadas, vedekezes, varazsero, tudas, moral, szerencse};
     }
@@ -96,16 +114,12 @@ public class Hos {
     }
 
 
-
-    @Override
-    public String toString() {
-        return "Jatekosok.Hos{" +
-                "tamadas=" + tamadas +
-                ", vedekezes=" + vedekezes +
-                ", varazsero=" + varazsero +
-                ", tudas=" + tudas +
-                ", moral=" + moral +
-                ", szerencse=" + szerencse +
-                '}';
+    public String[] getStatok() {
+        return new String[]{"tamadas: " + tamadas,
+                "vedekezes: " + vedekezes,
+                "varazsero: " + varazsero,
+                "tudas: " + tudas,
+                "moral: " + moral,
+                "szerencse: " + szerencse};
     }
 }

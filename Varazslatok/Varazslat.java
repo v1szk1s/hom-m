@@ -1,21 +1,30 @@
 package Varazslatok;
 
-public class Varazslat {
-    protected static String nev;
-    protected static int ar;
-    protected static int mana;
+import Bolt.Veheto;
 
+public abstract class Varazslat implements Veheto{
+    protected String nev;
+    protected int ar;
+    protected int mana;
 
-    public static int getAr() {
+    public Varazslat(String nev, int ar, int mana){
+        this.nev = nev;
+        this.ar = ar;
+        this.mana = mana;
+    }
+
+    public String getNev(){
+        return nev;
+    }
+
+    public int getAr() {
         return ar;
     }
 
-    public static int getMana() {
+    public int getMana() {
         return mana;
     }
 
-    public static String[] info() {
-        return null;
-    }
+    public abstract String[] info();
 
 }
