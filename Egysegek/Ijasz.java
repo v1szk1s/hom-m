@@ -1,12 +1,14 @@
 package Egysegek;
 
+import Jatekosok.Player;
+
 public class Ijasz extends Egyseg {
-    public Ijasz(){
-        super("Ijasz", 6, 3, 4, 9);
+    public Ijasz(Player kie){
+        super("Ijasz", 6, 7, 4, 9, kie);
     }
     
     public int getSebzes(){
-        return mennyiseg * (int)Math.random()*3+2;
+        return getMennyiseg() * (int)Math.random()*3+2;
     }
 
     public String getIcon(){

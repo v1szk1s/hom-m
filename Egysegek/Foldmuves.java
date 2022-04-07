@@ -1,13 +1,15 @@
 package Egysegek;
 
+import Jatekosok.Player;
+
 public class Foldmuves extends Egyseg{
-    public Foldmuves(){
-        super("Foldmuves", 2, 3, 4, 8);
+    public Foldmuves(Player kie){
+        super("Foldmuves", 2, 3, 4, 8, kie);
     }
 
 
     public int getSebzes(){
-        return 1;
+        return getMennyiseg();
     }
 
     public String getIcon(){

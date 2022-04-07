@@ -6,4 +6,6 @@ public class Jatekos extends Player{
         super(szint);
     }
 
+    
+
 }

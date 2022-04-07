@@ -1,7 +1,11 @@
 package Jatekosok;
 import Varazslatok.*;
+
+import java.util.ArrayList;
+
 import Bolt.Veheto;
 import Display.Color;
+import Display.Position;
 import Egysegek.Egyseg;
 import Egysegek.Foldmuves;
 import Egysegek.Griff;
@@ -31,31 +35,29 @@ public class Player {
         this.tulajdonsagAr = 5;
         hos = new Hos();
         varazslatok = new Varazslat[5];
-        egysegek = new Egyseg[]{new Foldmuves(), new Ijasz(), new Griff()};
+        egysegek = new Egyseg[]{new Foldmuves(this), new Ijasz(this), new Griff(this)};
         nev = "Player";
     }
 
     public boolean isMindenkiElhelyezve(){
         for(var e:getEgysegek()){
-            if(e.getY() == -1 || e.getX() == -1){
+            if(e.getPos().getY() == -1 || e.getPos().getX() == -1){
                 return false;
             }
         }
         return true;
     }
+    public String elhelyez(Egyseg e, int num){
+        Position pos = Position.convertToPos(num);
 
-    public String elhelyez(Egyseg e, int hova){
-        int y = (hova-1)/12;
-        int x = (hova-1)%12;
-        if(hova < 1 || hova > 120){
+        if(pos.getY()< 0 || pos.getY() > 11  || pos.getX() < 0 || pos.getX() > 9){
             return "Nem lehet ide lepni, mivel nincs a palyan!";
         }
 
-        if(getEgysegOnPosition(y, x) == null){
+        if(getEgysegOnPosition(pos) == null){
             for(var egyseg: egysegek){
                 if(Egyseg.equals(e, egyseg)){
-                    egyseg.setY(y);
-                    egyseg.setX(x);
+                    egyseg.setPos(pos);;
                     return "";
                 }
                 //Log.log(e.getNev() + ", " + egyseg.getNev());
@@ -64,28 +66,67 @@ public class Player {
         return "Ezen a mezon mar vannak.";
     }
 
-    public Egyseg getEgysegOnPosition(int y, int x){
+    public String elhelyez(Egyseg e, Position pos){
+
+        if(pos.getY()< 0 || pos.getY() > 11  || pos.getX() < 0 || pos.getX() > 9){
+            return "Nem lehet ide lepni, mivel nincs a palyan!";
+        }
+
+        if(getEgysegOnPosition(pos) == null){
+            for(var egyseg: egysegek){
+                if(Egyseg.equals(e, egyseg)){
+                    egyseg.setPos(pos);;
+                    return "";
+                }
+                //Log.log(e.getNev() + ", " + egyseg.getNev());
+            }
+        }
+        return "Ezen a mezon mar vannak.";
+    }
+
+    public Egyseg getEgysegOnPosition(Position pos){
         for(var e: egysegek){
-            if(e.getY() == y && e.getX() == x){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
                 return e;
             }
         }
         return null;
     }
 
-    public String[] getInfo(){
-        String[] most = new String[5];
-        most[0] = "Mana: [" +"#".repeat(Math.round(getHos().getMana()/10)) + "]";
+    public String getInfo(int hanyadik){
+        ArrayList<String> most = new ArrayList<>();
+        most.add(nev + ":");
+        most.add("");
+        most.add("Mana: [" +"#".repeat(Math.round(getHos().getMana()/10)) + "]");
+        most.add("");
         for(int i = 0, j = 1; i < getEgysegek().length; i++){
             if(getEgysegek()[i].getMennyiseg() > 0){
                 Egyseg e = getEgysegek()[i];
                 int db = e.getMennyiseg();
                 int hp = e.getEletero();
-                most[j] = e.getNev() + ": \t" + db + " db\t" + hp + " hp";
+                most.add(e.getNev() + ": \t" + db + " db\t" + hp + " hp");
                 //System.out.println(margo + player.getEgysegek()[i].getNev() + ":\t" + player.getEgysegek()[i].getMennyiseg());
             }
         }
-        return most;
+        most.add("");
+        most.add("");
+        most.add("Varazslatok: ");
+        most.add("");
+        int i = 0;
+        for(var v:varazslatok){
+            if(v == null){
+                break;
+            }
+            most.add(v.getNev());
+            i++;
+        }
+        if(i == 0){
+            most.add("-");
+        }
+        try{
+            return most.get(hanyadik);
+        }catch(Exception e){}
+        return "";
     }
 
     public boolean isLost(){
@@ -186,14 +227,17 @@ public class Player {
     public Varazslat[] getVarazslatok(){
         int counter = 0;
         for(int i = 0; i < varazslatok.length; i++){
-            if(varazslatok[i] == null)
-                break;
-            counter++;
+            if(varazslatok[i] != null){
+                counter++;
+            }
         }
         Varazslat[] ek = new Varazslat[counter];
         for(int i = 0, j = 0; i < varazslatok.length; i++){
-            ek[j] = varazslatok[i];
-            j++;
+            if(varazslatok[i] != null){
+                ek[j] = varazslatok[i];
+                j++;
+            }
+            
             
         }
         return ek;
@@ -250,4 +294,8 @@ public class Player {
     public Hos getHos() {
         return hos;
     }
+
+
+
+    
 }

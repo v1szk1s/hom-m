@@ -25,9 +25,13 @@ public class Display{
     public static void showStatok(Player p){
         clear();
         System.out.println();
-        System.out.println(margo + p.getNev() + "\n");
+        System.out.println(margo + p.getNev() + ":\n");
         for(var v:p.getHos().getStatok()){
-            System.out.println(margo + v);
+            System.out.println(margo + "\t- " +v);
+        }
+        System.out.println("\n\n" + margo + "Varazslatok:\n");
+        for(var v:p.getVarazslatok()){
+            System.out.println(margo + "\t- " + v.getNev());
         }
     }
 
@@ -153,7 +157,7 @@ public class Display{
         }
     }
 
-    public static int menu(String kerdes, String[] opciok){
+    public static int menuFullScreen(String kerdes, String[] opciok){
 
         String margo = " ".repeat(balMargo);
         int valasz = -1;
@@ -185,6 +189,8 @@ public class Display{
                 }
             }
     }
+
+
 
     public static int levelSystem(Player player) {
         Hos hos = player.getHos();
@@ -279,5 +285,29 @@ public class Display{
             }catch(Exception e){};
             
         }
+    }
+}
+
+class Bemenet{
+    private static Scanner sc = new Scanner(System.in);
+
+    public static int getBemenet(int min, int max){
+        int melyik;
+        try{
+            String most= sc.nextLine();
+            if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase()) || "quit".equals(most.toLowerCase()) ){
+                return -2;
+            }
+            if("t".equals(most.toLowerCase()) || "tovabb".equals(most.toLowerCase()) || "n".equals(most.toLowerCase()) ) {
+                return -1;
+            }
+            melyik = Integer.parseInt(most)-1;
+            if (melyik >= min && melyik <= max){
+                return melyik;
+            }
+        }catch (Exception e){
+            return -3;
+        }
+        return -3;
     }
 }

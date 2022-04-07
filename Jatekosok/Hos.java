@@ -115,11 +115,11 @@ public class Hos {
 
 
     public String[] getStatok() {
-        return new String[]{"tamadas: " + tamadas,
-                "vedekezes: " + vedekezes,
-                "varazsero: " + varazsero,
-                "tudas: " + tudas,
-                "moral: " + moral,
-                "szerencse: " + szerencse};
+        return new String[]{"Tamadas: " + tamadas,
+                "Vedekezes: " + vedekezes,
+                "Varazsero: " + varazsero,
+                "Tudas: " + tudas,
+                "Moral: " + moral,
+                "Szerencse: " + szerencse};
     }
 }
