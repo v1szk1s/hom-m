@@ -34,6 +34,15 @@ public abstract class Egyseg implements Veheto {
         osszElet += mennyi * eletero;
     }
 
+    public boolean helyez(int num){
+        Position pos = Position.convertToPos(num);
+        if(pos.getY() >= 0 && pos.getY() <= 9 && pos.getX() >= 0 &&  pos.getX() <= 11){
+            this.pos = pos;
+            return true;
+        }
+        return false;
+    }
+
     public boolean helyez(Position pos){
         if(pos.getY() >= 0 && pos.getY() <= 9 && pos.getX() >= 0 &&  pos.getX() <= 11){
             this.pos = pos;
@@ -48,6 +57,9 @@ public abstract class Egyseg implements Veheto {
 
     public Position getPos(){
         return pos;
+    }
+    public int getNumPos(){
+        return pos.getY() * 12 + pos.getX() + 1;
     }
 
 

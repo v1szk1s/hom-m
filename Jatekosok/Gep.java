@@ -39,6 +39,6 @@ public class Gep extends Player{
         if(melyik < 0 || melyik > 2){
             return;
         }
-        elhelyez(getEgysegek()[melyik], Position.convertToPos(xd[8+melyik]));
+        getEgysegek()[melyik].setPos(Position.convertToPos(xd[8+melyik]));
     }    
 }

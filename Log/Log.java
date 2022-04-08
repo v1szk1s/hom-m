@@ -1,13 +1,15 @@
 package Log;
 import java.util.LinkedList;
 
+import Display.Color;
+
 public class Log {
     private static LinkedList<String> logok = new LinkedList<>();
 
 
     public static String get(int i){
         try{
-            return logok.get(i);// == null ? "":logok.get(i);
+            return Color.CYAN_BACKGROUND + logok.get(i) + " ".repeat(30-logok.get(i).length())+  Color.RESET;// == null ? "":logok.get(i);
         }catch(Exception e){
             return "";
         }

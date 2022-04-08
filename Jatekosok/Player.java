@@ -92,6 +92,15 @@ public class Player {
         }
         return null;
     }
+    public Egyseg getEgysegOnPosition(int num){
+        Position pos = Position.convertToPos(num);
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
+                return e;
+            }
+        }
+        return null;
+    }
 
     public String getInfo(int hanyadik){
         ArrayList<String> most = new ArrayList<>();
