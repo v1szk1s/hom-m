@@ -1,5 +1,7 @@
 package Varazslatok;
 
+import Jatekosok.Hos;
+
 public class Feltamasztas extends Varazslat{
 
     public Feltamasztas(){

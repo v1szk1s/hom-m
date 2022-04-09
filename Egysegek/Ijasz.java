@@ -3,8 +3,8 @@ package Egysegek;
 import Jatekosok.Player;
 
 public class Ijasz extends Egyseg {
-    public Ijasz(Player kie){
-        super("Ijasz", 6, 7, 4, 9, kie, true);
+    public Ijasz(){
+        super("Ijasz", 6, 7, 4, 9, true);
     }
     
     public float getSebzes(){

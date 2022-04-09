@@ -1,5 +1,7 @@
 package Varazslatok;
 
+import Jatekosok.Hos;
+
 public class Tuzlabda extends Varazslat{
     public static final String nev = "Tuzlabda";
     public static final int ar = 120;

@@ -1,4 +1,4 @@
-# Előkészítési szakasz (max: 11 pont)
+# Előkészítési szakasz (max: 11 pont)  11/11
  - A nehézségi szint meg van valósítva: ki tudjuk választani nehézségi szintet (legalább) 3 opció közül. A döntés alapján különböző mennyiség¶ aranyat kapunk.
    - 2/2
 
@@ -17,7 +17,7 @@
 - Össze tudjuk válogatni a sereget. Legalább 3 különböző egységből választhatunk. Egy adott egységből tetszőleges mennyiség¶t tudunk venni, és több fajta egységet is lehet vásárolni. Az egységek ára levonódik a rendelkezésre álló aranyból. Több egységet nem tudunk vásárolni, mint amennyi aranyunk van. Legalább egy darab egységet kötelező a csatába vinni. (2 pont)
    - 2/2
 
-# Csata alapfeltételei (max: 13 pont):
+# Csata alapfeltételei (max: 13 pont): 13/13
 - Az előkészítési fázis után megjelenik a pálya, amely 12x10-es méret¶, tehát 10 mező magas és 12 mező széles. (1 pont)
     - 1/1
 - A csata előtt a játékos elhelyezheti az egységeket. Egy egység csak egyszer kerülhet a pályára és a csata elkezdéséhez minden egységet el kell helyezni, különben a játék nem kezdhető el. (2 pont)
@@ -33,7 +33,7 @@
     - 2/2
 
 - A csata körökre van osztva. Mindig látszik, hogy éppen hányadik kör van. Az is jelezve van, hogy az aktuális körön belül melyik egység mikor következik. Ha egy egység út közben meghal, akkor elt¶nik a listáról. (2 pont)
-    - /2
+    - 2/2
 
 - Az egységek körön belüli lépési sorrendje a kezdeményezés alapján dől el, amelyek a táblázat alapján megadott relációban állnak egymással. (1 pont)
     - 1/1

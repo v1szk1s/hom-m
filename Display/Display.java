@@ -1,13 +1,19 @@
 package Display;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import Egysegek.AllEgyseg;
 import Egysegek.Egyseg;
+import Egysegek.Foldmuves;
+import Egysegek.Griff;
+import Egysegek.Ijasz;
 import Jatekosok.*;
 import Varazslatok.*;
 
 
 public class Display{
-    private static Varazslat[] varazslatok = new Varazslat[]{new Villamcsapas(), new Tuzlabda(), new Feltamasztas()};
+    
     static boolean err = false;
     static int balMargo = 66;
     static String margo = " ".repeat(balMargo);
@@ -15,10 +21,8 @@ public class Display{
     static final String top = "\n".repeat(topMargo);
     private static Scanner sc = new Scanner(System.in);
     private static String infoMsg = "A tovabblepeshez irja be hogy tovabb. (vagy csak egy t betut)\n";
+    private List<Varazslat> mindenVarazslat = new ArrayList<>();
     
-    public static  Varazslat getVarazslat(int i){
-        return varazslatok[i];
-    }
 
 
 
@@ -30,7 +34,7 @@ public class Display{
             System.out.println(margo + "\t- " +v);
         }
         System.out.println("\n\n" + margo + "Varazslatok:\n");
-        for(var v:p.getVarazslatok()){
+        for(var v:p.getHos().getVarazslatok()){
             System.out.println(margo + "\t- " + v.getNev());
         }
     }
@@ -47,7 +51,7 @@ public class Display{
 
     
             String margo = " ".repeat(30);
-            Egyseg[] egysegek = player.getAllEgyseg();
+            Egyseg[] egysegek = new Egyseg[]{new Foldmuves(), new Ijasz(), new Griff()};
 
             for (int i = 0; i < egysegek.length; i++) {
                 
@@ -70,25 +74,26 @@ public class Display{
             //int errMsgMargo = balMargo - errMsg.length()/2;
             System.out.println(" ".repeat(balMargo- 3) + errMsg);
             System.out.println(" ".repeat(msgMargo) + infoMsg);
-            System.out.println(" ".repeat(msgMargo) + "Kerem igy adja meg mit akar venni: <egysegnev> <mennyit> (pl. ijasz 15)");
+            System.out.println(" ".repeat(msgMargo) + "Kerem igy adja meg mit akar venni: <sorszam> <mennyit> (pl. 2 15 -> 15 ijasz vetele)");
             System.out.printf("\n%sValasz: ", " ".repeat(msgMargo));
             try{
                 String input = sc.nextLine();
-                String[] t = input.split(" ");
-                String most = t[0];
-                if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase()) || "quit".equals(most.toLowerCase()) ){
-                    return 1;
-                }else if( player.getEgysegek().length <= 0){
+
+                if("q".equals(input.toLowerCase()) ||"exit".equals(input.toLowerCase()) || "quit".equals(input.toLowerCase()) ){
+                    return -2;
+                }else if( player.getEgysegek().size() <= 0){
                     errMsg = "Legalabb egy egysegednek lennie kell!";
 
-                }else if(("t".equals(most.toLowerCase()) || "tovabb".equals(most.toLowerCase()) || "n".equals(most.toLowerCase()))){
+                }else if(("t".equals(input.toLowerCase()) || "tovabb".equals(input.toLowerCase()) || "n".equals(input.toLowerCase()))){
                     
                     return 0;
                 }else{
                     errMsg = Info.error(6);
                 }
+                String[] t = input.split(" ");
+                int e = Integer.parseInt(t[0])-1;
                 int mennyi = Integer.parseInt(t[1]);
-                errMsg = player.buyEgyseg(most, mennyi);
+                errMsg = player.buyEgyseg(egysegek[e], mennyi);
                 
             }catch (Exception e){
                 errMsg = Info.error(5);
@@ -112,19 +117,20 @@ public class Display{
             
     
             String margo = " ".repeat(30);
-
-            for (int i = 0; i < varazslatok.length; i++) {
-                boolean isMegvan = player.vanVarazslat(varazslatok[i]);
+            int i = 0;
+            for (var v:AllVarazslat.getAllVarazslat()) {
+                boolean isMegvan = player.getHos().vanVarazslat(v);
                 System.out.println((isMegvan? Color.GREEN:""));
                 System.out.printf("%s%d. ",margo, i+1);
-                for(int j = 0; j < varazslatok[i].info().length; j++){
+                i++;
+                for(int j = 0; j < v.info().length; j++){
                     if(j == 0){
                         
-                        System.out.print(varazslatok[i].info()[j] + (isMegvan? Color.WHITE + " ".repeat(20)+ Color.GREEN_BACKGROUND + "MEGVEVE" + Color.RESET + Color.GREEN:"") + "\n");
+                        System.out.print(v.info()[j] + (isMegvan? Color.WHITE + " ".repeat(20)+ Color.GREEN_BACKGROUND + "MEGVEVE" + Color.RESET + Color.GREEN:"") + "\n");
                     }else{
                         margo = " ".repeat(30);
                     }
-                    System.out.printf("%s%s\n", margo, varazslatok[i].info()[j]);
+                    System.out.printf("%s%s\n", margo, v.info()[j]);
                 }
                 System.out.println(Color.RESET);
                 System.out.println("\n");
@@ -139,17 +145,17 @@ public class Display{
             try{
                 String most= sc.nextLine();
                 if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase()) || "quit".equals(most.toLowerCase()) ){
-                    return 1;
+                    return -2;
                 }
                 if("t".equals(most.toLowerCase()) || "tovabb".equals(most.toLowerCase()) || "n".equals(most.toLowerCase()) ){
                     return 0;
                 }
                 melyik = Integer.parseInt(most)-1;
-                if (melyik >= varazslatok.length || melyik < 0){
+                if (melyik >= AllVarazslat.getAllVarazslat().length || melyik < 0){
                     errMsg = Info.error(4);
                     continue;
                 }
-                errMsg = player.buyVarazslat(varazslatok[melyik]) + "\n";
+                errMsg = player.getHos().buyVarazslat(AllVarazslat.getAllVarazslat()[melyik]) + "\n";
             }catch (Exception e){
                 errMsg = Info.error(4);
             }
@@ -215,14 +221,14 @@ public class Display{
             }
 
             String errMsg = Info.error(error);
-            msg = "A tovabblepeshez irja be hogy tovabb.\n";
-            int msgMargo = balMargo- msg.length()/2;
+           
+            int msgMargo = balMargo- infoMsg.length()/2;
             //int errMsgMargo = balMargo - errMsg.length()/2;
-            System.out.printf("\n%s%s%s%s%sValasz: " ," ".repeat(balMargo- 3),errMsg, " ".repeat(msgMargo), msg, " ".repeat(msgMargo));
+            System.out.printf("\n%s%s%s%s%sValasz: " ," ".repeat(balMargo- 3),errMsg, " ".repeat(msgMargo), infoMsg, " ".repeat(msgMargo));
             try{
                 String most= sc.nextLine();
                 if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase()) || "quit".equals(most.toLowerCase()) ){
-                    return 1;
+                    return -2;
                 }
                 if("t".equals(most.toLowerCase()) || "tovabb".equals(most.toLowerCase()) || "n".equals(most.toLowerCase()) ) {
                     return 0;
@@ -248,8 +254,8 @@ public class Display{
             System.out.printf("%sMana: [%s]\n", margo, "#".repeat(Math.round(player.getHos().getMana()/10)));
         }
         if(player.getEgysegek() != null){
-            for(int i = 0; i < player.getEgysegek().length; i++){
-                System.out.println(margo + player.getEgysegek()[i].getNev() + ":\t" + player.getEgysegek()[i].getMennyiseg());
+            for(var e:player.getEgysegek()){
+                System.out.println(margo + e.getNev() + ":\t" + e.getMennyiseg());
             }
         }
 

@@ -35,7 +35,7 @@ public class Csatater {
 
     public int elhelyez(){
 
-        Egyseg[] egysegek = p1.getEgysegek();
+         List<Egyseg> egysegek = p1.getEgysegek();
         int melyik = -1;
         String errMsg = "\n";
         for(int i:elsoKetSor){
@@ -44,8 +44,8 @@ public class Csatater {
         while(true){
             showPalya(elsoSorok, new Player[]{p1});
             System.out.println("Meilyik csapatodat szeretned elhelyezni? (formatum: csapat <sorszama> <pozicio szam>)");
-            for(int i = 0; i < egysegek.length; i++){
-                System.out.println(i+1 + ". "+ egysegek[i].getNev() +  "\t[" +egysegek[i].getMennyiseg() + " db]");
+            for(int i = 0; i < egysegek.size(); i++){
+                System.out.println(i+1 + ". "+ egysegek.get(i).getNev() +  "\t[" + egysegek.get(i).getMennyiseg() + " db]");
     
             }
             System.out.println(errMsg);
@@ -58,7 +58,7 @@ public class Csatater {
 
                 if("q".equals(t[0].toLowerCase()) ||"exit".equals(t[0].toLowerCase()) || "quit".equals(t[0].toLowerCase()) ){
                     return 1;
-                }else if(("t".equals(most.toLowerCase()) || "tovabb".equals(t[0].toLowerCase())) &&  !p1.isMindenkiElhelyezve()){
+                }else if( ("t".equals(most.toLowerCase()) || "tovabb".equals(t[0].toLowerCase()) || "n".equals(t[0].toLowerCase())) &&  !p1.isMindenkiElhelyezve()){
                     errMsg = Info.error("Nincs mindenki elhelyezve!");
                 }else if("t".equals(most.toLowerCase()) || "tovabb".equals(t[0].toLowerCase()) || "n".equals(t[0].toLowerCase())){
                     return 0;
@@ -66,13 +66,13 @@ public class Csatater {
 
                 melyik = Integer.parseInt(t[0])-1;
                 int hova = Integer.parseInt(t[1]);
-                if (melyik >= egysegek.length || melyik < 0){
+                if (melyik >= egysegek.size() || melyik < 0){
                     errMsg = Info.error(4);
                     continue;
                 }
                 if(contains(elsoKetSor, hova)){
                     
-                    errMsg = Info.error(p1.elhelyez(egysegek[melyik], Position.convertToPos(hova)));
+                    errMsg = Info.error(p1.elhelyez(egysegek.get(melyik), Position.convertToPos(hova)));
                 }else{
                     errMsg = Info.error("Csak az elso ket sorba lehet rakni!");
                 }

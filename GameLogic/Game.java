@@ -2,13 +2,12 @@ package GameLogic;
 import Display.Csatater;
 import Display.Display;
 import Egysegek.Egyseg;
-import Egysegek.Foldmuves;
-import Egysegek.Ijasz;
-import Egysegek.Foldmuves;
 import Jatekosok.*;
 import Log.Log;
+import Varazslatok.Varazslat;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +32,29 @@ public class Game {
 
     }
 
-    public boolean playKor(){
+    public void play(){
+        while(true){
+            if(p1.isLost() && p2.isLost()){
+                //TODO make draw screen
+                return;
+            }
+            if(p1.isLost()){
+                Display.gg();
+                return;
+            }
+            if(p2.isLost()){
+                //TODO make winning screen
+                return;
+            }
+
+            if(playKor() == false){
+                //Display.gg();
+                return;
+            }
+        }
+    }
+
+    private boolean playKor(){
         List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
         allEgyseg.clear();
         for(var v:p1.getEgysegek()){
@@ -44,6 +65,8 @@ public class Game {
         }
 
         allEgyseg.sort(new EgysegComparator());
+
+
         Log.log(Csatater.getKor() + ". Kor");
         Log.log("Ebben a sorrendben lesz a harc:");
         for(var v:allEgyseg){
@@ -84,10 +107,9 @@ public class Game {
 
                 case 1:
                     return mozog(e);
-                    
-
+                
                 case 2:
-                    return hosTamad(e);
+                    return hosTamad();
                     
                 case 3:
                     return hosVarazsol();
@@ -123,7 +145,7 @@ public class Game {
         int valasz = -1;
         while(valasz == -1){
             refresh(hovaJo);
-            valasz = menu("Kit szeretnel megtamadni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
+            valasz = menuSzamos("Kit szeretnel megtamadni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
             if(valasz == -2){
                 return -1;
             }
@@ -141,7 +163,7 @@ public class Game {
         int valasz = -1;
         while(valasz == -1){
             refresh(hovaJo);
-            valasz = menu("Hova szeretnel lepni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
+            valasz = menuSzamos("Hova szeretnel lepni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
             if(valasz == -2){
                 return -1;
             }
@@ -150,13 +172,54 @@ public class Game {
         return 0;
     }
 
-    private int hosTamad(Egyseg e){
-
+    private int hosTamad(){
+        if(!p1.getHos().tudCselekedni()){
+            Log.log("A hosod elfaradt, ebben a korben nem tud tobbet csinalni!", true);
+            return -1;
+        }
+        refresh();
+        ArrayList<Integer> mostJo = new ArrayList<>();
+        for(var v:p2.getEgysegek()){
+            mostJo.add(v.getNumPos());
+        }
+        int valasz = -1;
+        while(valasz == -1){
+            refresh(mostJo);
+            valasz = menuSzamos("Kit szeretnel tamadni a hosoddel?", mostJo);
+            if(valasz == -2){
+                return -1;
+            }
+        }
+        p1.getHos().tamad(p2.getEgysegOnPosition(valasz));
+        
         return 0;
     }
 
     private int hosVarazsol(){
+        refresh();
+        if(!p1.getHos().tudCselekedni()){
+            Log.log("A hosod elfaradt, ebben a korben nem tud tobbet csinalni!", true);
+            return -1;
+        }
+        if(p1.getHos().getVarazslatok().size() == 0){
+            Log.log("Nem tudsz varazsolni, mivel nincs egy se!", true);
+            return -1;
+        }
+
+        int valasz = -1;
+        while(valasz == -1){
+            valasz = menu("Melyik varazslatod szeretned hasznalni?", p1.getHos().getVarazslatok());
+            if(valasz == -2){
+                return -1;
+            }
+        }
+
+        //p1.getHos().varazsol(p1.getHos().getVarazslatok(). );
+        
+
         return 0;
+        //return p1.getHos().varazsol();
+        
     }
 
     private void refresh(){
@@ -168,7 +231,35 @@ public class Game {
     
     }
 
-    public static int menu(String kerdes, List<Integer> t){
+    
+    // public static int menuSzamos(String kerdes, ArrayList<Integer> t){
+    //     int valasz = -1;
+
+    //     System.out.println(margo + kerdes + "\n");
+
+
+
+    //     System.out.print((err ? Color.RED + "\n" + margo + "A listabol adj meg elemet [1, 2, 3...]!\n" + Color.WHITE + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
+    //     String most = "";
+    //     try {
+    //         most = sc.nextLine();
+    //         if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase())||"quit".equals(most.toLowerCase()) ){
+    //             return -2;
+    //         }
+    //         valasz = Integer.parseInt(most);
+    //         if(!t.contains(valasz)){
+    //             err = true;
+    //             return -1;
+    //         }
+    //     }catch (Exception e){
+    //         err = true;
+    //         return -1;
+    //     }
+    //     err = false;
+    //     return valasz;
+    // }
+
+    public static int menuSzamos(String kerdes, List<Integer> t){
         int valasz = -1;
 
         System.out.println(margo + kerdes + "\n");
@@ -204,7 +295,7 @@ public class Game {
         }
         
 
-        System.out.print((err ? "\n"+ margo + Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
+        System.out.print((err ? Color.RED + "\n" + margo + "A listabol adj meg elemet [1, 2, 3...]!\n" + Color.WHITE + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
         String most = "";
         try {
             most = sc.nextLine();
@@ -224,18 +315,19 @@ public class Game {
         return valasz - 1;
     }
 
-    public static int menu(String kerdes, ArrayList<String> opciok){
+    public static int menu(String kerdes, List<Varazslat> opciok){
         int valasz = -1;
 
         System.out.println(margo + kerdes + "\n");
         if(opciok != null){
             for (int i = 0; i < opciok.size(); i++) {
-                System.out.println(margo + (i + 1) + ". " + opciok.get(i));
+                //if()
+                System.out.println(margo + (i + 1) + ". " + opciok.get(i).getNev());
             }
         }
         
 
-        System.out.print((err ? "\n"+ margo + Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
+        System.out.print((err ? Color.RED + "\n" + margo + "A listabol adj meg elemet [1, 2, 3...]!\n" + Color.WHITE + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
         String most = "";
         try {
             most = sc.nextLine();

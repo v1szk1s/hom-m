@@ -1,5 +1,7 @@
 package Varazslatok;
 
+import Jatekosok.Hos;
+
 public class Villamcsapas extends Varazslat{
  
     public Villamcsapas(){

@@ -3,8 +3,8 @@ package Egysegek;
 import Jatekosok.Player;
 
 public class Griff extends Egyseg{
-    public Griff(Player kie){
-        super("Griff", 15, 30, 7, 15, kie, false);
+    public Griff(){
+        super("Griff", 15, 30, 7, 15, false);
     }
 
     public float getSebzes(){

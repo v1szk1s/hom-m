@@ -22,17 +22,22 @@ public abstract class Egyseg implements Veheto {
 
 
 
-    public Egyseg(String nev, int ar, int eletero, int sebesseg, int kezdemenyezes, Player kie, Boolean isTavolsagi) {
+    public Egyseg(String nev, int ar, int eletero, int sebesseg, int kezdemenyezes, Boolean isTavolsagi) {
         pos = new Position(-1, -1);
         this.nev = nev;
         this.ar = ar;
         this.eletero = eletero;
         this.sebesseg = sebesseg;
         this.kezdemenyezes = kezdemenyezes;
-        this.kie = kie;
+
         this.isTavolsagi = isTavolsagi;
         osszElet = 0;
     }
+
+    public void setPlayer(Player kie){
+        this.kie = kie;
+    }
+
 
     public boolean isTavolsagi(){
         return isTavolsagi;
@@ -80,6 +85,9 @@ public abstract class Egyseg implements Veheto {
         if(osszElet == 0){
             return 0;
         }
+        // if(osszElet % eletero > 0){
+        //     return (osszElet / eletero)+1;
+        // }
         return osszElet / eletero;
     }
 
@@ -115,11 +123,24 @@ public abstract class Egyseg implements Veheto {
 
     public abstract String getIcon();
 
-    public static boolean equals(Egyseg e1, Egyseg e2){
-        if(e1.getNev().equals(e2.getNev()))
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof Egyseg)){
+            return false;
+        }
+        if(((Egyseg)o).getNev().equals(getNev()))
             return true;
         return false;
     }
+    @Override
+    public int hashCode(){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(getNev());
+        buffer.append(getAr());
+        return buffer.toString().hashCode();
+    }
+
+
 
     public void tamad(Egyseg kit){
         int mennyi = kit.getMennyiseg();
@@ -206,6 +227,9 @@ public abstract class Egyseg implements Veheto {
         }
         return uresek;
     }
+
+    
+
     public abstract String[] info();
     public abstract boolean tudTamadni(Player p);
 

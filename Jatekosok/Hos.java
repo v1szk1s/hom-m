@@ -1,5 +1,16 @@
 package Jatekosok;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import Display.Color;
+import Display.Csatater;
+import Egysegek.Egyseg;
+import Log.Log;
+import Varazslatok.Varazslat;
+
 public class Hos {
 
     private int tamadas;
@@ -8,23 +19,29 @@ public class Hos {
     private int tudas;
     private int moral;
     private int szerencse;
+    List<Varazslat> varazslatok;
+    Player kie;
+    private int korAmikorCsinaltValamit = -1;
 
-    public Hos(){
+    public Hos(Player kie){
         tamadas = 1;
         vedekezes = 1;
         varazsero = 1;
         tudas = 1;
         moral = 1;
         szerencse =1;
+        this.kie = kie;
+        varazslatok = new ArrayList<>();
     }
-    public Hos(int tamadas, int vedekezes, int varazsero, int tudas, int moral, int szerencse){
-        this.tamadas = tamadas;
-        this.vedekezes = vedekezes;
-        this.varazsero = varazsero;
-        this.tudas = tudas;
-        this.moral = moral;
-        this.szerencse =szerencse;
-    }
+    // public Hos(int tamadas, int vedekezes, int varazsero, int tudas, int moral, int szerencse){
+    //     this.tamadas = tamadas;
+    //     this.vedekezes = vedekezes;
+    //     this.varazsero = varazsero;
+    //     this.tudas = tudas;
+    //     this.moral = moral;
+    //     this.szerencse =szerencse;
+    //     varazslatok = new HashSet<>();
+    // }
 
     public boolean levelUp(int melyiket){
         switch (melyiket){
@@ -111,6 +128,56 @@ public class Hos {
     }
     public String[] getTulStr(){
         return new String[]{"Tamadas", "Vedekezes", "Varazserő", "Tudas", "Moral", "Szerencse"};
+    }
+
+    public boolean tudVarazsolni(Varazslat varazs){
+        if(varazs.getMana() <= getMana())
+             return true;
+
+        return false;
+    }
+
+    public String buyVarazslat(Varazslat varazs){
+
+        if(varazs.getAr() > kie.getArany()){
+            return "Nincs eleg aranyod!";
+        }
+        if(varazslatok.contains(varazs)){
+            return Color.RED + "Ezt a varazslatot mar megvetted!" + Color.WHITE;
+        }
+
+        varazslatok.add(varazs);
+        return "";
+    }
+
+    public List<Varazslat> getVarazslatok(){
+        return varazslatok;
+    }
+
+    public boolean vanVarazslat(Varazslat varazs){
+        if(varazslatok.size() == 0 ){
+            return false;
+        }
+        return varazslatok.contains(varazs);
+    }
+
+    public boolean tudCselekedni(){
+        if(korAmikorCsinaltValamit == Csatater.getKor()){
+            
+            return false;
+        }
+        return true;
+    }
+
+    public int tamad(Egyseg e){
+        e.setEletero(e.getEletero()-(tamadas*10));
+        korAmikorCsinaltValamit = Csatater.getKor();
+        Log.log(tamadas*10 + " sebzes -> " +e.getPlayer().getNev() + " " + e.getNev());
+        return 0;
+    }
+
+    public int varazsol(){
+        return 0;
     }
 
 

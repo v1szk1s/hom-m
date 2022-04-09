@@ -2,6 +2,7 @@ package Jatekosok;
 import Varazslatok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Bolt.Veheto;
 import Display.Color;
@@ -13,8 +14,8 @@ public class Player {
     private int arany;
     private int tulajdonsagAr;
     private Hos hos;
-    private Varazslat[] varazslatok;
-    private Egyseg[] egysegek;
+//    private Varazslat[] varazslatok;
+    private List<Egyseg> egysegek;
     String nev;
     Player ellenfel;
 
@@ -31,9 +32,8 @@ public class Player {
                 break;
         }
         this.tulajdonsagAr = 5;
-        hos = new Hos();
-        varazslatok = new Varazslat[5];
-        egysegek = new Egyseg[]{new Foldmuves(this), new Ijasz(this), new Griff(this)};
+        hos = new Hos(this);
+        egysegek = new ArrayList<>();
         nev = "Player";
     }
 
@@ -58,7 +58,7 @@ public class Player {
 
         if(getEgysegOnPosition(pos) == null){
             for(var egyseg: egysegek){
-                if(Egyseg.equals(e, egyseg)){
+                if(e.equals(egyseg)){
                     egyseg.setPos(pos);;
                     return "";
                 }
@@ -76,7 +76,7 @@ public class Player {
 
         if(getEgysegOnPosition(pos) == null){
             for(var egyseg: egysegek){
-                if(Egyseg.equals(e, egyseg)){
+                if(e.equals(egyseg)){
                     egyseg.setPos(pos);;
                     return "";
                 }
@@ -108,29 +108,27 @@ public class Player {
         ArrayList<String> most = new ArrayList<>();
         most.add(nev + ":");
         most.add("");
-        most.add("Mana: [" +"#".repeat(Math.round(getHos().getMana()/10)) + "]");
+        most.add("Mana: " + getHos().getMana() + "[" +"#".repeat(Math.round(getHos().getMana()/10)) + "]");
         most.add("");
-        for(int i = 0, j = 1; i < getEgysegek().length; i++){
-            if(getEgysegek()[i].getMennyiseg() > 0){
-                Egyseg e = getEgysegek()[i];
-                int db = e.getMennyiseg();
-                int hp = e.getEletero();
-                most.add(e.getNev() + ": \t" + db + " db\t" + hp + " hp");
+        for(var e:egysegek){
+            int db = e.getMennyiseg();
+            int hp = e.getEletero();
+            most.add(e.getNev() + ": \t" + db + " db\t" + hp + " hp");
                 //System.out.println(margo + player.getEgysegek()[i].getNev() + ":\t" + player.getEgysegek()[i].getMennyiseg());
-            }
+            
         }
         most.add("");
         most.add("");
         most.add("Varazslatok: ");
         most.add("");
         int i = 0;
-        for(var v:varazslatok){
-            if(v == null){
-                break;
+        if(getHos().getVarazslatok().size() > 0){
+            for(var v:getHos().getVarazslatok()){
+                most.add(v.getNev());
+                i++;
             }
-            most.add(v.getNev());
-            i++;
         }
+
         if(i == 0){
             most.add("-");
         }
@@ -149,126 +147,40 @@ public class Player {
         return true;
     }
 
-    public Egyseg[] getAllEgyseg(){
-        return egysegek;
+
+    public List<Egyseg> getEgysegek(){
+       return egysegek;
     }
 
-    public Egyseg[] getEgysegek(){
-        int counter = 0;
+    public String buyEgyseg(Egyseg egyseg, int mennyi){
+        
+        if(egyseg.getAr()*mennyi > arany){
+            return Color.RED + "Nincs eleg aranyad!" + Color.RESET;
+        }
         for(var e:egysegek){
-            if(e.getMennyiseg() > 0){
-                counter++;
-            }
-        }
-        Egyseg[] ek = new Egyseg[counter];
-        for(int i = 0, j = 0; i < egysegek.length; i++){
-            if(egysegek[i].getMennyiseg() > 0){
-                ek[j] = egysegek[i];
-                j++;
-            }
-        }
-        return ek;
-    }
-
-    public String buyEgyseg(String nev, int mennyi){
-        Egyseg most = null;
-
-        for(int i = 0; i < egysegek.length; i++){
-            switch(nev){
-                case "1":
-                    nev = "foldmuves";
-                    break;
-                case "2":
-                    nev = "ijasz";
-                    break;
-                case "3":
-                    nev = "griff";
-                    break;
-            }
-            if(egysegek[i].getNev().toLowerCase().equals(nev.toLowerCase())){
-                most = egysegek[i];
-                if(most.getAr()*mennyi > arany){
-                    return Color.RED + "Nincs eleg aranyad!" + Color.RESET;
-                }
-                arany -= most.getAr()* mennyi;
-                egysegek[i].addMennyiseg(mennyi);
+            if(e.equals(egyseg)){        
+                e.addMennyiseg(mennyi);
+                arany -= egyseg.getAr()* mennyi;
                 return "";
             }
         }
+        egyseg.setPlayer(this);
+        egyseg.addMennyiseg(mennyi);
+
+        arany -= egyseg.getAr() * mennyi;
+        egysegek.add(egyseg);
+
         return "";
     }
 
     public int getEgysegSzam(){
-        int sum = 0;
-        for(int i = 0; i < egysegek.length; i++){
-            sum += egysegek[i].getMennyiseg();
-        }
-        return sum;
+        return egysegek.size();
     }
 
     public int maxMennyitVehet(Veheto valami){
         return arany / valami.getAr();
     }
 
-    public String buyVarazslat(Varazslat varazs){
-
-        if(varazs.getAr() > arany){
-            return "Nincs eleg aranyod!";
-        }
-
-        for(int i = 0; i < 5; i++){
-            if(varazslatok[i] == null){
-                break;
-            }
-            if(varazs.getNev().equals(varazslatok[i].getNev())){
-                return Color.RED + "Ezt a varázslatot már megvetted!" + Color.WHITE;
-            }
-        }
-
-        for(int i = 0; i < 5; i++){
-            if(varazslatok[i] == null){
-                varazslatok[i] =  varazs;
-                arany -= varazs.getAr();
-                return "";
-            }
-        }
-        return Color.RED + "Nem tudsz több varázslatot venni!" + Color.WHITE;
-    }
-
-    public Varazslat[] getVarazslatok(){
-        int counter = 0;
-        for(int i = 0; i < varazslatok.length; i++){
-            if(varazslatok[i] != null){
-                counter++;
-            }
-        }
-        Varazslat[] ek = new Varazslat[counter];
-        for(int i = 0, j = 0; i < varazslatok.length; i++){
-            if(varazslatok[i] != null){
-                ek[j] = varazslatok[i];
-                j++;
-            }
-            
-            
-        }
-        return ek;
-    }
-
-    public boolean vanVarazslat(Varazslat varazs){
-        if(varazs == null){
-            return false;
-        }
-        for(int i = 0; i < 5; i++){
-            if(varazslatok[i] == null){
-                return false;
-            }
-
-            if(this.varazslatok[i].getNev().equals(varazs.getNev())){
-                return true;
-            }
-        }
-        return false;
-    }
 
     public int levelUp(int melyik){
         if (arany >= tulajdonsagAr){

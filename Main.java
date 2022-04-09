@@ -1,5 +1,6 @@
 import Display.Csatater;
 import Display.Display;
+import Egysegek.AllEgyseg;
 import Egysegek.Egyseg;
 import Egysegek.Ijasz;
 import Egysegek.Foldmuves;
@@ -36,52 +37,44 @@ class Main {
     }
 
     static void debug(){
-        Gep g = new Gep();
+        
         Jatekos p = new Jatekos(1);
-        p.buyEgyseg("1", 100);
-        p.buyEgyseg("2", 1);
-        p.buyEgyseg("3", 2);
-        p.elhelyez(p.getEgysegek()[0], 55);
-        p.elhelyez(p.getEgysegek()[1], 38);
-        p.elhelyez(p.getEgysegek()[2], 72);
-        Csatater csatater = new Csatater(p, g);
+        Gep g = new Gep(2);
+        //p.buyEgyseg(AllEgyseg.getAllEgyseg()[0], 100);
+        //p.buyEgyseg(AllEgyseg.getAllEgyseg()[1], 1);
+        System.out.println(p.buyEgyseg(AllEgyseg.getAllEgyseg()[2], 86));
+        System.out.println(p.getEgysegek().get(0).getMennyiseg());
+        //p.elhelyez(p.getEgysegek().get(0), 55);
+        //p.elhelyez(p.getEgysegek().get(0), 38);
+        //p.elhelyez(p.getEgysegek().get(0), 72);
+        //Csatater csatater = new Csatater(p, g);
         //csatater.elhelyez();
-        g.elhelyez();
-        Game game = new Game(p, g);
-        Egyseg e = p.getEgysegek()[2];
-        Csatater.showPalya(null, new Player[]{p, g});
+        //g.elhelyez();
+        //Game game = new Game(p, g);
+        //Egyseg e = p.getEgysegek().get(2);
+        //Csatater.showPalya(null, new Player[]{p, g});
         //System.out.println(e2.getUresMezok(g));
-        System.out.println(e.getNev() + e.getPos());
-        System.out.println(e.getSzomszedok(g));
+       // System.out.println(e.getNev() + e.getPos());
+        //System.out.println(e.getSzomszedok(g));
 
 
     }
 
     static void hack(){
-        Gep g = new Gep();
+        Gep g = new Gep(2);
         Jatekos p = new Jatekos(1);
-        p.buyEgyseg("1", 100);
-        p.buyEgyseg("2", 100);
-        p.buyEgyseg("3", 2);
-        p.elhelyez(p.getEgysegek()[0], 55);
-        p.elhelyez(p.getEgysegek()[1], 38);
-        p.elhelyez(p.getEgysegek()[2], 50);
+        p.buyEgyseg(AllEgyseg.getAllEgyseg()[0], 100);
+        p.buyEgyseg(AllEgyseg.getAllEgyseg()[1], 1);
+        p.buyEgyseg(AllEgyseg.getAllEgyseg()[2], 2);
+        p.elhelyez(p.getEgysegek().get(0), 55);
+        p.elhelyez(p.getEgysegek().get(1), 38);
+        p.elhelyez(p.getEgysegek().get(2), 50);
         Csatater csatater = new Csatater(p, g);
         //csatater.elhelyez();
         //Display.showStatok(g);
-        g.elhelyez();
         Game game = new Game(p, g);
+        game.play();
         
-        while(true){
-            if(p.isLost() || g.isLost()){
-                Display.gg();
-                return;
-            }
-            if(game.playKor() == false){
-                //Display.gg();
-                return;
-            }
-        }
 
 
 
@@ -99,13 +92,21 @@ class Main {
             return;
         }
         Jatekos player = new Jatekos(nehezseg);
-        Display.levelSystem(player);
-        Display.varazsShop(player);
-        Display.egysegShop(player);
-        Gep g = new Gep();
-        Csatater csatater = new Csatater(player, g);
+        if(Display.levelSystem(player) == -2){
+            return;
+        }
+        if(Display.varazsShop(player) == -1){
+            return;
+        }
+        if(Display.egysegShop(player) == -2){
+            return;
+        }
+        Gep ellenfel = new Gep(nehezseg);
+        Csatater csatater = new Csatater(player, ellenfel);
         csatater.elhelyez();
-        Display.showStatok(g);
+        Game game = new Game(player, ellenfel);
+        game.play();
+        //Display.showStatok(g);
     }
 
     static void multi(){

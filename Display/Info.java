@@ -73,6 +73,7 @@ public class Info {
         }
     }
 
+
     public static String error(String text){
         return Color.RED + text + Color.WHITE;
     }
