@@ -131,7 +131,7 @@ public class Hos {
     }
 
     public boolean tudVarazsolni(Varazslat varazs){
-        if(varazs.getMana() <= getMana())
+        if(varazs.getManaCost() <= getMana())
              return true;
 
         return false;
@@ -153,6 +153,17 @@ public class Hos {
     public List<Varazslat> getVarazslatok(){
         return varazslatok;
     }
+
+    public List<Varazslat> getJoVarazslatok(){
+        List<Varazslat> lista = new ArrayList<>();
+        for(var v:varazslatok){
+            if(tudVarazsolni(v)){
+                lista.add(v);
+            }
+        }
+        return lista;
+    }
+
 
     public boolean vanVarazslat(Varazslat varazs){
         if(varazslatok.size() == 0 ){
@@ -176,7 +187,10 @@ public class Hos {
         return 0;
     }
 
-    public int varazsol(){
+    public int varazsol(Varazslat varazs){
+        if(varazs.getManaCost() > getMana()){
+            return -1;
+        }
         return 0;
     }
 

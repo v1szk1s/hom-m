@@ -32,7 +32,7 @@ public abstract class Varazslat implements Veheto{
         return ar;
     }
 
-    public int getMana() {
+    public int getManaCost() {
         return mana;
     }
 

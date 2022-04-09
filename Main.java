@@ -70,6 +70,7 @@ class Main {
         p.elhelyez(p.getEgysegek().get(1), 38);
         p.elhelyez(p.getEgysegek().get(2), 50);
         Csatater csatater = new Csatater(p, g);
+        p.getHos().buyVarazslat(new Villamcsapas());
         //csatater.elhelyez();
         //Display.showStatok(g);
         Game game = new Game(p, g);

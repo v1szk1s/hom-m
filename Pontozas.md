@@ -41,14 +41,15 @@
  # Hős (max: 7 pont)
 
 - Lehetőségünk van a hőst használni valamilyen módon (támadás vagy varázslás). Egy körben legfeljebb 1 alkalommal, de azon belül bármikor tudunk vele valamilyen cselekvést végrehajtani. A hős nem foglal helyet a csatatéren és megölni sem lehet. (2 pont)
-    - /2
+    - 2/2
 
 - A hőssel tudunk támadni. Kiválaszthatjuk, hogy melyik ellenséges egységet szeretnénk megtámadni. A kiválasztott egység a képletnek megfelelő mennyiség¶ sebzést szenved el. A sebzés jól számítódik. (2 pont)
+    2/2
 
 - A hős legalább 1 fajta varázslatot tud használni, amelynek van valamilyen hatása az egy- ségekre. Csak akkor tudunk varázsolni, ha van elég mannánk. A mannaköltség levonódik a rendelkezésre álló mannánkból. (2 pont)
 
 - A hős maximális mannájának értéke megfelelően van kiszámítva a tudás tulajdonság alapján. (1 pont)
-
+    
 # Varázslatokkal kapcsolatos szempontok (max: 10 pont)
 
 - A villámcsapás varázslat meg van valósítva: egy ellenséges egységre tudunk vele megfelelő mennyiség¶ sebzést mérni. Saját egységre nem használhatjuk. (3 pont)

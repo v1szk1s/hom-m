@@ -118,7 +118,7 @@ public class Game {
                 //varakozik
                     return 0;
                 default:
-                    return 0;
+                    return -1;
             }
         }
         err = false;
@@ -206,15 +206,20 @@ public class Game {
             return -1;
         }
 
+        if(p1.getHos().getJoVarazslatok().size() == 0){
+            Log.log("Nem tudsz varazsolni, mivel nincs eleg manad!");
+            return -1;
+        }
+
         int valasz = -1;
         while(valasz == -1){
-            valasz = menu("Melyik varazslatod szeretned hasznalni?", p1.getHos().getVarazslatok());
+            valasz = menu("Melyik varazslatod szeretned hasznalni?", p1.getHos().getJoVarazslatok());
             if(valasz == -2){
                 return -1;
             }
         }
 
-        //p1.getHos().varazsol(p1.getHos().getVarazslatok(). );
+        p1.getHos().varazsol(p1.getHos().getJoVarazslatok().get(valasz));
         
 
         return 0;
@@ -299,6 +304,9 @@ public class Game {
         String most = "";
         try {
             most = sc.nextLine();
+            if(most.trim().length() == 0){
+                return -1;
+            }
             if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase())||"quit".equals(most.toLowerCase()) ){
                 return -2;
             }
