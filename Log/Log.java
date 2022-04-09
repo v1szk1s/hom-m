@@ -9,7 +9,7 @@ public class Log {
 
     public static String get(int i){
         try{
-            return logok.get(i) + " ".repeat(80-logok.get(i).length())+  Color.RESET;// == null ? "":logok.get(i);
+            return logok.get(i) + " ".repeat(70-logok.get(i).length())+  Color.RESET;// == null ? "":logok.get(i);
         }catch(Exception e){
             return "";
         }
@@ -18,6 +18,10 @@ public class Log {
 
     public static void log(String msg){
         logok.addFirst(msg);
+    }
+
+    public static void log(int msg){
+        logok.addFirst(Integer.toString(msg));
     }
 
     public static void log(String msg, boolean error){

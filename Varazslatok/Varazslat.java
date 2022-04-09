@@ -1,6 +1,7 @@
 package Varazslatok;
 
 import Bolt.Veheto;
+import Display.Csatater;
 import Jatekosok.Hos;
 public abstract class Varazslat implements Veheto{
     protected String nev;
@@ -14,6 +15,8 @@ public abstract class Varazslat implements Veheto{
         this.mana = mana;
         
     }
+
+    public abstract int varazsol(Csatater csatater);
 
     public void setHos(Hos kie){
         this.kie = kie;

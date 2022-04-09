@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Bolt.Veheto;
+import Display.Csatater;
 import Display.Position;
+import GameLogic.Tavolsag;
 import Jatekosok.Player;
 import Log.Log;
-
+/**
+ * A jatekban szereplo egysegek ososztalya.
+ */
 public abstract class Egyseg implements Veheto {
     protected String nev;
     protected int ar;
     protected int sebzes;
     protected int eletero;
+    private int maxElet;
     private int osszElet;
     protected int sebesseg;
     protected int kezdemenyezes;
@@ -27,6 +32,7 @@ public abstract class Egyseg implements Veheto {
         this.nev = nev;
         this.ar = ar;
         this.eletero = eletero;
+        maxElet = eletero;
         this.sebesseg = sebesseg;
         this.kezdemenyezes = kezdemenyezes;
 
@@ -49,6 +55,7 @@ public abstract class Egyseg implements Veheto {
 
     public void addMennyiseg(int mennyi){
         osszElet += mennyi * eletero;
+        maxElet += mennyi * eletero;
     }
 
     public boolean helyez(int num){
@@ -97,7 +104,7 @@ public abstract class Egyseg implements Veheto {
     public int getAr() {
         return ar;
     }
-    public abstract float getSebzes();
+    public abstract int getSebzes();
 
     public int getEletero() {
         return osszElet;
@@ -105,12 +112,20 @@ public abstract class Egyseg implements Veheto {
     public int getSebesseg(){
         return sebesseg;
     }
-    public int getKezdemenyezes(){
+    public double getKezdemenyezes(){
         return kezdemenyezes;
     }
 
     public void setEletero(int num){
-        osszElet = Math.max(num, 0);
+        osszElet = Math.max(0, num);
+    }
+
+    public void addEletero(int num){
+        setEletero(Math.min((eletero+num), maxElet));
+    }
+
+    public void sebez(int num){
+        setEletero(getEletero() - num);
     }
 
     // public void setMennyiseg(int num){
@@ -144,11 +159,16 @@ public abstract class Egyseg implements Veheto {
 
     public void tamad(Egyseg kit){
         int mennyi = kit.getMennyiseg();
+
         boolean kritikus = false;
         if((double)getPlayer().getHos().getSzerencse()/20 > Math.random()){
             kritikus = true;
         }
-        float sebzes = getSebzes() * (1+((float)getPlayer().getHos().getTamadas()/10));
+        
+        float sebzes = getSebzes();
+        System.out.println(sebzes);
+        sebzes *= (1+((float)getPlayer().getHos().getTamadas()/10));
+        System.out.println(sebzes);
         float vedekezes = 1 - ((float)kit.getPlayer().getHos().getvedekezes()/20);
         sebzes *= vedekezes;
         sebzes = kritikus? sebzes*2:sebzes;
@@ -158,43 +178,43 @@ public abstract class Egyseg implements Veheto {
         Log.log(getPlayer().getNev() + getNev() + " " + " csapata " + vegsoSebzes + " sebzest okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " ellensege " + kit.getNev());
     }
 
+    /**
+     * Visszadja az adott egyseg ellenseges szomszedait  
+     * @param p Ellenseges player
+     * @return  osszes szomszedos ellenseges egyseg
+     */
     public List<Egyseg> getSzomszedok(Player p){
         List<Egyseg> szomszedok = new ArrayList<>();
         int y = pos.getY();
         int x = pos.getX();
+        System.out.println(y+ " " + x);
+        System.out.println(p.getEgysegOnPosition(4, 10));
 
-        if(y-1 >= 0 && x-1 >= 0 &&  p.getEgysegOnPosition(new Position(y-1, x-1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()-1, pos.getX()-1)));
+        if(y-1 >= 0 && x-1 >= 0 &&  p.getEgysegOnPosition(y-1, x-1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y-1, x-1));
         }
-        if(y-1 >= 0 &&  p.getEgysegOnPosition(new Position(y-1, x)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()-1, pos.getX())));
+        if(y-1 >= 0 &&  p.getEgysegOnPosition(y-1, x) != null){
+            szomszedok.add(p.getEgysegOnPosition(y-1, x));
         }
-        if(y-1 >= 0 && x+1 <= 11 && p.getEgysegOnPosition(new Position(y-1, x+1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()-1, pos.getX()+1)));
+        if(y-1 >= 0 && x+1 <= 11 && p.getEgysegOnPosition(y-1, x+1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y-1, x+1));
         }
-        if(x-1 >= 0 &&  p.getEgysegOnPosition(new Position(y, x-1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY(), pos.getX()-1)));
+        if(x-1 >= 0 &&  p.getEgysegOnPosition(y, x-1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y, x-1));
         }
-        if(x+1 <= 11 &&  p.getEgysegOnPosition(new Position(y, x+1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY(), pos.getX()+1)));
+        if(x+1 <= 11 &&  p.getEgysegOnPosition(y, x+1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y, x+1));
         }
-        if(y+1 <= 9 &&  p.getEgysegOnPosition(new Position(y+1, x)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()+1, pos.getX()-1)));
+        if(y+1 <= 9 &&  p.getEgysegOnPosition(y+1, x) != null){
+            szomszedok.add(p.getEgysegOnPosition(y+1, x));
         }
-        if(y+1 <= 9 && x-1 >= 0  && p.getEgysegOnPosition(new Position(y+1, x-1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()+1, pos.getX())));
+        if(y+1 <= 9 && x-1 >= 0  && p.getEgysegOnPosition(y+1, x-1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y+1, x-1));
         }
-        if(y+1 <= 9 && x+1 <= 11 && p.getEgysegOnPosition(new Position(y+1, x+1)) != null){
-            szomszedok.add(p.getEgysegOnPosition(new Position(pos.getY()+1, pos.getX()+1)));
+        if(y+1 <= 9 && x+1 <= 11 && p.getEgysegOnPosition(y+1, x+1) != null){
+            szomszedok.add(p.getEgysegOnPosition(y+1, x+1));
         }
         
-       
-       
-       
-        
-       
-       
-
         return szomszedok;
     }
     public int getUresMezok(Player p2){
@@ -228,9 +248,31 @@ public abstract class Egyseg implements Veheto {
         return uresek;
     }
 
-    
+
 
     public abstract String[] info();
+    /**
+     * Visszaadja, hogy az adott egyseg tud e tamadni
+     * @param p Player akit tamadni akarunk
+     * @return  ha tudunk tamadni return igaz, kulonben hamis
+     */
     public abstract boolean tudTamadni(Player p);
+    /**
+     * 
+     * @param p aki meghivta
+     * @return
+     */
+    public List<Egyseg> getTamadhatoEgysegek(Csatater csatater, Player akiMeghivja){
+        if(!tudTamadni(akiMeghivja)){
+            new ArrayList<Egyseg>();
+        }
+        Player p = akiMeghivja.equals(csatater.getP1())? csatater.getP2():csatater.getP1();
+        if(!isTavolsagi){
+            return getSzomszedok(p);
+        }
+        Tavolsag tav = new Tavolsag(akiMeghivja, p);
+        return tav.getEgysegInRange(this, 999, 2);
+       
+    }
 
 }

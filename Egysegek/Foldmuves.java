@@ -8,7 +8,7 @@ public class Foldmuves extends Egyseg{
     }
 
 
-    public float getSebzes(){
+    public int getSebzes(){
         return getMennyiseg();
     }
 
@@ -23,6 +23,7 @@ public class Foldmuves extends Egyseg{
         return false;
 
     }
+    
 
     public String[] info(){
 
