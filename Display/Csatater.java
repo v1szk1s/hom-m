@@ -204,4 +204,8 @@ public class Csatater {
         return false;
     }
 
+    public static int getKor(){
+        return kor;
+    }
+
 }

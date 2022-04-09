@@ -22,11 +22,17 @@ public class Game {
     private static int margoSize = 3;
     private static String margo = " ".repeat(margoSize);
 
-    List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
+
     public Game(Player p1, Player p2){
         this.p1 = p1;
         this.p2 = p2;
         
+
+    }
+
+    public boolean playKor(){
+        List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
+        allEgyseg.clear();
         for(var v:p1.getEgysegek()){
             allEgyseg.add(v);
         }
@@ -35,14 +41,11 @@ public class Game {
         }
 
         allEgyseg.sort(new EgysegComparator());
+        Log.log(Csatater.getKor() + ". Kor");
         Log.log("Ebben a sorrendben lesz a harc:");
         for(var v:allEgyseg){
             Log.log(v.getPlayer().getNev() + ": " + v.getNev());
         }
-    }
-
-    public boolean playKor(){
-
         for(var e:allEgyseg){
             if(e.getPlayer() instanceof Jatekos){
                 int valasz = -1;
@@ -104,13 +107,22 @@ public class Game {
             Log.log("Ezzel az egyseggel nem tudsz tamadni!", true);
             return -1;
         }
+        ArrayList<Integer> hovaJo = new ArrayList<>();
+        if(e.isTavolsagi()){
+           for(var v:p2.getEgysegek()){
+               hovaJo.add(v.getNumPos());
+           }
+        }else{
+            for(var v:e.getSzomszedok(p2)){
+                hovaJo.add(v.getNumPos());
+            }
+        }
         int valasz = -1;
         while(valasz == -1){
-            ArrayList<Integer> hovaJo = getEgysegInRange(e);
             refresh(hovaJo);
             valasz = menu("Kit szeretnel megtamadni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
             if(valasz == -2){
-                return -2;
+                return -1;
             }
         }
         e.tamad(p2.getEgysegOnPosition(valasz));
@@ -128,7 +140,7 @@ public class Game {
             refresh(hovaJo);
             valasz = menu("Hova szeretnel lepni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
             if(valasz == -2){
-                return -2;
+                return -1;
             }
         }
         e.helyez(valasz);
@@ -240,10 +252,10 @@ public class Game {
         return valasz - 1;
     }
 
-    public ArrayList<Integer> getEgysegInRange(Egyseg e){
+    public ArrayList<Integer> getEgysegInRange(Egyseg e, int tav){
         ArrayList<Integer> lista = new ArrayList<>();
         for(var egyseg:p2.getEgysegek()){
-            if(getTavolsag(e, egyseg) <= e.getSebesseg()){
+            if(getTavolsag(e, egyseg) <= tav){
                 lista.add(egyseg.getNumPos());
             }
         }

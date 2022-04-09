@@ -4,11 +4,11 @@ import Jatekosok.Player;
 
 public class Ijasz extends Egyseg {
     public Ijasz(Player kie){
-        super("Ijasz", 6, 7, 4, 9, kie);
+        super("Ijasz", 6, 7, 4, 9, kie, true);
     }
     
-    public int getSebzes(){
-        return getMennyiseg() * (int)Math.random()*3+2;
+    public float getSebzes(){
+        return getMennyiseg() * (float)Math.random()*2+2;
     }
 
     public String getIcon(){
@@ -16,7 +16,7 @@ public class Ijasz extends Egyseg {
     }
 
     public boolean tudTamadni(Player kit){
-        if(this.getSzomszedok(kit) != 0){
+        if(this.getSzomszedok(kit).size() == 0){
             return true;
         }
         return false;

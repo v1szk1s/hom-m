@@ -4,10 +4,10 @@ import Jatekosok.Player;
 
 public class Griff extends Egyseg{
     public Griff(Player kie){
-        super("Griff", 15, 30, 7, 15, kie);
+        super("Griff", 15, 30, 7, 15, kie, false);
     }
 
-    public int getSebzes(){
+    public float getSebzes(){
         return getMennyiseg() * (int)Math.random()*6+5;
     }
 
@@ -16,7 +16,7 @@ public class Griff extends Egyseg{
     }
 
     public boolean tudTamadni(Player kit){
-        if(this.getSzomszedok(kit) > 0){
+        if(this.getSzomszedok(kit).size() > 0){
             return true;
         }
         return false;

@@ -4,11 +4,11 @@ import Jatekosok.Player;
 
 public class Foldmuves extends Egyseg{
     public Foldmuves(Player kie){
-        super("Foldmuves", 2, 3, 4, 8, kie);
+        super("Foldmuves", 2, 3, 4, 8, kie, false);
     }
 
 
-    public int getSebzes(){
+    public float getSebzes(){
         return getMennyiseg();
     }
 
@@ -17,7 +17,7 @@ public class Foldmuves extends Egyseg{
     }
 
     public boolean tudTamadni(Player kit){
-        if(this.getSzomszedok(kit) > 0){
+        if(this.getSzomszedok(kit).size() > 0){
             return true;
         }
         return false;

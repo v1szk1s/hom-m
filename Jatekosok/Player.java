@@ -54,10 +54,7 @@ public class Player {
     }
     public String elhelyez(Egyseg e, int num){
         Position pos = Position.convertToPos(num);
-
-        if(pos.getY()< 0 || pos.getY() > 11  || pos.getX() < 0 || pos.getX() > 9){
-            return "Nem lehet ide lepni, mivel nincs a palyan!";
-        }
+        System.out.println("" +num + pos);
 
         if(getEgysegOnPosition(pos) == null){
             for(var egyseg: egysegek){
@@ -91,7 +88,7 @@ public class Player {
 
     public Egyseg getEgysegOnPosition(Position pos){
         for(var e: egysegek){
-            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
                 return e;
             }
         }
@@ -100,7 +97,7 @@ public class Player {
     public Egyseg getEgysegOnPosition(int num){
         Position pos = Position.convertToPos(num);
         for(var e: egysegek){
-            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
                 return e;
             }
         }
