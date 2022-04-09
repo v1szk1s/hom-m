@@ -158,11 +158,11 @@ public class Csatater {
                 if(k == 0){
                     System.out.print(margo);
                 }
-                String xd = (p[0].getEgysegOnPosition(new Position(i, k)) == null? "":p[0].getEgysegOnPosition(new Position(i, k)).getEletero() + " hp");
+                String xd = (p[0].getEgysegOnPosition(new Position(i, k)) == null? "":p[0].getEgysegOnPosition(new Position(i, k)).getMennyiseg() + " db");
                 //String color = Color.GREEN_BACKGROUND;
                 if(p.length > 1){
                     if(p[1].getEgysegOnPosition(new Position(i, k)) != null){
-                        xd = p[1].getEgysegOnPosition(new Position(i, k)).getEletero() + " hp";
+                        xd = p[1].getEgysegOnPosition(new Position(i, k)).getMennyiseg() + " db";
                         //color = Color.RED_BACKGROUND;
                     } 
                     

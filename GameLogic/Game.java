@@ -1,7 +1,10 @@
 package GameLogic;
 import Display.Csatater;
 import Display.Display;
-import Egysegek.*;
+import Egysegek.Egyseg;
+import Egysegek.Foldmuves;
+import Egysegek.Ijasz;
+import Egysegek.Foldmuves;
 import Jatekosok.*;
 import Log.Log;
 

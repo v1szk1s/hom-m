@@ -9,7 +9,7 @@ public class Log {
 
     public static String get(int i){
         try{
-            return Color.BLACK_BACKGROUND + logok.get(i) + " ".repeat(120-logok.get(i).length())+  Color.RESET;// == null ? "":logok.get(i);
+            return Color.BLACK_BACKGROUND + logok.get(i) + " ".repeat(80-logok.get(i).length())+  Color.RESET;// == null ? "":logok.get(i);
         }catch(Exception e){
             return "";
         }

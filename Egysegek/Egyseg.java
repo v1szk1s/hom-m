@@ -134,7 +134,7 @@ public abstract class Egyseg implements Veheto {
         int vegsoSebzes = Math.round(sebzes);
         kit.setEletero(kit.getEletero()-vegsoSebzes);
 
-        Log.log(getPlayer().getNev() + getNev() + " " + " csapata " + sebzes + " sebzest okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " ellensege " + kit.getNev());
+        Log.log(getPlayer().getNev() + getNev() + " " + " csapata " + vegsoSebzes + " sebzest okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " ellensege " + kit.getNev());
     }
 
     public List<Egyseg> getSzomszedok(Player p){
