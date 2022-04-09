@@ -1,7 +1,5 @@
 package Display;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,13 +16,14 @@ public class Csatater {
     private static List<Integer> elsoSorok = new LinkedList<>();
     private Player p1;
     private Player p2;
-
-    private static String margo = " ".repeat(8);
+    private static int margoSize = 8;
+    private static String margo = " ".repeat(margoSize);
     private static String teto = margo + "┌───────" + "┬───────".repeat(11) + "┐";
     //private static String koztes = margo + "│       ".repeat(12) + "│";
     private static String elvalaszto = margo + "├" + "───────┼".repeat(11) + "───────┤";
     private static String alja = margo + "└───────" + "┴───────".repeat(11) + "┘";
 
+    
     public Csatater(Player p1, Player p2){
         this.p1 = p1;
         this.p2 = p2;

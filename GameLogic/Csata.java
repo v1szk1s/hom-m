@@ -1,3 +1,4 @@
+package GameLogic;
 import Egysegek.*;
 import Log.Log;
 

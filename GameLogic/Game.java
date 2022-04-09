@@ -1,6 +1,7 @@
+package GameLogic;
 import Display.Csatater;
 import Display.Display;
-import Egysegek.Egyseg;
+import Egysegek.*;
 import Jatekosok.*;
 import Log.Log;
 
@@ -18,34 +19,13 @@ public class Game {
     private Player p2;
     static Scanner sc = new Scanner(System.in);
     static boolean err = false;
+    private static int margoSize = 3;
+    private static String margo = " ".repeat(margoSize);
+
+    List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
     public Game(Player p1, Player p2){
         this.p1 = p1;
         this.p2 = p2;
-    }
-
-    public void playKor(){
-        
-        
-        //Egyseg e = p1.getEgysegek()[1];
-        //e.helyez(1);
-        //refresh(getPosInRange(e));
-//        System.out.println(getTavolsag(e, 60));
-        // for(int i = 0; i < 10;i++){
-        //     for(int j = 0; j < 12; j++){
-        //      System.out.print(i*12+j+1 + ":" + getTavolsag(e, (i*12+j+1)) + " | ");
-        //     }
-        //     System.out.println();
-        // }
-        
-        //refresh(getPosInRange(e));
-        // for(int i = 0; i < 120; i++){
-        //     System.out.println(getTavolsag(e, (i+1)));
-        // }
-        //System.out.println(e.getSebesseg());
-        //System.out.println(e.getNumPos());
-        //System.out.println(72);
-        //System.out.println(getTavolsag(e, 86));
-        ArrayList<Egyseg> allEgyseg = new ArrayList<>();
         
         for(var v:p1.getEgysegek()){
             allEgyseg.add(v);
@@ -53,18 +33,26 @@ public class Game {
         for(var v:p2.getEgysegek()){
             allEgyseg.add(v);
         }
+
         allEgyseg.sort(new EgysegComparator());
         Log.log("Ebben a sorrendben lesz a harc:");
         for(var v:allEgyseg){
             Log.log(v.getPlayer().getNev() + ": " + v.getNev());
         }
-        
+    }
+
+    public boolean playKor(){
 
         for(var e:allEgyseg){
             if(e.getPlayer() instanceof Jatekos){
-                Log.log("Te jossz");
-                if(!chooseAction(e))
-                    return;
+                int valasz = -1;
+                while(valasz != 0){
+                    valasz = chooseAction(e);
+                    if(valasz == -2){
+                        return false;
+                    }
+                }
+                
             }else{
                 ((Gep)p2).play(e);
                 Log.log("Ellenfel ezt csinalta: seemit");
@@ -72,71 +60,94 @@ public class Game {
         }
 
         Csatater.incKor();
+        return true;
 
     }
 
-    private boolean chooseAction(Egyseg e){
+    private int chooseAction(Egyseg e){
         int cselekves = -1;
         while(cselekves == -1){
             refresh();
-            cselekves = menu("Mit szeretnel csinalni?", new String[]{"Varakozik", e.getNev() + " Mozog", e.getNev() + " Tamad", "Hos Tamad", "Hos Varazsol"});
-            if(cselekves == -2){
-                return true;
-            }
+            cselekves = menu("Mit szeretnel csinalni? Ezzel az egyseggel vagy: " + e.getNev(), new String[]{"Tamad", "Mozog", "Hos Tamad", "Hos Varazsol", "Varakozik"});
+
             switch(cselekves){
                 case -2:
-                    return false;
+                    return -2;
                 case 0:
-                    return true;
+                    return tamad(e);
+
                 case 1:
-                    mozog(e);
-                    return true;
+                    return mozog(e);
+                    
+
                 case 2:
-                    tamad();
-                    return true;
+                    return hosTamad(e);
+                    
                 case 3:
-                    hosTamad();
-                    return true;
+                    return hosVarazsol();
+                    
                 case 4:
-                    hosVarazsol();
-                    return true;
+                //varakozik
+                    return 0;
                 default:
-                    return true;
+                    return 0;
             }
         }
         err = false;
-        return true;
+        return -1;
     }
 
-    private void hosVarazsol(){
 
+
+    private int tamad(Egyseg e){
+        if(e.tudTamadni(p2) == false){
+            Log.log("Ezzel az egyseggel nem tudsz tamadni!", true);
+            return -1;
+        }
+        int valasz = -1;
+        while(valasz == -1){
+            ArrayList<Integer> hovaJo = getEgysegInRange(e);
+            refresh(hovaJo);
+            valasz = menu("Kit szeretnel megtamadni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
+            if(valasz == -2){
+                return -2;
+            }
+        }
+        e.tamad(p2.getEgysegOnPosition(valasz));
+        return 0;
     }
 
-    private void hosTamad(){
-
-    }
-
-    private void mozog(Egyseg e){
+    private int mozog(Egyseg e){
+        if(e.getUresMezok(p1) == 0){
+            Log.log("Ezzel az egyseggel nem tudsz mozogni!", true);
+            return -1;
+        }
         ArrayList<Integer> hovaJo = getPosInRange(e);
-        refresh(hovaJo);
         int valasz = -1;
         while(valasz == -1){
             refresh(hovaJo);
             valasz = menu("Hova szeretnel lepni? (Csak a zolden megjelolt mezokre lephetsz)", hovaJo);
             if(valasz == -2){
-                return;
+                return -2;
             }
         }
         e.helyez(valasz);
+        return 0;
     }
 
-    private void tamad(){
+    private int hosTamad(Egyseg e){
 
+        return 0;
+    }
+
+    private int hosVarazsol(){
+        return 0;
     }
 
     private void refresh(){
         Csatater.showPalya(null,new Player[]{p1, p2});
     }
+
     private void refresh(List<Integer> t){
         Csatater.showPalya(t,new Player[]{p1, p2});
     
@@ -145,9 +156,9 @@ public class Game {
     public static int menu(String kerdes, List<Integer> t){
         int valasz = -1;
 
-        System.out.println(kerdes + "\n");
+        System.out.println(margo + kerdes + "\n");
 
-        System.out.print((err ? "\n"+ Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + "Valasz: " : "\n\n" + "Valasz: "));
+        System.out.print((err ? "\n"+ margo + Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
         String most = "";
         try {
             most = sc.nextLine();
@@ -170,15 +181,15 @@ public class Game {
     public static int menu(String kerdes, String[] opciok){
         int valasz = -1;
 
-        System.out.println(kerdes + "\n");
+        System.out.println(margo + kerdes + "\n");
         if(opciok != null){
             for (int i = 0; i < opciok.length; i++) {
-                System.out.printf("%d. %s\n", i + 1, opciok[i]);
+                System.out.println(margo + (i + 1) + ". " + opciok[i]);
             }
         }
         
 
-        System.out.print((err ? "\n"+ Info.error("A listabol adj meg elemet [1, 2, 3...]!\n") + "Valasz: " : "\n\n" + "Valasz: "));
+        System.out.print((err ? "\n"+ margo + Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
         String most = "";
         try {
             most = sc.nextLine();
@@ -198,6 +209,48 @@ public class Game {
         return valasz - 1;
     }
 
+    public static int menu(String kerdes, ArrayList<String> opciok){
+        int valasz = -1;
+
+        System.out.println(margo + kerdes + "\n");
+        if(opciok != null){
+            for (int i = 0; i < opciok.size(); i++) {
+                System.out.println(margo + (i + 1) + ". " + opciok.get(i));
+            }
+        }
+        
+
+        System.out.print((err ? "\n"+ margo + Info.error("Csak a zolden jelolt mezok kozul valaszthat!\n") + margo + "Valasz: " : "\n\n" + margo + "Valasz: "));
+        String most = "";
+        try {
+            most = sc.nextLine();
+            if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase())||"quit".equals(most.toLowerCase()) ){
+                return -2;
+            }
+            valasz = Integer.parseInt(most);
+            if(valasz < 1 || valasz > opciok.size()){
+                err = true;
+                return -1;
+            }
+        }catch (Exception e){
+            err = true;
+            return -1;
+        }
+        err = false;
+        return valasz - 1;
+    }
+
+    public ArrayList<Integer> getEgysegInRange(Egyseg e){
+        ArrayList<Integer> lista = new ArrayList<>();
+        for(var egyseg:p2.getEgysegek()){
+            if(getTavolsag(e, egyseg) <= e.getSebesseg()){
+                lista.add(egyseg.getNumPos());
+            }
+        }
+
+        return lista;
+    }
+
     public ArrayList<Integer> getPosInRange(Egyseg e){
         ArrayList<Integer> jok = new ArrayList<>();
         int maxTav = e.getSebesseg();
@@ -211,6 +264,49 @@ public class Game {
  
         }
         return jok;
+    }
+
+    public int getTavolsag(Egyseg e, Egyseg e2){
+        int y = e2.getPos().getY();
+        int x = e2.getPos().getX();
+        List<Position> posok = new ArrayList<>();
+        if(y-1 >= 0 && x-1 >= 0 && (p1.getEgysegOnPosition(new Position(y-1, x-1)) == null && p2.getEgysegOnPosition(new Position(y-1, x-1)) == null)){
+            posok.add( new Position(y-1, x-1));
+        }
+        if(y-1 >= 0 && (p1.getEgysegOnPosition(new Position(y-1, x)) == null && p2.getEgysegOnPosition(new Position(y-1, x)) == null)){
+            posok.add(new Position(y-1, x));
+        }
+        if(y-1 >= 0 && x+1 <= 11 && (p1.getEgysegOnPosition(new Position(y-1, x+1)) == null && p2.getEgysegOnPosition(new Position(y-1, x+1)) == null)){
+            posok.add(new Position(y-1, x+1));
+        }
+        if(x-1 >= 0 && (p1.getEgysegOnPosition(new Position(y, x-1)) == null && p2.getEgysegOnPosition(new Position(y, x-1)) == null)){
+            posok.add(new Position(y, x-1));
+        }
+        if(x+1 <= 11 && (p1.getEgysegOnPosition(new Position(y, x+1)) == null && p2.getEgysegOnPosition(new Position(y, x+1)) == null)){
+            posok.add(new Position(y, x+1));
+        }
+        if(y+1 <= 9 && (p1.getEgysegOnPosition(new Position(y+1, x)) == null && p2.getEgysegOnPosition(new Position(y+1, x)) == null)){
+            posok.add(new Position(y+1, x));
+        }
+        if(y+1 <= 9 && x-1 >= 0 && (p1.getEgysegOnPosition(new Position(y+1, x-1)) == null && p2.getEgysegOnPosition(new Position(y+1, x-1)) == null)){
+            posok.add(new Position(y+1, x-1));
+        }
+        if(y+1 <= 9 && x+1 <= 11 && (p1.getEgysegOnPosition(new Position(y+1, x+1)) == null && p2.getEgysegOnPosition(new Position(y+1, x+1)) == null)){
+            posok.add( new Position(y+1, x+1));
+        }
+        if(posok.size() == 0){
+            return -1;
+        }
+        int tav = Integer.MAX_VALUE;
+        for(var pos:posok){
+            int most = getTavolsag(e, Position.convertToSzam(pos));
+            if( most < tav){
+                tav = most; 
+            }
+
+        }
+
+        return tav + 1;
     }
 
     public int getTavolsag(Egyseg e, int dest){
@@ -231,16 +327,6 @@ public class Game {
             }
         }
         nodes[e.getPos().getY()][e.getPos().getX()].setDistance(0);
-        // for(Node[] i:nodes){
-        //     for(Node j:i){
-        //         try{
-        //         System.out.println(j);
-        //         }catch(Exception b){
-        //             System.out.println(b.toString());
-        //         }
-    
-        //     }
-        // }
 
         Set<Node> nudes = new HashSet<>();
         for(var i:nodes){
@@ -286,7 +372,7 @@ public class Game {
         return min;
     }
 
-    public void addSzomszedok(Node[][] n, int i, int j, int dest){
+    private void addSzomszedok(Node[][] n, int i, int j, int dest){
         Node n1 = null;
         Node n2 = null;
         Node n3 = null;
@@ -319,7 +405,6 @@ public class Game {
         if(i+1 <= 9 && j+1 <= 11){
             n8 = n[i+1][j+1];
         }
-        Position most = Position.convertToPos(dest);
         if(n1 != null && /*((i-1) == most.getY() && (j-1) == most.getX())  || */ (p1.getEgysegOnPosition(new Position(i-1, j-1)) == null && p2.getEgysegOnPosition(new Position(i-1, j-1)) == null)){
             n[i][j].addSzomszed(n1);
         }
@@ -361,8 +446,6 @@ public class Game {
     }
 
 }
-
-
 
 class EgysegComparator implements Comparator {
     @Override

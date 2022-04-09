@@ -1,6 +1,5 @@
 package Egysegek;
 
-import Display.Color;
 import Jatekosok.Player;
 
 public class Griff extends Egyseg{
@@ -16,6 +15,12 @@ public class Griff extends Egyseg{
         return "G";
     }
 
+    public boolean tudTamadni(Player kit){
+        if(this.getSzomszedok(kit) > 0){
+            return true;
+        }
+        return false;
+    }
     public String[] info(){
         return new String[]{nev, "ar: " + ar, "sebzes: 5-15" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
     }

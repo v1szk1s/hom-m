@@ -15,6 +15,14 @@ public class Ijasz extends Egyseg {
         return "I";
     }
 
+    public boolean tudTamadni(Player kit){
+        if(this.getSzomszedok(kit) != 0){
+            return true;
+        }
+        return false;
+    }
+
+
     public String[] info(){
 
         return new String[]{nev, "ar: " + ar, "sebzes: 2-4" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};

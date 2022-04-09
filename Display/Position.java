@@ -35,8 +35,9 @@ public class Position {
     public static int convertToSzam(Position coo){
         return coo.getY()*12 + coo.getX() + 1;
     }
-    public boolean equals(Position pos){
-        if(pos.getX() == x && pos.getY() == y)
+    @Override
+    public boolean equals(Object o){
+        if(((Position)o).getX() == x && ((Position)o).getY() == y)
             return true;
         return false;
     }

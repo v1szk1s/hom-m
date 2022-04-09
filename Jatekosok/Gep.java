@@ -1,13 +1,11 @@
 package Jatekosok;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import Display.Display;
 import Display.Position;
-import Egysegek.Egyseg;
+import Egysegek.*;
 
 public class Gep extends Player{
     int[] xd = {11, 12, 23, 24, 35, 36, 47, 48, 59, 60, 71, 72, 83, 84, 95, 96, 107, 108, 119, 120};
@@ -33,6 +31,12 @@ public class Gep extends Player{
 
     public void play(Egyseg e){
 
+    }
+
+    public void elhelyez(){
+        elhelyez(0);
+        elhelyez(1);
+        elhelyez(2);
     }
 
     public void elhelyez(int melyik){

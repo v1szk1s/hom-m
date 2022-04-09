@@ -6,10 +6,7 @@ import java.util.ArrayList;
 import Bolt.Veheto;
 import Display.Color;
 import Display.Position;
-import Egysegek.Egyseg;
-import Egysegek.Foldmuves;
-import Egysegek.Griff;
-import Egysegek.Ijasz;
+import Egysegek.*;
 import Log.Log;
 
 public class Player {
@@ -19,6 +16,7 @@ public class Player {
     private Varazslat[] varazslatok;
     private Egyseg[] egysegek;
     String nev;
+    Player ellenfel;
 
     public Player(int szint){
         switch (szint){
@@ -39,6 +37,13 @@ public class Player {
         nev = "Player";
     }
 
+    public void setEllenfel(Player ellenfel){
+        this.ellenfel = ellenfel;
+    }
+
+    public Player getEllenfel(){
+        return ellenfel;
+    }
     public boolean isMindenkiElhelyezve(){
         for(var e:getEgysegek()){
             if(e.getPos().getY() == -1 || e.getPos().getX() == -1){
