@@ -1,5 +1,9 @@
 package Display;
-
+/**
+ * A jatekban az egysegek informacio megjelenitesehez kell ez az osztaly.
+ * Minen fontos informacio itt van eltarolva.
+ * meg nincs implementalva
+ */
 public class Info {
      /**
      * @param num Az error kod szama.

@@ -140,3 +140,5 @@
 - Legalább 10 metódushoz tartoznak JUnit tesztek, amelyek az adott metódusokat legalább 3-3 inputra tesztelik. Legalább 4 metódus tesztjének tartalmaznia kell szélsőséges inputra való tesztelést is. (4 pont)
 
 
+eddig osszeszamolt: 72
+04.09.

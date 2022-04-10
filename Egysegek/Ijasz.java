@@ -7,8 +7,8 @@ public class Ijasz extends Egyseg {
         super("Ijasz", 6, 7, 4, 9, true);
     }
     
-    public float getSebzes(){
-        return getMennyiseg() * (float)Math.random()*2+2;
+    public int getSebzes(){
+        return getMennyiseg() * (int)(Math.random()*2+2);
     }
 
     public String getIcon(){

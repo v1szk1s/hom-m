@@ -4,7 +4,7 @@ import Varazslatok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import Bolt.Veheto;
+
 import Display.Color;
 import Display.Position;
 import Egysegek.*;
@@ -14,7 +14,6 @@ public class Player {
     private int arany;
     private int tulajdonsagAr;
     private Hos hos;
-//    private Varazslat[] varazslatok;
     private List<Egyseg> egysegek;
     String nev;
     Player ellenfel;
@@ -54,7 +53,6 @@ public class Player {
     }
     public String elhelyez(Egyseg e, int num){
         Position pos = Position.convertToPos(num);
-        System.out.println("" +num + pos);
 
         if(getEgysegOnPosition(pos) == null){
             for(var egyseg: egysegek){
@@ -94,8 +92,36 @@ public class Player {
         }
         return null;
     }
+    public Egyseg getHalottEgysegOnPosition(Position pos){
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() == 0){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public Egyseg getHalottEgysegOnPosition(int num){
+        Position pos = Position.convertToPos(num);
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() == 0){
+                return e;
+            }
+        }
+        return null;
+    }
+
     public Egyseg getEgysegOnPosition(int num){
         Position pos = Position.convertToPos(num);
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
+                return e;
+            }
+        }
+        return null;
+    }
+    public Egyseg getEgysegOnPosition(int y, int x){
+        Position pos = Position.convertToPos(y,x);
         for(var e: egysegek){
             if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
                 return e;
@@ -108,7 +134,7 @@ public class Player {
         ArrayList<String> most = new ArrayList<>();
         most.add(nev + ":");
         most.add("");
-        most.add("Mana: " + getHos().getMana() + "[" +"#".repeat(Math.round(getHos().getMana()/10)) + "]");
+        most.add("Mana: " + getHos().getMana() + " │ " + Color.BLUE + "|".repeat(getHos().getMana()/2) + Color.RESET + " ".repeat((getHos().getMaxMana()-getHos().getMana())/2) + " │");
         most.add("");
         for(var e:egysegek){
             int db = e.getMennyiseg();
@@ -152,6 +178,8 @@ public class Player {
        return egysegek;
     }
 
+    
+
     public String buyEgyseg(Egyseg egyseg, int mennyi){
         
         if(egyseg.getAr()*mennyi > arany){
@@ -177,9 +205,35 @@ public class Player {
         return egysegek.size();
     }
 
-    public int maxMennyitVehet(Veheto valami){
-        return arany / valami.getAr();
+    public List<Integer> getEgysegPosok(){
+        List<Integer> lista = new ArrayList<>();
+        for(var v:getEgysegek()){
+            lista.add(v.getNumPos());
+        }
+        return lista;
     }
+
+    public List<Integer> getEloEgysegPosok(){
+        List<Integer> lista = new ArrayList<>();
+        for(var v:getEgysegek()){
+            if(v.getEletero() > 0){
+                lista.add(v.getNumPos());
+            }
+        }
+        return lista;
+    }
+
+    public List<Integer> getHalottEgysegPosok(){
+        List<Integer> lista = new ArrayList<>();
+        for(var v:getEgysegek()){
+            if(v.getEletero() == 0){
+                lista.add(v.getNumPos());
+            }
+
+        }
+        return lista;
+    }
+
 
 
     public int levelUp(int melyik){
@@ -218,7 +272,17 @@ public class Player {
         return hos;
     }
 
+    public int maxMennyitVehet(Egyseg egyseg) {
+        return arany / egyseg.getAr();
+    }
 
 
+    // public boolean equals(Object o){
+    //     if(!(o instanceof Player)){
+    //         return false;
+    //     }
+    //     if(((Player)o).getNev())
+    //     return false;
+    // }
     
 }

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-make && cd build && java Main
+javac -d build -encoding utf-8 *.java && cd build && java Main

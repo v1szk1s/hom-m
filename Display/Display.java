@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import Egysegek.AllEgyseg;
 import Egysegek.Egyseg;
 import Egysegek.Foldmuves;
 import Egysegek.Griff;
@@ -11,12 +10,15 @@ import Egysegek.Ijasz;
 import Jatekosok.*;
 import Varazslatok.*;
 
-
+/**
+ * Az elokesziteshez szukseges kepernyok megjeleniteseert felel.
+ */
 public class Display{
     
     static boolean err = false;
     static int balMargo = 66;
     static String margo = " ".repeat(balMargo);
+    static String kisMargo = " ".repeat(30);
     static int topMargo = 1;
     static final String top = "\n".repeat(topMargo);
     private static Scanner sc = new Scanner(System.in);
@@ -118,7 +120,8 @@ public class Display{
     
             String margo = " ".repeat(30);
             int i = 0;
-            for (var v:AllVarazslat.getAllVarazslat()) {
+            Varazslat[] varazsok = new Varazslat[]{new Villamcsapas(), new Tuzlabda(), new Feltamasztas()};
+            for (var v:varazsok) {
                 boolean isMegvan = player.getHos().vanVarazslat(v);
                 System.out.println((isMegvan? Color.GREEN:""));
                 System.out.printf("%s%d. ",margo, i+1);
@@ -141,7 +144,11 @@ public class Display{
             //msg = "A tovabblepeshez irja be hogy tovabb. (vagy csak egy t betut)\n";
             int msgMargo = balMargo- infoMsg.length()/2;
             //int errMsgMargo = balMargo - errMsg.length()/2;
-            System.out.printf("\n%s%s%s%s%sValasz: " ," ".repeat(balMargo- 3),errMsg, " ".repeat(msgMargo), infoMsg, " ".repeat(msgMargo));
+            System.out.println(margo+errMsg);
+            System.out.println(margo + infoMsg);
+            System.out.print(margo + "Valasz: ");
+            //System.out.println();
+            //System.out.printf("\n%s%s%s%s%sValasz: " ," ".repeat(balMargo- 3),errMsg, " ".repeat(msgMargo), infoMsg, " ".repeat(msgMargo));
             try{
                 String most= sc.nextLine();
                 if("q".equals(most.toLowerCase()) ||"exit".equals(most.toLowerCase()) || "quit".equals(most.toLowerCase()) ){
@@ -151,11 +158,13 @@ public class Display{
                     return 0;
                 }
                 melyik = Integer.parseInt(most)-1;
-                if (melyik >= AllVarazslat.getAllVarazslat().length || melyik < 0){
+                if (melyik >= varazsok.length || melyik < 0){
                     errMsg = Info.error(4);
                     continue;
                 }
-                errMsg = player.getHos().buyVarazslat(AllVarazslat.getAllVarazslat()[melyik]) + "\n";
+                Varazslat vett = varazsok[melyik];
+
+                errMsg = player.getHos().buyVarazslat(vett) + "\n";
             }catch (Exception e){
                 errMsg = Info.error(4);
             }
@@ -251,7 +260,7 @@ public class Display{
         String margo = " ".repeat((int)((float)balMargo*1.5));
         System.out.printf("%sArany:  %d\n", margo, player.getArany());
         if(player.getHos().getMana() > 0){
-            System.out.printf("%sMana: [%s]\n", margo, "#".repeat(Math.round(player.getHos().getMana()/10)));
+            System.out.println(margo + "Mana: " + player.getHos().getMana() + " │ " + Color.BLUE + "|".repeat(player.getHos().getMana()/2) + Color.RESET + " ".repeat((player.getHos().getMaxMana()-player.getHos().getMana())/2) + " │");
         }
         if(player.getEgysegek() != null){
             for(var e:player.getEgysegek()){

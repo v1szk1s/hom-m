@@ -1,5 +1,8 @@
 package Display;
-
+/**
+ * A csatateren a poziciok kezelesehez szukseges osztaly
+ * Koordinatakat tarol.
+ */
 public class Position {
     int y;
     int x;

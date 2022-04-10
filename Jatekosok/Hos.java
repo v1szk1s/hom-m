@@ -8,6 +8,7 @@ import java.util.Set;
 import Display.Color;
 import Display.Csatater;
 import Egysegek.Egyseg;
+import IO.IO;
 import Log.Log;
 import Varazslatok.Varazslat;
 
@@ -19,6 +20,8 @@ public class Hos {
     private int tudas;
     private int moral;
     private int szerencse;
+    private int mana;
+    private int maxMana;
     List<Varazslat> varazslatok;
     Player kie;
     private int korAmikorCsinaltValamit = -1;
@@ -32,6 +35,8 @@ public class Hos {
         szerencse =1;
         this.kie = kie;
         varazslatok = new ArrayList<>();
+        mana = tudas * 10;
+        maxMana = tudas * 10;
     }
     // public Hos(int tamadas, int vedekezes, int varazsero, int tudas, int moral, int szerencse){
     //     this.tamadas = tamadas;
@@ -86,6 +91,8 @@ public class Hos {
     private boolean incTudas(){
         if(tudas < 10){
             tudas++;
+            maxMana = tudas *10;
+            mana = tudas *10;
             return true;
         }
         return false;
@@ -115,7 +122,10 @@ public class Hos {
         return varazsero;
     }
     public int getMana(){
-        return tudas * 10;
+        return mana;
+    }
+    public int getMaxMana(){
+        return maxMana;
     }
     public int getMoral(){
         return moral;
@@ -123,11 +133,20 @@ public class Hos {
     public int getSzerencse(){
         return szerencse;
     }
+
+    public void setMana(int num){
+        mana = Math.max(0, num);
+    }
+
+    public void koltMana(int num){
+        setMana(getMana()-num);
+    }
+
     public int[] getTul(){
         return new int[]{tamadas, vedekezes, varazsero, tudas, moral, szerencse};
     }
     public String[] getTulStr(){
-        return new String[]{"Tamadas", "Vedekezes", "Varazserő", "Tudas", "Moral", "Szerencse"};
+        return new String[]{"Tamadas", "Vedekezes", "Varazsero", "Tudas", "Moral", "Szerencse"};
     }
 
     public boolean tudVarazsolni(Varazslat varazs){
@@ -145,7 +164,7 @@ public class Hos {
         if(varazslatok.contains(varazs)){
             return Color.RED + "Ezt a varazslatot mar megvetted!" + Color.WHITE;
         }
-
+        varazs.setHos(this);
         varazslatok.add(varazs);
         return "";
     }
@@ -169,7 +188,12 @@ public class Hos {
         if(varazslatok.size() == 0 ){
             return false;
         }
-        return varazslatok.contains(varazs);
+        for(var v:varazslatok){
+            if(v.getNev().equals(varazs.getNev())){
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean tudCselekedni(){
@@ -180,20 +204,19 @@ public class Hos {
         return true;
     }
 
+    public void setKorAmikorCsinaltValamit(int num){
+        this.korAmikorCsinaltValamit = num;
+    }
+
     public int tamad(Egyseg e){
         e.setEletero(e.getEletero()-(tamadas*10));
         korAmikorCsinaltValamit = Csatater.getKor();
-        Log.log(tamadas*10 + " sebzes -> " +e.getPlayer().getNev() + " " + e.getNev());
+        Log.log(kie.getNev() + " " + tamadas*10 + " sebzes okozott " +e.getPlayer().getNev() + " " + e.getNev() + " egysegere");
         return 0;
     }
-
-    public int varazsol(Varazslat varazs){
-        if(varazs.getManaCost() > getMana()){
-            return -1;
-        }
-        return 0;
+    public Player getPlayer(){
+        return kie;
     }
-
 
     public String[] getStatok() {
         return new String[]{"Tamadas: " + tamadas,
