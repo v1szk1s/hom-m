@@ -52,7 +52,7 @@
 - A hős maximális mannájának értéke megfelelően van kiszámítva a tudás tulajdonság alapján. (1 pont)
     1/1
     
-# Varázslatokkal kapcsolatos szempontok (max: 10 pont)  7/10
+# Varázslatokkal kapcsolatos szempontok (max: 10 pont)  9/10
 
 - A villámcsapás varázslat meg van valósítva: egy ellenséges egységre tudunk vele megfelelő mennyiség¶ sebzést mérni. Saját egységre nem használhatjuk. (3 pont)
     3/3
@@ -64,17 +64,18 @@
     2/2
 
 - Meg van valósítva egy negyedik varázslat típus, amelynek hatása a táblázatban lévőktől különböző. Ez a varázslat megfelelően m¶ködik. (2 pont)
+    2/2
 
 - Meg van valósítva egy ötödik varázslat típus, amelynek hatása a táblázatban lévőktől, illetve a negyedikként megvalósítottól különbözik. Ez a varázslat megfelelően m¶ködik. (1 pont)
 
-# Egységek (max: 24 pont)   15/24
+# Egységek (max: 24 pont)   21/24
 
 - A játék tartalmaz "földm¶ves" egységet a megfelelő adatokkal. Nincs speciális képessége. (2 pont)
     2/2
 - A játék tartalmaz "íjász" egységet a megfelelő adatokkal. Az íjász tud lőni, de csak akkor, ha nincs mellette ellenséges egység. (2 pont)
     2/2
 - A játék tartalmaz "gri􏰁" egységet a megfelelő adatokkal. A gri􏰁 végtelen alkalommal vissza tud támadni. (2 pont)
-
+    2/2
 - A játék tartalmaz egy negyedik egységtípust, amelynek adatai eltérnek a táblázatban lá- tottaktól, de van legalább 1 (táblázatban szereplő vagy nem szereplő) speciális képessége. (2 pont)
 
 - A játék tartalmaz egy ötödik egységtípust, amelynek adatai eltérnek a táblázatban lá- tottaktól, illetve a negyedik egységtípus adataitól. Az egységnek van legalább 1 olyan speciális képessége, amely a táblázatban nem szerepel. (1 pont)
@@ -94,19 +95,21 @@
 - Az egységek tudnak várakozni, ilyenkor az adott körből kimarad. (1 pont)
     1/1
 - A kritikus támadás meg van valósítva, melynek esélye a hős szerencse tulajdonságától függ. A kritikus támadás tényéről a játékos kap tájékoztatást. (2 pont)
+    2/2
 
 - 􏰀 Az egységek visszatámadása meg van valósítva. Csak a közelharci támadások esetén van visszatámadás. Egy körben egy egység legfeljebb egyszer tud visszatámadni, azonban több különböző körben is vissza tud támadni 1-1 alkalommal. A visszatámadás során okozott sebzés mértéke 50%-a a normál sebzésnek. A halott egységek nem támadnak vissza. (2 pont)
+    2/2
 
-# Gépi ellenféllel kapcsolatos szempontok (max: 10 pont)    2/10
+# Gépi ellenféllel kapcsolatos szempontok (max: 10 pont)    10/10
 
 - Az ellenfél hőse is végez legalább egy fajta cselekvést (támadást vagy varázslást) (2 pont) 
     2/2
 - Az ellenfél egységei is mozognak, a megadott szempontok alapján. Nem lépnek olyan mezőre, ahol másik egység van, nem mennek ki a pályáról, továbbá legfeljebb annyit mozognak, amennyi a sebesség tulajdonságuk. (2 pont)
-
+    2/2
 - Az ellenfél egységei is támadnak. A támadás a megadott képletek alapján számítódik, a megfelelő hősök támadás és védekezés tulajdonsága is gyelembe van véve. (3 pont)
-
+    3/3
 - Az ellenfél okosan viselkedik. Nem random dönt a lehetséges cselekedetek közül, hanem legalább néhány tényezőt 􏰂gyelembe vesz, ha nem túl ügyesen játszunk, képes belátható időn belül legyőzni. (3 pont)
-
+    3/3
 # Egyéb (max: 3 pont)   2/3
 
 - A győzelem le van kezelve. A játékot meg lehet nyerni, el lehet veszíteni. Ha az egyik csapat minden egysége meghal, akkor a játék véget ér. (2 pont)
@@ -140,5 +143,5 @@
 - Legalább 10 metódushoz tartoznak JUnit tesztek, amelyek az adott metódusokat legalább 3-3 inputra tesztelik. Legalább 4 metódus tesztjének tartalmaznia kell szélsőséges inputra való tesztelést is. (4 pont)
 
 
-eddig osszeszamolt: 72
+eddig osszeszamolt: 88
 04.09.

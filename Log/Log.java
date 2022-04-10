@@ -2,7 +2,10 @@ package Log;
 import java.util.LinkedList;
 
 import Display.Color;
-
+/**
+ * Rovid megis annal hasznosabb osztaly.
+ * A csatater megjelenitesi utan, a csatateren torteno dolgokat jegyzi fel, valamint adja vissz.
+ */
 public class Log {
     private static LinkedList<String> logok = new LinkedList<>();
 

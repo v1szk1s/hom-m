@@ -1,22 +1,17 @@
 package GameLogic;
-import Display.Csatater;
-import Display.Display;
+
+import Display.*;
 import Egysegek.Egyseg;
 import IO.IO;
 import Jatekosok.*;
 import Log.Log;
-import Varazslatok.Varazslat;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
-
-import Display.*;
-
+/**
+ * A jatek csata reszet kezeli, lenyegeben ez az egesz jateknak a lelke. Itt tortennek a fontos dolgok.
+ */
 public class Game {
     private Player p1;
     private Player p2;
@@ -26,44 +21,42 @@ public class Game {
         this.p1 = p1;
         this.p2 = p2;
         csatater = new Csatater(p1, p2);
+        ((Gep)p2).elhelyez();
 
     }
 
     public void play(){
-        while(true){
-            if(p1.isLost() && p2.isLost()){
-                //TODO make draw screen
-                System.out.println("dontetlen");
-                return;
-            }
-            if(p1.isLost()){
-
-                Display.gg();
-                return;
-            }
-            if(p2.isLost()){
-                //TODO make winning screen
-                System.out.println("nyertel");
-                return;
-            }
-
-            if(playKor() == false){
-                //Display.gg();
-                return;
-            }
+        while(playKor()){
+            Log.log("--------------------- Kor vege ---------------------");
         }
     }
 
     private boolean playKor(){
+        if(p1.isLost() && p2.isLost()){
+            Log.log("Vege a jateknak, dontetlen lett, a folytatashoz: press any key", true);
+            csatater.refresh();
+            Display.waitForInput();
+            Display.draw();
+            return false;
+        }
+        if(p1.isLost()){
+            Log.log("Bena vagy. Vesztettel. folytatashoz: press any key", true);
+            csatater.refresh();
+            Display.waitForInput();
+            Display.gameOver();
+            return false;
+        }
+        if(p2.isLost()){
+            Log.log("Nyertel, nem is olyan rossz. folytatashoz: press any key", true);
+            csatater.refresh();
+            Display.waitForInput();
+            Display.win();
+            return false;
+        }
         List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
         allEgyseg.clear();
-        for(var v:p1.getEgysegek()){
-            allEgyseg.add(v);
-        }
-        for(var v:p2.getEgysegek()){
-            allEgyseg.add(v);
-        }
-
+        allEgyseg.addAll(p1.getEloEgysegek());
+        allEgyseg.addAll(p2.getEloEgysegek());
         allEgyseg.sort(new EgysegComparator());
 
 
@@ -73,8 +66,19 @@ public class Game {
         for(var v:allEgyseg){
             Log.log(v.getPlayer().getNev() + ": " + v.getNev());
         }
+        
+        Log.log("Nyomj entert a folytatashoz");
+        csatater.refresh();
+        Display.waitForInput();
+
         for(var e:allEgyseg){
+            if(!e.isEl()){
+                continue;
+            }
             if(e.getPlayer() instanceof Jatekos){
+                if(e.getEletero() == 0){
+                    continue;
+                }
                 int valasz = -1;
                 while(valasz != 0){
                     valasz = chooseAction(e);
@@ -85,7 +89,6 @@ public class Game {
                 
             }else{
                 ((Gep)p2).play(csatater, e);
-
             }
         }
 
@@ -98,7 +101,7 @@ public class Game {
         int cselekves = -1;
         while(cselekves == -1){
             csatater.refresh();
-            cselekves = IO.menu("Mit szeretnel csinalni? Ezzel az egyseggel vagy: " + e.getNev(), new String[]{"Tamad", "Mozog", "Hos Tamad", "Hos Varazsol", "Varakozik"});
+            cselekves = IO.menu("Mit szeretnel csinalni? Ezzel az egyseggel vagy: " + Color.CYAN_BACKGROUND + e.getNev() + Color.RESET, new String[]{"Tamad", "Mozog", "Hos Tamad", "Hos Varazsol", "Varakozik"});
 
             switch(cselekves){
                 case -2:
@@ -113,7 +116,8 @@ public class Game {
                     return hosTamad();
                     
                 case 3:
-                    return hosVarazsol();
+                    hosVarazsol();
+                    return -1;
                     
                 case 4:
                 //varakozik
@@ -220,9 +224,11 @@ public class Game {
                 return -1;
             }
         }
-        p1.getHos().setKorAmikorCsinaltValamit(Csatater.getKor());
-        p1.getHos().getJoVarazslatok().get(valasz).varazsol(csatater);
-        return 0;
+        
+        if(p1.getHos().getJoVarazslatok().get(valasz).varazsol(csatater) == 0){
+            p1.getHos().setKorAmikorCsinaltValamit(Csatater.getKor());
+        }
+        return -1;
         //return p1.getHos().varazsol();
         
     }

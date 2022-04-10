@@ -13,13 +13,15 @@ import Jatekosok.Jatekos;
 import Varazslatok.*;
 import Log.Log;
 
-
+/**
+ * Ez a foprogramunk, igazibol itt tenyleg nincs olyan sokminen. A jetek meneteert felel.
+ */
 class Main {
 
     public static void main(String[] args) {
-        hack();  
+        //hack();  
         //debug();
-        //single();
+        single();
 
         // int mode = Display.menuFullScreen("Menu:", new String[]{"Egyjatekos", "Tobbjatekos"});
         // switch(mode){
@@ -80,8 +82,9 @@ class Main {
     }
 
     static void hack(){
-        Gep g = new Gep(2);
         Jatekos p = new Jatekos(1);
+        Gep g = new Gep(2);
+        
         p.buyEgyseg(new Foldmuves(), 100);
         p.buyEgyseg(new Ijasz(), 1);
         p.buyEgyseg(new Griff(), 2);
@@ -109,14 +112,14 @@ class Main {
     static void single(){
         int nehezseg = Display.menuFullScreen("Kerlek valassz nehezsegi fokozatot:", new String[]{"Konnyu", "Kozepes", "Nehez"});
         if(nehezseg == -1){
-            gameOver();
+            Display.gameOver();
             return;
         }
         Jatekos player = new Jatekos(nehezseg);
         if(Display.levelSystem(player) == -2){
             return;
         }
-        if(Display.varazsShop(player) == -1){
+        if(Display.varazsShop(player) == -2){
             return;
         }
         if(Display.egysegShop(player) == -2){
@@ -138,8 +141,4 @@ class Main {
 
     }
 
-    static void gameOver(){
-        Display.gg();
-
-    }
 }

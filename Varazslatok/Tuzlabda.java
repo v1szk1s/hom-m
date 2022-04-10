@@ -10,12 +10,14 @@ import GameLogic.Tavolsag;
 import IO.IO;
 import Jatekosok.Hos;
 import Log.Log;
-
+/**
+ * Csatateren minden egyseget sebez egy 3x3-as teruleten.
+ */
 public class Tuzlabda extends Varazslat{
     public Tuzlabda(){
         super("Tuzlabda", 120, 9);
     }
-    
+
     @Override
     public int varazsol(Csatater csatater) {
         if(getManaCost() > getHos().getMana()){
@@ -55,6 +57,25 @@ public class Tuzlabda extends Varazslat{
 
         return 0;
     }
+
+    public void gepVarazsol(Egyseg e){
+        getHos().koltMana(getManaCost());
+        int sebzes = getHos().getVarazsero() * getSzorzo();
+        StringBuilder builder = new StringBuilder();
+        
+        List<Egyseg> l = Tavolsag.getSzomszedok(e.getPos(), e.getPlayer(), this.getHos().getPlayer());
+        for(var v:l){
+            v.sebez(sebzes);
+            builder.append(v.getNev() + ",");
+        }
+
+        if(l.size() == 0){
+            Log.log("Hat ezzel nem talaltalt el semmit...");
+        }else{
+            Log.log(getHos().getPlayer().getNev() + ": "+ sebzes + " sebzes okozasa ezekre az egysegekre: " + builder.toString() + " egysegekre!");
+        }
+    }
+
 
 
 

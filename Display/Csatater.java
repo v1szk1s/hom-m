@@ -1,6 +1,5 @@
 package Display;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +8,8 @@ import Log.Log;
 import Egysegek.Egyseg;
 import Jatekosok.*;
 /**
- * Ez az osztaly a jatek csataterenek a megjelenitesere szolgal, metodusaival a csatateret tudjuk megjeleniteni kulonvozo modokon.
+ * Ez az osztaly a jatek csataterenek a megjelenitesere szolgal, metodusaival a csatateret tudjuk megjeleniteni kulonbozo modokon.
+ * Az egysegek elhelyezeset is ez a class vegzi.
  */
 public class Csatater {
     
@@ -45,6 +45,9 @@ public class Csatater {
             elsoSorok.add(i);
         }
         while(true){
+            if(p1.isMindenkiElhelyezve()){
+                return 0;
+            }
             showPalya(elsoSorok);
             System.out.println("Meilyik csapatodat szeretned elhelyezni? (formatum: csapat <sorszama> <pozicio szam>)");
             for(int i = 0; i < egysegek.size(); i++){
@@ -113,8 +116,7 @@ public class Csatater {
                     msg = Integer.toString(counter) + ".";
                 }
                 
-                if(p1.getHalottEgysegOnPosition(Position.convertToPos(counter)) != null){
-                    
+                if(p1.getHalottEgysegOnPosition(Position.convertToPos(counter)) != null || p2.getHalottEgysegOnPosition(Position.convertToPos(counter)) != null){
                     System.out.print("│ " + msg + " ".repeat(5-Integer.toString(counter).length()-1) + '┼');
                 }else{
                     System.out.print("│ " + msg + " ".repeat(6-Integer.toString(counter).length()-1));

@@ -8,7 +8,10 @@ import java.util.Set;
 import Display.Position;
 import Egysegek.Egyseg;
 import Jatekosok.Player;
-
+/**
+ * Erre az osztalyra vagyok a legbuszkebb. Ez az osztaly a csatateren valo tavolsagokat tudja kiszamolni.
+ * Az arra kell, hogy csak megfelelo tavolsagban levo teruletre tudjanak mozogni az egysegek.
+ */
 public class Tavolsag {
     Player p1;
     Player p2;
@@ -43,6 +46,17 @@ public class Tavolsag {
         }
 
 
+        return lista;
+    }
+    public ArrayList<Integer> getUresekInRange(Egyseg e, int tav){
+        ArrayList<Integer> lista = new ArrayList<>();
+        for(int i = 0; i < 120; i++){
+            int mostTav = getTavolsag(e, i);
+
+            if(mostTav != -1 && mostTav <= tav){
+                lista.add(i);
+            }
+        }
         return lista;
     }
     /**
@@ -120,6 +134,14 @@ public class Tavolsag {
      * @return  a ketto tavolsaga
      */
     public int getTavolsag(Egyseg e, int dest){
+        if(p1.getEgysegOnPosition(dest) != null){
+            //return getTavolsag(e, p1.getEgysegOnPosition(dest));
+            return -1;
+        }
+        if(p2.getEgysegOnPosition(dest) != null){
+            return -1;
+            //return getTavolsag(e, p2.getEgysegOnPosition(dest));
+        }
         if(e.getNumPos() == dest){
             return 0;
         }

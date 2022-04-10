@@ -1,7 +1,9 @@
 package Egysegek;
 
 import Jatekosok.Player;
-
+/**
+ * Foldmuves egyseg osztalya.
+ */
 public class Foldmuves extends Egyseg{
     public Foldmuves(){
         super("Foldmuves", 2, 3, 4, 8, false);

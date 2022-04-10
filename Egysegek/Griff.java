@@ -1,7 +1,9 @@
 package Egysegek;
 
 import Jatekosok.Player;
-
+/**
+ * Griff egyseg osztalya
+ */
 public class Griff extends Egyseg{
     public Griff(){
         super("Griff", 15, 30, 7, 15, false);
@@ -21,6 +23,7 @@ public class Griff extends Egyseg{
         }
         return false;
     }
+
     public String[] info(){
         return new String[]{nev, "ar: " + ar, "sebzes: 5-10" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
     }

@@ -22,6 +22,9 @@ public class Color {
     public static final String PURPLE_BACKGROUND = "\u001B[45m";
     public static final String CYAN_BACKGROUND = "\u001B[46m";
 
+    public static String sebzesColor(){
+        return RED;
+    }
 
     public static String blackBg(String t){
         return BLACK_BACKGROUND + t + RESET;

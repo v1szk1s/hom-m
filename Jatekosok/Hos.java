@@ -11,7 +11,10 @@ import Egysegek.Egyseg;
 import IO.IO;
 import Log.Log;
 import Varazslatok.Varazslat;
-
+/**
+ * Ez az osztaly a Player-hez tartozo host irja le.
+ * A hosnek a tulajdonsagpontjait kezeli, azoknak a szinteleset, es a hos tamadas-nak a kezeleset.
+ */
 public class Hos {
 
     private int tamadas;
@@ -164,7 +167,9 @@ public class Hos {
         if(varazslatok.contains(varazs)){
             return Color.RED + "Ezt a varazslatot mar megvetted!" + Color.WHITE;
         }
+
         varazs.setHos(this);
+        kie.koltArany(varazs.getAr());
         varazslatok.add(varazs);
         return "";
     }
@@ -211,7 +216,7 @@ public class Hos {
     public int tamad(Egyseg e){
         e.setEletero(e.getEletero()-(tamadas*10));
         korAmikorCsinaltValamit = Csatater.getKor();
-        Log.log(kie.getNev() + " " + tamadas*10 + " sebzes okozott " +e.getPlayer().getNev() + " " + e.getNev() + " egysegere");
+        Log.log(kie.getNev() + " Hos: " + Color.sebzesColor() + tamadas*10 + Color.RESET + " sebzes okozott " +e.getPlayer().getNev() + " " + e.getNev() + " egysegere");
         return 0;
     }
     public Player getPlayer(){

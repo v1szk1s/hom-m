@@ -10,7 +10,10 @@ import GameLogic.Tavolsag;
 import IO.IO;
 import Jatekosok.Hos;
 import Log.Log;
-
+/**
+ * A csatateren elo sajat egysegek gyogyitasart szolgal.
+ * 
+ */
 public class Gyogyit extends Varazslat{
     public Gyogyit(){
         super("Gyogyit", 75, 5);
@@ -22,6 +25,7 @@ public class Gyogyit extends Varazslat{
             Log.log("Nincs eleg manad!", true);
             return -1;
         }
+
         List<Egyseg> lista = getHos().getPlayer().getEgysegek();
 
         int valasz = -1;
@@ -44,6 +48,12 @@ public class Gyogyit extends Varazslat{
         return 0;
     }
 
+    public void gepVarazsol(Egyseg e){
+        e.addEletero(getHos().getVarazsero()*25);
+        getHos().koltMana(getManaCost());
+        Log.log(getHos().getPlayer().getNev() + " " + e.getNev() + "egyseg gyogyitasa (+" + getHos().getVarazsero()*25 + " hp)" );
+
+    }
 
 
 

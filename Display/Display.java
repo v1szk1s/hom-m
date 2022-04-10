@@ -1,22 +1,23 @@
 package Display;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import Egysegek.Egyseg;
-import Egysegek.Foldmuves;
-import Egysegek.Griff;
-import Egysegek.Ijasz;
-import Jatekosok.*;
+import Egysegek.*;
+import Jatekosok.Player;
+import Jatekosok.Hos;
 import Varazslatok.*;
 
 /**
  * Az elokesziteshez szukseges kepernyok megjeleniteseert felel.
+ * Valasztasi kepernyoket jelenit meg, kezeli a rossz inputokat.
+ * Igaz hogy van az IO osztaly, amibe at lehetne pakolni egy csomo mindent, ez sokkal hamarabb kesz volt, szoval marad igy.
  */
 public class Display{
     
     static boolean err = false;
-    static int balMargo = 66;
+    static int balMargo = 80;
     static String margo = " ".repeat(balMargo);
     static String kisMargo = " ".repeat(30);
     static int topMargo = 1;
@@ -45,6 +46,7 @@ public class Display{
         int melyik = -1;
         String errMsg = "";
         while (true){
+    
             clear();
             String msg = "Melyik egysegbol szeretnel venni?\n";
             System.out.println("\n".repeat(topMargo));
@@ -53,21 +55,21 @@ public class Display{
 
     
             String margo = " ".repeat(30);
-            Egyseg[] egysegek = new Egyseg[]{new Foldmuves(), new Ijasz(), new Griff()};
+            List<Egyseg> egysegek= Arrays.asList(new Foldmuves(), new Ijasz(), new Griff());
 
-            for (int i = 0; i < egysegek.length; i++) {
+            for (int i = 0; i < egysegek.size(); i++) {
                 
                 System.out.printf("%s%d. ",margo, i+1);
-                for(int j = 0; j < egysegek[i].info().length; j++){
+                for(int j = 0; j < egysegek.get(i).info().length; j++){
                     if(j == 0){      
                         margo = "";
                     }else{
                         margo = " ".repeat(30);
                     }
-                    System.out.printf("%s%s\n", margo, egysegek[i].info()[j]);
+                    System.out.printf("%s%s\n", margo, egysegek.get(i).info()[j]);
                 }
                 System.out.println(Color.RESET);
-                System.out.println(margo + "Maximum ennyit tudsz venni: " + player.maxMennyitVehet(egysegek[i]));
+                System.out.println(margo + "Maximum ennyit tudsz venni: " + player.maxMennyitVehet(egysegek.get(i)) + " db");
                 System.out.println("\n");
             }
 
@@ -92,10 +94,26 @@ public class Display{
                 }else{
                     errMsg = Info.error(6);
                 }
+
                 String[] t = input.split(" ");
-                int e = Integer.parseInt(t[0])-1;
-                int mennyi = Integer.parseInt(t[1]);
-                errMsg = player.buyEgyseg(egysegek[e], mennyi);
+                Egyseg venniValo = null;
+                try{
+                    int mennyi = Integer.parseInt(t[0]);
+                    for(var egyseg:egysegek){
+                        if(egyseg.getNev().toLowerCase().equals(t[1].toLowerCase())){
+                            venniValo = egyseg;
+                            errMsg = player.buyEgyseg(egyseg, mennyi);
+                            break;
+                        }
+                    }
+                }catch(Exception ex){}
+
+                if(venniValo == null){
+                    int e = Integer.parseInt(t[0])-1;
+                    int mennyi = Integer.parseInt(t[1]);
+                    errMsg = player.buyEgyseg(egysegek.get(e), mennyi);    
+                }
+                
                 
             }catch (Exception e){
                 errMsg = Info.error(5);
@@ -120,7 +138,7 @@ public class Display{
     
             String margo = " ".repeat(30);
             int i = 0;
-            Varazslat[] varazsok = new Varazslat[]{new Villamcsapas(), new Tuzlabda(), new Feltamasztas()};
+            Varazslat[] varazsok = new Varazslat[]{new Villamcsapas(), new Tuzlabda(), new Feltamasztas(), new Gyogyit()};
             for (var v:varazsok) {
                 boolean isMegvan = player.getHos().vanVarazslat(v);
                 System.out.println((isMegvan? Color.GREEN:""));
@@ -128,7 +146,6 @@ public class Display{
                 i++;
                 for(int j = 0; j < v.info().length; j++){
                     if(j == 0){
-                        
                         System.out.print(v.info()[j] + (isMegvan? Color.WHITE + " ".repeat(20)+ Color.GREEN_BACKGROUND + "MEGVEVE" + Color.RESET + Color.GREEN:"") + "\n");
                     }else{
                         margo = " ".repeat(30);
@@ -136,7 +153,6 @@ public class Display{
                     System.out.printf("%s%s\n", margo, v.info()[j]);
                 }
                 System.out.println(Color.RESET);
-                System.out.println("\n");
             }
 
             
@@ -285,8 +301,21 @@ public class Display{
         catch (final Exception e){}
     }
 
-    public static void gg(){
-        animate("Game over");
+    public static void gameOver(){
+        animate(new String[]{"Game", " over"});
+
+        sc.nextLine();
+    }
+
+    public static void draw(){
+        animate("That's a draw");
+    }
+
+    public static void win(){
+        animate("You won!");
+    }
+
+    public static void waitForInput(){
         sc.nextLine();
     }
 
@@ -296,10 +325,39 @@ public class Display{
             System.out.println("\n".repeat(topMargo));
             System.out.print(" ".repeat(balMargo) + text.substring(0, i));
             try{
-                Thread.sleep(100);
+                Thread.sleep(80);
             }catch(Exception e){};
             
         }
+    }
+    /**
+     * animate word by word
+     * @param text
+     */
+    private static void animate(String[] text){
+        StringBuilder builder = new StringBuilder();
+
+        for(var s:text){
+            for(int i = 0; i < s.length(); i++){
+                clear();
+                builder.append(s.charAt(i));
+                System.out.println("\n".repeat(topMargo));
+                System.out.print(" ".repeat(balMargo) + builder.toString());
+                try{
+                    Thread.sleep(80);
+                }catch(Exception e){};
+                
+            }
+            try{
+                Thread.sleep(800);
+            }catch(Exception e){};
+        }
+    }
+
+    public static void sleep(long meddig){
+        try{
+            Thread.sleep(meddig);
+        }catch(Exception e){}
     }
 }
 

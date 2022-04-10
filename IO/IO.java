@@ -7,6 +7,12 @@ import Display.Color;
 import Display.Info;
 import Varazslatok.Varazslat;
 
+
+/**
+ * Ez az osztaly a csatateren belul valo felhasznalo inputjait kezelo class file.
+ * Ez a file a display irasa  utan joval kesobb jott letre es lusta voltam athozni onnan a dolgokat.
+ * 
+ */
 public class IO {
     
     private static int margoSize = 3;

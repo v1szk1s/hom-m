@@ -3,11 +3,15 @@ package Varazslatok;
 import java.util.List;
 
 import Display.Csatater;
+import Egysegek.Egyseg;
 import IO.IO;
 import Jatekosok.Hos;
 import Jatekosok.Player;
 import Log.Log;
-
+/**
+ * A csatateren meghalt sajat egysegek feltamasztasaert szolgal.
+ * Itt van megvalositva a jatekos fele csinalt kerdesek, mivel uj varazslathoz mas dolgok kellhetnek, es igy eleg ccsak itt megcsinalni.
+ */
 public class Feltamasztas extends Varazslat{
 
     public Feltamasztas(){
@@ -64,7 +68,13 @@ public class Feltamasztas extends Varazslat{
         getHos().koltMana(getManaCost());
         Log.log(getHos().getPlayer().getHalottEgysegOnPosition(valasz) + " egyseg feltamasztasa!");
         return 0;
+    }
 
+    public void gepVarazsol(Egyseg e){
+        e.addEletero(getSzorzo()*getHos().getVarazsero());
+        
+        getHos().koltMana(getManaCost());
+        Log.log(getHos().getPlayer().getNev() + " " + e.getNev() + " egyseg feltamasztasa!");
     }
 
     public int getSzorzo() {

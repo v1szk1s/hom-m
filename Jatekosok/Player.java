@@ -10,13 +10,17 @@ import Display.Position;
 import Egysegek.*;
 import Log.Log;
 
+/**
+ * Ez az ososztalya az osszes jatekosnak.
+ * Ez az osztaly eleg sokmindent kezel, a jatekos egysegeit, varazslatait is ez az osztaly kezeli,
+ * uj egyseg vetelet is ez az osztaly kezeli.
+ */
 public class Player {
     private int arany;
     private int tulajdonsagAr;
     private Hos hos;
     private List<Egyseg> egysegek;
     String nev;
-    Player ellenfel;
 
     public Player(int szint){
         switch (szint){
@@ -36,13 +40,6 @@ public class Player {
         nev = "Player";
     }
 
-    public void setEllenfel(Player ellenfel){
-        this.ellenfel = ellenfel;
-    }
-
-    public Player getEllenfel(){
-        return ellenfel;
-    }
     public boolean isMindenkiElhelyezve(){
         for(var e:getEgysegek()){
             if(e.getPos().getY() == -1 || e.getPos().getX() == -1){
@@ -165,12 +162,8 @@ public class Player {
     }
 
     public boolean isLost(){
-        for(var egyseg:egysegek){
-            if(egyseg.getEletero() > 0){
-                return false;
-            }
-        }
-        return true;
+        
+        return getEloEgysegek().size() == 0;
     }
 
 
@@ -178,7 +171,25 @@ public class Player {
        return egysegek;
     }
 
-    
+    public List<Egyseg> getEloEgysegek(){
+        List<Egyseg> lista = new ArrayList<>();
+        for(var v:egysegek){
+            if(v.getEletero() > 0){
+                lista.add(v);
+            }
+        }
+        return lista;
+    }
+
+    public List<Egyseg> getHalottEgysegek(){
+        List<Egyseg> lista = new ArrayList<>();
+        for(var v:egysegek){
+            if(v.getEletero() == 0){
+                lista.add(v);
+            }
+        }
+        return lista;
+    }
 
     public String buyEgyseg(Egyseg egyseg, int mennyi){
         
@@ -262,6 +273,12 @@ public class Player {
     public int getArany(){
         return arany;
     }
+    public void setArany(int num){
+        arany = Math.max(0, num);
+    }
+    public void koltArany(int num){
+        setArany(getArany() - num);
+    }
 
     public int getTulajdonsagAr() {
         return tulajdonsagAr;
@@ -277,12 +294,14 @@ public class Player {
     }
 
 
-    // public boolean equals(Object o){
-    //     if(!(o instanceof Player)){
-    //         return false;
-    //     }
-    //     if(((Player)o).getNev())
-    //     return false;
-    // }
+    public boolean equals(Object o){
+        if(!(o instanceof Player)){
+            return false;
+        }
+        if(((Player)o).getNev() == nev){
+            return true;
+        }
+        return false;
+    }
     
 }

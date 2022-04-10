@@ -1,7 +1,9 @@
 package Egysegek;
 
 import Jatekosok.Player;
-
+/**
+ * Ijasz egyseg osztalya
+ */
 public class Ijasz extends Egyseg {
     public Ijasz(){
         super("Ijasz", 6, 7, 4, 9, true);
