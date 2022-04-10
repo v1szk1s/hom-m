@@ -38,7 +38,7 @@
 - Az egységek körön belüli lépési sorrendje a kezdeményezés alapján dől el, amelyek a táblázat alapján megadott relációban állnak egymással. (1 pont)
     - 1/1
 
- # Hős (max: 7 pont)
+ # Hős (max: 7 pont)    7/7
 
 - Lehetőségünk van a hőst használni valamilyen módon (támadás vagy varázslás). Egy körben legfeljebb 1 alkalommal, de azon belül bármikor tudunk vele valamilyen cselekvést végrehajtani. A hős nem foglal helyet a csatatéren és megölni sem lehet. (2 pont)
     - 2/2
@@ -47,28 +47,32 @@
     2/2
 
 - A hős legalább 1 fajta varázslatot tud használni, amelynek van valamilyen hatása az egy- ségekre. Csak akkor tudunk varázsolni, ha van elég mannánk. A mannaköltség levonódik a rendelkezésre álló mannánkból. (2 pont)
+    2/2
 
 - A hős maximális mannájának értéke megfelelően van kiszámítva a tudás tulajdonság alapján. (1 pont)
+    1/1
     
-# Varázslatokkal kapcsolatos szempontok (max: 10 pont)
+# Varázslatokkal kapcsolatos szempontok (max: 10 pont)  7/10
 
 - A villámcsapás varázslat meg van valósítva: egy ellenséges egységre tudunk vele megfelelő mennyiség¶ sebzést mérni. Saját egységre nem használhatjuk. (3 pont)
+    3/3
 
 - A tűzlabda varázslat meg van valósítva: ki tudunk jelölni egy tetszőleges területet, amely körüli 3x3-as környezetben lévő minden egységre megfelelő mennyiség¶ sebzést okozunk. (2 pont)
-
+    2/2
 
 - A feltámasztás varázslat meg van valósítva: a kiválasztott saját egység a megadott mennyiség¶ életerőt gyógyul. Ha már korábban haltak meg belőle egységek, akkor azok újraélednek, viszont az eredetinél nem lehet több az összesített életerő. (2 pont)
+    2/2
 
 - Meg van valósítva egy negyedik varázslat típus, amelynek hatása a táblázatban lévőktől különböző. Ez a varázslat megfelelően m¶ködik. (2 pont)
 
 - Meg van valósítva egy ötödik varázslat típus, amelynek hatása a táblázatban lévőktől, illetve a negyedikként megvalósítottól különbözik. Ez a varázslat megfelelően m¶ködik. (1 pont)
 
-# Egységek (max: 24 pont)
+# Egységek (max: 24 pont)   15/24
 
 - A játék tartalmaz "földm¶ves" egységet a megfelelő adatokkal. Nincs speciális képessége. (2 pont)
-
+    2/2
 - A játék tartalmaz "íjász" egységet a megfelelő adatokkal. Az íjász tud lőni, de csak akkor, ha nincs mellette ellenséges egység. (2 pont)
-
+    2/2
 - A játék tartalmaz "gri􏰁" egységet a megfelelő adatokkal. A gri􏰁 végtelen alkalommal vissza tud támadni. (2 pont)
 
 - A játék tartalmaz egy negyedik egységtípust, amelynek adatai eltérnek a táblázatban lá- tottaktól, de van legalább 1 (táblázatban szereplő vagy nem szereplő) speciális képessége. (2 pont)
@@ -84,53 +88,53 @@
     - 2/2
 
 - Az egységek meg tudnak támadni egy ellenséges egységet, ennek hatására az ellenséges egység életereje valamennyivel csökken. (1 pont)
-
+    1/1
 -  A sebzés mértéke a megadott képletek alapján számítódik, tehát 􏰂gyelembe van véve a megfelelő hősök támadás és védekezés tulajdonsága, az egység minimum és maximum sebzése. A támadás hatására megfelelő mennyiség¶ egység meghal és a maradék életerő is jól számítódik. (3 pont)
-
+    3/3
 - Az egységek tudnak várakozni, ilyenkor az adott körből kimarad. (1 pont)
-
+    1/1
 - A kritikus támadás meg van valósítva, melynek esélye a hős szerencse tulajdonságától függ. A kritikus támadás tényéről a játékos kap tájékoztatást. (2 pont)
 
 - 􏰀 Az egységek visszatámadása meg van valósítva. Csak a közelharci támadások esetén van visszatámadás. Egy körben egy egység legfeljebb egyszer tud visszatámadni, azonban több különböző körben is vissza tud támadni 1-1 alkalommal. A visszatámadás során okozott sebzés mértéke 50%-a a normál sebzésnek. A halott egységek nem támadnak vissza. (2 pont)
 
-# Gépi ellenféllel kapcsolatos szempontok (max: 10 pont)
+# Gépi ellenféllel kapcsolatos szempontok (max: 10 pont)    2/10
 
 - Az ellenfél hőse is végez legalább egy fajta cselekvést (támadást vagy varázslást) (2 pont) 
-
+    2/2
 - Az ellenfél egységei is mozognak, a megadott szempontok alapján. Nem lépnek olyan mezőre, ahol másik egység van, nem mennek ki a pályáról, továbbá legfeljebb annyit mozognak, amennyi a sebesség tulajdonságuk. (2 pont)
 
 - Az ellenfél egységei is támadnak. A támadás a megadott képletek alapján számítódik, a megfelelő hősök támadás és védekezés tulajdonsága is gyelembe van véve. (3 pont)
 
 - Az ellenfél okosan viselkedik. Nem random dönt a lehetséges cselekedetek közül, hanem legalább néhány tényezőt 􏰂gyelembe vesz, ha nem túl ügyesen játszunk, képes belátható időn belül legyőzni. (3 pont)
 
-# Egyéb (max: 3 pont)
+# Egyéb (max: 3 pont)   2/3
 
 - A győzelem le van kezelve. A játékot meg lehet nyerni, el lehet veszíteni. Ha az egyik csapat minden egysége meghal, akkor a játék véget ér. (2 pont)
 
 - A választható funkciók közül legalább 1 meg van valósítva. (1 pont)
 
-# Használhatóság (max: 10 pont)
+# Használhatóság (max: 10 pont) 10/10
 
 - A játékban nincsenek végzetes hibák. Végzetes hibának számít egy olyan nem várt ese- mény, amely a játék további futtatását megakadályozza és csak újraindítással orvosolható (pl. egy exception dobódik, ami nincs elkapva). (3 pont)
-
+    3/3
 - A játékban nincsenek súlyos hibák. Súlyos hibának számít egy olyan nem várt esemény, amely hatására a játék ugyan tovább játszható, de a hiba sokáig jelen van (pl. egy egység pályán kívülre kerül). (2 pont)
-
+    2/3
 - A játékban nincsenek apróbb hibák. Apró hibának számít egy olyan nem várt esemény, amelynek nincs jelentős hatása a játékmenetre, legfeljebb idegesítő a játékos számára (pl. bizonyos esetekben a tábla kétszer jelenik meg egymás után). (1 pont)
-
+    1/1
 - A program fel van készülve érvénytelen felhasználói inputokra. Ezek megfelelően le vannak kezelve (pl. olyan cselekvést írunk be, ami nem létezik). (1 pont)
-
+    1/1
 - A program egyszer¶en használható, könnyen irányítható (pl. az egységeket nem egyesével kell vásárolgatni), egyértelm¶ek a jelölések és a lehetséges inputok (legfeljebb a readme alapján). (3 pont)
-
-# Programkód (max: 12 pont)
+    3/3
+# Programkód (max: 12 pont)  5/12
 
 - A program tartalmaz legalább 5 különböző, értelmes osztályt, amelyek egy-egy, a játékhoz kapcsolódó entitást írnak le. (2 pont)
-
+    2/2
 - A programban szerepel legalább 2 olyan osztály, aminek van több, értelmes gyerekosztá- lya. (1 pont)
-
+    1/1
 - Az osztályok, adattagok és metódusok nevei a gyakorlaton látottak szerint vannak elne- vezve (osztályok PascalCase, adattagok és metódusok camelCase), a nevek tükrözik az osztályok, metódusok és adattagok feladatait. A program megfelelően van indentálva. (1 pont)
-
+    1/1
 - Az osztályok funkcionalitásuk alapján package-ekbe vannak rendezve. (1 pont)
-
+    1/1
 - A program JavaDoc dokumentációval el van látva. Az osztályok mindegyike meg van ma- gyarázva JavaDoc dokumentációval. Legalább két osztályban az legalább 5-5 metódushoz tartozik JavaDoc dokumentáció, amely tartalmazza a paraméterek és visszatérési érték leírását is. A HTML fájlt nem szükséges legenerálni. (3 pont)
 
 - Legalább 10 metódushoz tartoznak JUnit tesztek, amelyek az adott metódusokat legalább 3-3 inputra tesztelik. Legalább 4 metódus tesztjének tartalmaznia kell szélsőséges inputra való tesztelést is. (4 pont)
