@@ -3,6 +3,7 @@ package Varazslatok;
 import java.util.ArrayList;
 import java.util.List;
 
+import Display.Color;
 import Display.Csatater;
 import Display.Position;
 import Egysegek.Egyseg;
@@ -25,25 +26,34 @@ public class Gyogyit extends Varazslat{
             Log.log("Nincs eleg manad!", true);
             return -1;
         }
+        int gyogyithato = 0;
+        for(var v:getHos().getPlayer().getEloEgysegek()){
+            if(v.getEletero() < v.getMaxElet()){
+                gyogyithato++;
+            }
+        }
+        if(gyogyithato == 0){
+            Log.log("Mindenki teljesen egeszseges!");
+            return -1;
+        }
 
-        List<Egyseg> lista = getHos().getPlayer().getEgysegek();
+        List<Egyseg> lista = getHos().getPlayer().getEloEgysegek();
 
         int valasz = -1;
         while(valasz == -1){
-            csatater.refresh(getHos().getPlayer().getEgysegPosok());
+            csatater.refresh(getHos().getPlayer().getEloEgysegPosok());
             if(valasz == -2){
                 return -1;
             }
-            valasz = IO.menuSzamos("Mely csapatodat szeretned gyogyitani?", getHos().getPlayer().getEgysegPosok());
+            valasz = IO.menuSzamos("Mely csapatodat szeretned gyogyitani?", getHos().getPlayer().getEloEgysegPosok());
         }
         
-        StringBuilder builder = new StringBuilder();
-        List<Egyseg> l = Tavolsag.getSzomszedok(Position.convertToPos(valasz), csatater.getP1(), csatater.getP2());
-
+        //StringBuilder builder = new StringBuilder();
+       // List<Egyseg> l = Tavolsag.getSzomszedok(Position.convertToPos(valasz), csatater.getP1(), csatater.getP2());
 
         getHos().getPlayer().getEgysegOnPosition(valasz).addEletero(getHos().getVarazsero()*25);
         getHos().koltMana(getManaCost());
-        Log.log(getHos().getPlayer().getNev() + " " + getHos().getPlayer().getEgysegOnPosition(valasz) + "egyseg gyogyitasa (+" + getHos().getVarazsero()*25 + " hp)" );
+        Log.log(getHos().getPlayer().getNev() + " " + getHos().getPlayer().getEgysegOnPosition(valasz).getNev() + "egyseg gyogyitasa ("+ Color.GREEN+"+" + getHos().getVarazsero()*25 + " hp"+Color.RESET +")" );
 
         return 0;
     }

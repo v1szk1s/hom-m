@@ -159,9 +159,13 @@ public class Player {
         most.add(nev + ":");
         most.add("Mana: " + getHos().getMana() + " │" + Color.BLUE + "|".repeat(getHos().getMana()/2) + Color.RESET + " ".repeat((getHos().getMaxMana()-getHos().getMana())/2) + "│");
         for(var e:egysegek){
+            if(e.isEl() == false){
+                continue;
+            }
             int db = e.getMennyiseg();
             int hp = e.getEletero();
-            most.add(e.getNev() + " HP: │" + Color.RED + "|".repeat(Math.max(0, e.getEletero()/50-Integer.toString(hp).length()/2)) + Color.RESET+ " " + hp + " " + Color.RED +"|".repeat(Math.max(0,e.getEletero()/50-Integer.toString(hp).length()/2))  + Color.RESET + "│");
+            String minBar = hp > 0 ? Color.RED + "|" + Color.RESET:"";
+            most.add(e.getNev() + " HP: │" + minBar + Color.RED + "|".repeat(Math.max(0, e.getEletero()/70-Integer.toString(hp).length()/2)) + Color.RESET+ " " + hp + " " + Color.RED +"|".repeat(Math.max(0,e.getEletero()/70-Integer.toString(hp).length()/2)) + minBar + Color.RESET + "│");
                 //System.out.println(margo + player.getEgysegek()[i].getNev() + ":\t" + player.getEgysegek()[i].getMennyiseg());
             
         }

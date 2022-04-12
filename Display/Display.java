@@ -28,7 +28,10 @@ public class Display{
     
 
 
-
+    /**
+     * Egy adott playernek a statjait jeleniti meg, kulon kepernyon.
+     * @param p
+     */
     public static void showStatok(Player p){
         clear();
         System.out.println();

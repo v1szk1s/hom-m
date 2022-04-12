@@ -137,9 +137,11 @@ public class Game {
     private int tamad(Egyseg e){
         if(e.tudTamadni(p2) == false){
             if(e.isTavolsagi()){
-                Log.log("Nem merek tamadni, tul kozel enemy!");
+                Log.log("Nem merek tamadni, tul kozel enemy!", true);
+            }else{
+                Log.log("Nincs a kozelben senki...", true);
             }
-            Log.log("Nincs a kozelben senki...", true);
+            
             return -1;
         }
         List<Integer> hovaJo; 

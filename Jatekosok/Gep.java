@@ -53,16 +53,23 @@ public class Gep extends Player{
         if(nehezseg == 0){
             return;
         }
-        if(e.getEletero() == 0){
+        if(e.getEletero() == 0 || e.getMennyiseg() == 0 || !e.isEl()){
             return;
         }
+
         
-        Log.log(getNev() + " gondolkozik...");
-        csatater.refresh();
-        Display.sleep((long)(Math.random() * 1000 + 1000));
+        
+        // Log.log(getNev() + " gondolkozik...");
+        // csatater.refresh();
+        // //Display.sleep((long)(Math.random() * 1000 + 1000));
 
         Player ellenseg = this.equals(csatater.getP1())? csatater.getP2():csatater.getP1();
         
+        if(e instanceof Ijasz && e.tudTamadni(ellenseg) == false){
+            e.helyez(e.getSzomszedok(ellenseg).get((int)(Math.random()*e.getSzomszedok(ellenseg).size())).getNumPos());
+        }
+
+
         if(e.tudTamadni(csatater.getP1())){
             e.tamad(e.getTamadhatoEgysegek(ellenseg).get(0));
             return;
@@ -89,33 +96,43 @@ public class Gep extends Player{
         }
         
         Tavolsag tav = new Tavolsag(this, ellenseg);
-        //if()
-        List<Egyseg> kozelbenVan = tav.getEgysegInRange(e, e.getSebesseg(), 2);
+        //csatater.refresh(tav.getUresekInRange(e));
+        //Display.waitForInput();
+        List<Egyseg> kozelbenVan = tav.getEloEgysegInRange(e, ellenseg);//tav.getEloEgysegInRange(e, e.getSebesseg(), ellenseg);
+        //csatater.refresh();
         //e.move()
-        List<Integer> xd = new ArrayList<>();
+        List<Integer> hovaLephet = new ArrayList<>();
         if(kozelbenVan.size() > 0){
             for(var v:kozelbenVan.get(0).getUresMezoPosok(ellenseg)){
-                xd.add(Position.convertToSzam(v));
+                if(getEgysegOnPosition(v) == null)
+                    hovaLephet.add(Position.convertToSzam(v));
             }
-            //csatater.refresh(xd);
-            //Display.waitForInput();
+            // csatater.refresh(xd);
+            // Display.waitForInput();
         }
 
 
-        if(kozelbenVan.size() > 0 && kozelbenVan.get(0).getUresMezok(this) > 0){
-            for(var v:kozelbenVan.get(0).getUresMezoPosok(this)){
-                if(tav.getTavolsag(e, Position.convertToSzam(v)) <= e.getSebesseg()){
-                    e.helyez(v);
+        if(hovaLephet.size() > 0){
+            for(int m:hovaLephet){
+                if(tav.getTavolsag(e, m) <= e.getSebesseg()){
+                    e.helyez(m);
                     return;
                 }
             }
         }
-        List<Integer> hovaLephet = tav.getUresekInRange(e, ellenseg);
-
+        hovaLephet.clear();
+        hovaLephet = tav.getUresekInRange(e, ellenseg);
+        
         int hovaLepjen = -1;
         int legkozelebbiRange = Integer.MAX_VALUE;
         for(var i:hovaLephet){
-            for(var j:ellenseg.getEgysegek()){
+            
+            if(getEgysegOnPosition(i) != null || ellenseg.getEgysegOnPosition(i) != null){
+                continue;
+            }
+            for(var j:ellenseg.getEloEgysegek()){
+
+
                 int m = tav.getTavolsag(j, i);
                 if(m < legkozelebbiRange){
                     legkozelebbiRange = m;
@@ -123,6 +140,8 @@ public class Gep extends Player{
                 }
             }
         }
+
+
         e.helyez(Position.convertToPos(hovaLepjen));
     }
 

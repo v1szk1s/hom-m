@@ -52,7 +52,7 @@ public class Tuzlabda extends Varazslat{
         if(l.size() == 0){
             Log.log("Hat ezzel nem talaltal el semmit...");
         }else{
-            Log.log(sebzes + " sebzes okozasa ezekre az egysegekre: " + builder.toString() + " egysegekre!");
+            Log.log("Tuzlabda: " + sebzes + " sebzes okozasa ezekre az egysegekre: " + builder.toString() + " egysegekre!");
         }
 
         return 0;

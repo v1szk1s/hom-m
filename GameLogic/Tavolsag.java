@@ -28,32 +28,45 @@ public class Tavolsag {
      * @param miket ha 1 akkor friendly, 2 akkor enemy, 3 akkor minda kettot beleveszi
      * @return egysegeknek a poziciojukat numPos-kent
      */
-    public ArrayList<Egyseg> getEgysegInRange(Egyseg e, int tav, int miket){
+    // public ArrayList<Egyseg> getEgysegInRange(Egyseg e, int tav, int miket){
+    //     ArrayList<Egyseg> lista = new ArrayList<>();
+    //     if(miket == 1 || miket == 3){
+    //         for(var egyseg:p1.getEgysegek()){
+    //             if(getTavolsag(e, egyseg) <= tav){
+    //                 lista.add(egyseg);
+    //             }
+    //         }
+    //     }
+    //     if(miket == 2 || miket == 3){
+    //         for(var egyseg:p2.getEgysegek()){
+    //             if(getTavolsag(e, egyseg) <= tav){
+    //                 lista.add(egyseg);
+    //             }
+    //         }
+    //     }
+
+
+    //     return lista;
+    // }
+
+    public ArrayList<Egyseg> getEloEgysegInRange(Egyseg e, Player ellenfel){
         ArrayList<Egyseg> lista = new ArrayList<>();
-        if(miket == 1 || miket == 3){
-            for(var egyseg:p1.getEgysegek()){
-                if(getTavolsag(e, egyseg) <= tav){
-                    lista.add(egyseg);
-                }
-            }
-        }
-        if(miket == 2 || miket == 3){
-            for(var egyseg:p2.getEgysegek()){
-                if(getTavolsag(e, egyseg) <= tav){
-                    lista.add(egyseg);
-                }
+        for(var egyseg:ellenfel.getEloEgysegek()){
+            if(getTavolsag(e, egyseg) <= e.getSebesseg()){
+                lista.add(egyseg);
             }
         }
 
 
         return lista;
     }
+
     public ArrayList<Integer> getUresekInRange(Egyseg e, Player ellenseg){
         int tav = e.getSebesseg();
         ArrayList<Integer> lista = new ArrayList<>();
         
         for(int i = 0; i < 120; i++){
-            if(ellenseg.getEgysegOnPosition(i) != null){
+            if(ellenseg.getEloEgysegOnPosition(i) != null || e.getPlayer().getEloEgysegOnPosition(i) != null){
                 continue;
             }
             int mostTav = getTavolsag(e, i);
@@ -158,11 +171,13 @@ public class Tavolsag {
                 nodes[i][j] = new Node(i*12 + j);
             }
         }
+        
         for(int i = 0; i < 10; i++){
             for(int j = 0; j < 12; j++){
                 addSzomszedok(nodes, i, j,dest);
             }
         }
+        
         nodes[e.getPos().getY()][e.getPos().getX()].setDistance(0);
 
         Set<Node> nudes = new HashSet<>();
@@ -171,32 +186,35 @@ public class Tavolsag {
                 nudes.add(j);
             }
         }
-
+        
         Set<Node> unSettledNodes = new HashSet<>();
         Set<Node> settledNodes = new HashSet<>();
         unSettledNodes.add(getLowest(nudes));
-        int i = 0;
 
+        
         while(unSettledNodes.size() != 0){
             Node current = getLowest(unSettledNodes);
+            //System.out.println(current.getId() + " " + );
             //System.out.println("c: "+ (current.getId() + 1));
             unSettledNodes.remove(current);
-            // System.out.println(current);
+            
+            //System.out.println(current);
+
             for(Node n:current.getSzomszedok()){
                 
                 if(!settledNodes.contains(n)){
-                    //System.out.print(" |" + n.getId());
-                    // if(current.getSzomszedok().contains(n)){
-                    //     continue;
-                    // }
-                    n.setDistance(current.getDistance()+1);
-                    unSettledNodes.addAll(n.getSzomszedok());
-                    settledNodes.add(n);
+                    int tav = current.getDistance()+ 1;
+                    if(tav < n.getDistance()){
+                        n.setDistance(tav);
+                    }
+                    //System.out.println(n);
+                    unSettledNodes.add(n);
+                    //settledNodes.add(n);
                 }
             }
-            //System.out.println("\n"+current);
             settledNodes.add(current);
-            i++;
+            //System.out.println("\n"+current);
+            
         }
         int min = Integer.MAX_VALUE;
         
@@ -209,7 +227,13 @@ public class Tavolsag {
         return min;
     }
 
-
+    /**
+     * Egy adott 3x3-as pozicion minen egyseget visszaad
+     * @param pos   a vizsgalt pozicio
+     * @param p1    elso player
+     * @param p2    2. player
+     * @return  Az Egysegeket tartalmazo lista.
+     */
     public static List<Egyseg> getSzomszedok(Position pos, Player p1, Player p2){
         List<Egyseg> szomszedok = new ArrayList<>();
         int y = pos.getY();
@@ -308,28 +332,28 @@ public class Tavolsag {
         if(i+1 <= 9 && j+1 <= 11){
             n8 = n[i+1][j+1];
         }
-        if(n1 != null && /*((i-1) == most.getY() && (j-1) == most.getX())  || */ (p1.getEgysegOnPosition(new Position(i-1, j-1)) == null && p2.getEgysegOnPosition(new Position(i-1, j-1)) == null)){
+        if(n1 != null && /*((i-1) == most.getY() && (j-1) == most.getX())  || */ (p1.getEloEgysegOnPosition(new Position(i-1, j-1)) == null && p2.getEloEgysegOnPosition(new Position(i-1, j-1)) == null)){
             n[i][j].addSzomszed(n1);
         }
-        if(n2 != null && /* ((i-1) == most.getY() && (j) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i-1, j)) == null && p2.getEgysegOnPosition(new Position(i-1, j)) == null){
+        if(n2 != null && /* ((i-1) == most.getY() && (j) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i-1, j)) == null && p2.getEloEgysegOnPosition(new Position(i-1, j)) == null){
             n[i][j].addSzomszed(n2);
         }
-        if(n3 != null && /*((i-1) == most.getY() && (j+1) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i-1, j+1)) == null && p2.getEgysegOnPosition(new Position(i-1, j+1)) == null){
+        if(n3 != null && /*((i-1) == most.getY() && (j+1) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i-1, j+1)) == null && p2.getEloEgysegOnPosition(new Position(i-1, j+1)) == null){
             n[i][j].addSzomszed(n3);
         }
-        if(n4 != null &&  /*((i) == most.getY() && (j-1) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i, j-1)) == null && p2.getEgysegOnPosition(new Position(i, j-1)) == null){
+        if(n4 != null &&  /*((i) == most.getY() && (j-1) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i, j-1)) == null && p2.getEloEgysegOnPosition(new Position(i, j-1)) == null){
             n[i][j].addSzomszed(n4);
         }
-        if(n5 != null && /* ((i) == most.getY() && (j+1) == most.getX())  ||*/ p1.getEgysegOnPosition(new Position(i, j+1)) == null && p2.getEgysegOnPosition(new Position(i, j+1)) == null){
+        if(n5 != null && /* ((i) == most.getY() && (j+1) == most.getX())  ||*/ p1.getEloEgysegOnPosition(new Position(i, j+1)) == null && p2.getEloEgysegOnPosition(new Position(i, j+1)) == null){
             n[i][j].addSzomszed(n5);
         }
-        if(n6 != null && /* ((i+1) == most.getY() && (j) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i+1, j)) == null && p2.getEgysegOnPosition(new Position(i+1, j)) == null){
+        if(n6 != null && /* ((i+1) == most.getY() && (j) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i+1, j)) == null && p2.getEloEgysegOnPosition(new Position(i+1, j)) == null){
             n[i][j].addSzomszed(n6);
         }
-        if(n7 != null && /**((i+1) == most.getY() && (j-1) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i+1, j-1)) == null && p2.getEgysegOnPosition(new Position(i+1, j-1)) == null){
+        if(n7 != null && /**((i+1) == most.getY() && (j-1) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i+1, j-1)) == null && p2.getEloEgysegOnPosition(new Position(i+1, j-1)) == null){
             n[i][j].addSzomszed(n7);
         }
-        if(n8 != null && /**((i+1) == most.getY() && (j+1) == most.getX())  || */ p1.getEgysegOnPosition(new Position(i+1, j+1)) == null && p2.getEgysegOnPosition(new Position(i+1, j+1)) == null){
+        if(n8 != null && /**((i+1) == most.getY() && (j+1) == most.getX())  || */ p1.getEloEgysegOnPosition(new Position(i+1, j+1)) == null && p2.getEloEgysegOnPosition(new Position(i+1, j+1)) == null){
             n[i][j].addSzomszed(n8);
         }
 
@@ -352,7 +376,7 @@ public class Tavolsag {
 
 class Node{
     private int id;
-    private int dist = Integer.MAX_VALUE;
+    private int dist = Integer.MAX_VALUE-1;
     private Set<Node> szomszedok = new HashSet<>();
 
     public Set<Node> getSzomszedok(){
@@ -383,6 +407,9 @@ class Node{
     public int hashCode(){
         StringBuffer buffer = new StringBuffer();
         buffer.append(this.id);
+        for(var v:this.getSzomszedok()){
+            buffer.append(v.getId());
+        }
         //  buffer.append(getSzomszedok().iterator().next());
         return buffer.toString().hashCode();
     }
@@ -392,7 +419,8 @@ class Node{
         b.append("node " + (id+1) + " dist: " + dist );
         b.append(" somszedok: ");
         for(var v:szomszedok){
-            b.append(v.getId()+1 + ":" + v.getDistance() +", ");
+            int i = v.getDistance() == Integer.MAX_VALUE? -1:v.getDistance();
+            b.append(v.getId()+1 + " : " + v.getDistance() +", ");
         }
 
         return b.toString();

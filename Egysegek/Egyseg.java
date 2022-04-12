@@ -116,6 +116,9 @@ public abstract class Egyseg implements Veheto {
     public int getEletero() {
         return osszElet;
     }
+    public int getMaxElet(){
+        return maxElet;
+    }
     public int getSebesseg(){
         return sebesseg;
     }

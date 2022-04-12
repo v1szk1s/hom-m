@@ -40,7 +40,7 @@ public class Villamcsapas extends Varazslat{
         int sebzes = getHos().getVarazsero() * getSzorzo();
         ellenseg.getEgysegOnPosition(valasz).sebez(sebzes);
         getHos().koltMana(getManaCost());
-        Log.log(Color.RED + sebzes + " sebzes" + Color.RESET + " okozasa " + ellenseg.getNev() + " " + ellenseg.getEgysegOnPosition(valasz).getNev() + " egysegere!");
+        Log.log("Villamcsapas: " + Color.RED + sebzes + " sebzes" + Color.RESET + " okozasa " + ellenseg.getNev() + " " + ellenseg.getEgysegOnPosition(valasz).getNev() + " egysegere!");
         return 0;
 
     }

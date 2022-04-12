@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import Display.Csatater;
 import Display.Display;
 import Display.Position;
@@ -6,6 +9,7 @@ import Egysegek.Ijasz;
 import Egysegek.Foldmuves;
 import Egysegek.Griff;
 import GameLogic.Game;
+import GameLogic.Tavolsag;
 import Jatekosok.Player;
 import Jatekosok.Hos;
 import Jatekosok.Gep;
@@ -20,8 +24,8 @@ class Main {
 
     public static void main(String[] args) {
         //hack();  
-        debug();
-        //single();
+        //debug();
+        single();
 
         // int mode = Display.menuFullScreen("Menu:", new String[]{"Egyjatekos", "Tobbjatekos"});
         // switch(mode){
@@ -45,40 +49,43 @@ class Main {
         Gep g = new Gep(2);
         //p.buyEgyseg(new Ijasz(), 50);
         //p.buyEgyseg(new Griff(), 0);
-        p.buyEgyseg(new Griff(), 50);
+        p.buyEgyseg(new Foldmuves(), 50);
         p.buyEgyseg(new Ijasz(), 50);
+        p.buyEgyseg(new Griff(), 40);
+        
 
-        p.elhelyez(p.getEgysegek().get(0), 53);
-        p.elhelyez(p.getEgysegek().get(1), 54);
+        p.elhelyez(p.getEgysegek().get(0), 1);
+        p.elhelyez(p.getEgysegek().get(1), 2);
+        p.elhelyez(p.getEgysegek().get(2), 14);
         //p.elhelyez(p.getEgysegek().get(1), 54);
         //p.getEgysegek().get(1).sebez(999);
         // p.elhelyez(p.getEgysegek().get(1), 38);
         // p.elhelyez(p.getEgysegek().get(2), 50);
         //p.getHos().buyVarazslat(new Villamcsapas());
         //p.getHos().buyVarazslat(new Tuzlabda());
-        p.getHos().buyVarazslat(new Gyogyit());
-        g.elhelyez();
+        //p.getHos().buyVarazslat(new Gyogyit());
+        //g.elhelyez();
+        g.elhelyez(g.getEgysegek().get(2), 72);
+        Csatater cs = new Csatater(p, g);
+        Tavolsag tav = new Tavolsag(p, g);
+        
+
+        
+        List<Integer> most = new ArrayList<>();
+        System.out.println(tav.getTavolsag(p.getEgysegek().get(0), g.getEgysegek().get(2)));
+        for(var v:p.getEgysegek().get(0).getUresMezoPosok(p)){
+            //System.out.println();
+            most.add(Position.convertToSzam(v));
+        }
+        cs.refresh(most);
         Game game = new Game(p, g);
         
-        game.play();
-        // for(var v:p.getEgysegek()){
-        //     System.out.println(v.getEletero());
-        // }
-        // p.getEgysegek().get(1).addEletero(1);
-        // for(var v:p.getEgysegek()){
-        //     System.out.println(v.getEletero());
-        //}
-        // for(var v:p.getEgysegPosok()){
-        //     System.out.println(v);
-        // }
-        // Csatater cs = new Csatater(p, g);
-        // cs.refresh();
-        // p.getEgysegek().get(0).tamad(g.getEgysegek().get(0));
-
-        //System.out.println(p.getEgysegOnPosition(Position.convertToPos(54)));
-        //System.out.println(p.getHos().getVarazslatok().get(0).getHos().hashCode());
-        //p.getHos().getVarazslatok().get(0).varazsol(csatater);
         
+        //Tavolsag tav = new Tavolsag(p, g);
+        //cs.refresh(tav.getPosInRange(p.getEgysegek().get(0)));
+        //System.out.println(tav.getTavolsag(p.getEgysegek().get(0), 38));
+        game.play();
+
 
 
     }

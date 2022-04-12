@@ -125,10 +125,10 @@ public class Csatater {
 
                 if(j == 11){
                     System.out.print("│");
-                    System.out.print(margo + (i == 0?p1.getInfo(1) /*+ p1.getInfo(2)*/:"") + (i == 1?p1.getInfo(9)/* + p1.getInfo(10)*/:""));   //pinfo
+                    System.out.print(margo + (i == 0?p1.getInfo(1):"") + (i == 1?p1.getInfo(5)/* + p1.getInfo(10)*/:""));   //pinfo
 
                    
-                    System.out.print((i == 3?p2.getInfo(0):""));// + p2.getInfo(1):"") + (i == 3?p2.getInfo(8) + "\t" + p2.getInfo(9):""));
+                    System.out.print((i == 3?p2.getInfo(0):"") + (i == 4?p2.getInfo(4):""));// + p2.getInfo(1):"") + (i == 3?p2.getInfo(8) + "\t" + p2.getInfo(9):""));
                     
                     System.out.print((i == 9?Log.get(3):"") + (i == 8?Log.get(7):"") + (i == 7?Log.get(11):""));
                     System.out.println();
@@ -161,7 +161,7 @@ public class Csatater {
             System.out.print((i == 9?Log.get(2):"") + (i == 8?Log.get(6):"") + (i == 7?Log.get(10):""));
             System.out.print((i == 0?p1.getInfo(2):""));// + p1.getInfo(4):"") + (i == 1?p1.getInfo(11) + "\t" + p1.getInfo(12):""));
             
-                System.out.print((i == 3?p2.getInfo(2):""));// + p2.getInfo(3):"") + (i == 4?p2.getInfo(9) + p2.getInfo(10):""));
+                System.out.print((i == 3?p2.getInfo(1):""));// + p2.getInfo(3):"") + (i == 4?p2.getInfo(9) + p2.getInfo(10):""));
             
             System.out.println();
 
@@ -186,7 +186,7 @@ public class Csatater {
 
             System.out.print((i == 0?p1.getInfo(3) + "\t" + p1.getInfo(6):""));
            
-                System.out.print((i == 3?p2.getInfo(3):""));// + "\t" + p2.getInfo(5):"") + (i == 4?p2.getInfo(11) + "\t" + p2.getInfo(12):""));
+                System.out.print((i == 3?p2.getInfo(2):""));// + "\t" + p2.getInfo(5):"") + (i == 4?p2.getInfo(11) + "\t" + p2.getInfo(12):""));
             
             System.out.print((i == 9?Log.get(1):"") + (i == 8?Log.get(5):"") + (i == 7?Log.get(9):""));
             System.out.println();
@@ -196,7 +196,7 @@ public class Csatater {
                 System.out.print(margo + (i == 8?Log.get(4):"") + (i == 7?Log.get(8):""));
                 System.out.print((i == 0?p1.getInfo(4):""));// + "\t" + p1.getInfo(8):""));
                 
-                    System.out.print((i == 3?p2.getInfo(4):""));// + "\t" + p2.getInfo(7):"") + (i == 4?p2.getInfo(13) + "\t" + p2.getInfo(14):""));
+                    System.out.print((i == 3?p2.getInfo(3):""));// + "\t" + p2.getInfo(7):"") + (i == 4?p2.getInfo(13) + "\t" + p2.getInfo(14):""));
                 
                 System.out.println();
             }
