@@ -108,7 +108,7 @@ public class Player {
         return null;
     }
 
-    public Egyseg getEgysegOnPosition(int num){
+    public Egyseg getEloEgysegOnPosition(int num){
         Position pos = Position.convertToPos(num);
         for(var e: egysegek){
             if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
@@ -117,10 +117,37 @@ public class Player {
         }
         return null;
     }
+    public Egyseg getEloEgysegOnPosition(Position pos){
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
+                return e;
+            }
+        }
+        return null;
+    }
+    public Egyseg getEloEgysegOnPosition(int y, int x){
+        Position pos = new Position(y, x);
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
+                return e;
+            }
+        }
+        return null;
+    }
+
+    public Egyseg getEgysegOnPosition(int num){
+        Position pos = Position.convertToPos(num);
+        for(var e: egysegek){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
+                return e;
+            }
+        }
+        return null;
+    }
     public Egyseg getEgysegOnPosition(int y, int x){
         Position pos = Position.convertToPos(y,x);
         for(var e: egysegek){
-            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX() && e.getEletero() > 0){
+            if(e.getPos().getY() == pos.getY() && e.getPos().getX() == pos.getX()){
                 return e;
             }
         }
@@ -130,35 +157,30 @@ public class Player {
     public String getInfo(int hanyadik){
         ArrayList<String> most = new ArrayList<>();
         most.add(nev + ":");
-        most.add("");
-        most.add("Mana: " + getHos().getMana() + " │ " + Color.BLUE + "|".repeat(getHos().getMana()/2) + Color.RESET + " ".repeat((getHos().getMaxMana()-getHos().getMana())/2) + " │");
-        most.add("");
+        most.add("Mana: " + getHos().getMana() + " │" + Color.BLUE + "|".repeat(getHos().getMana()/2) + Color.RESET + " ".repeat((getHos().getMaxMana()-getHos().getMana())/2) + "│");
         for(var e:egysegek){
             int db = e.getMennyiseg();
             int hp = e.getEletero();
-            most.add(e.getNev() + ": \t" + db + " db\t" + hp + " hp");
+            most.add(e.getNev() + " HP: │" + Color.RED + "|".repeat(Math.max(0, e.getEletero()/50-Integer.toString(hp).length()/2)) + Color.RESET+ " " + hp + " " + Color.RED +"|".repeat(Math.max(0,e.getEletero()/50-Integer.toString(hp).length()/2))  + Color.RESET + "│");
                 //System.out.println(margo + player.getEgysegek()[i].getNev() + ":\t" + player.getEgysegek()[i].getMennyiseg());
             
         }
-        most.add("");
-        most.add("");
-        most.add("Varazslatok: ");
-        most.add("");
+        StringBuilder builder = new StringBuilder();
+        builder.append("Varazslatok: ");
+        
         int i = 0;
         if(getHos().getVarazslatok().size() > 0){
+            builder.append(getHos().getVarazslatok().get(0).getNev());
             for(var v:getHos().getVarazslatok()){
-                most.add(v.getNev());
-                i++;
+                if(i==0){
+                    i++;
+                    continue;
+                }
+                builder.append(", " + v.getNev());
             }
         }
-
-        if(i == 0){
-            most.add("-");
-        }
-        try{
-            return most.get(hanyadik);
-        }catch(Exception e){}
-        return "";
+        most.add(builder.toString());
+        return hanyadik< most.size()? most.get(hanyadik):"";
     }
 
     public boolean isLost(){

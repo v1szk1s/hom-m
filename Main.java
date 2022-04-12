@@ -20,8 +20,8 @@ class Main {
 
     public static void main(String[] args) {
         //hack();  
-        //debug();
-        single();
+        debug();
+        //single();
 
         // int mode = Display.menuFullScreen("Menu:", new String[]{"Egyjatekos", "Tobbjatekos"});
         // switch(mode){
@@ -43,29 +43,31 @@ class Main {
         Jatekos p = new Jatekos(1);
         p.setNev("xd");
         Gep g = new Gep(2);
-        p.buyEgyseg(new Ijasz(), 50);
+        //p.buyEgyseg(new Ijasz(), 50);
         //p.buyEgyseg(new Griff(), 0);
-        p.buyEgyseg(new Griff(), 10);
+        p.buyEgyseg(new Griff(), 50);
+        p.buyEgyseg(new Ijasz(), 50);
 
         p.elhelyez(p.getEgysegek().get(0), 53);
         p.elhelyez(p.getEgysegek().get(1), 54);
-        p.getEgysegek().get(1).sebez(999);
+        //p.elhelyez(p.getEgysegek().get(1), 54);
+        //p.getEgysegek().get(1).sebez(999);
         // p.elhelyez(p.getEgysegek().get(1), 38);
         // p.elhelyez(p.getEgysegek().get(2), 50);
-        p.getHos().buyVarazslat(new Villamcsapas());
-        p.getHos().buyVarazslat(new Tuzlabda());
-        p.getHos().buyVarazslat(new Feltamasztas());
+        //p.getHos().buyVarazslat(new Villamcsapas());
+        //p.getHos().buyVarazslat(new Tuzlabda());
+        p.getHos().buyVarazslat(new Gyogyit());
         g.elhelyez();
         Game game = new Game(p, g);
         
-        //game.play();
-        for(var v:p.getEgysegek()){
-            System.out.println(v.getEletero());
-        }
-        p.getEgysegek().get(1).addEletero(1);
-        for(var v:p.getEgysegek()){
-            System.out.println(v.getEletero());
-        }
+        game.play();
+        // for(var v:p.getEgysegek()){
+        //     System.out.println(v.getEletero());
+        // }
+        // p.getEgysegek().get(1).addEletero(1);
+        // for(var v:p.getEgysegek()){
+        //     System.out.println(v.getEletero());
+        //}
         // for(var v:p.getEgysegPosok()){
         //     System.out.println(v);
         // }
@@ -127,7 +129,11 @@ class Main {
         }
         Gep ellenfel = new Gep(nehezseg);
         Csatater csatater = new Csatater(player, ellenfel);
-        csatater.elhelyez();
+        if(csatater.elhelyez() == -2){
+            return;
+        }
+        Display.showStatok(ellenfel);
+        Display.waitForInput();
         Game game = new Game(player, ellenfel);
         game.play();
         //Display.showStatok(g);

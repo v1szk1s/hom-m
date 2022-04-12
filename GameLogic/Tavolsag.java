@@ -48,9 +48,14 @@ public class Tavolsag {
 
         return lista;
     }
-    public ArrayList<Integer> getUresekInRange(Egyseg e, int tav){
+    public ArrayList<Integer> getUresekInRange(Egyseg e, Player ellenseg){
+        int tav = e.getSebesseg();
         ArrayList<Integer> lista = new ArrayList<>();
+        
         for(int i = 0; i < 120; i++){
+            if(ellenseg.getEgysegOnPosition(i) != null){
+                continue;
+            }
             int mostTav = getTavolsag(e, i);
 
             if(mostTav != -1 && mostTav <= tav){
@@ -69,7 +74,7 @@ public class Tavolsag {
         int maxTav = e.getSebesseg();
         //System.out.println(maxTav);
         for(int i = 0; i < 120; i++){
-            if(p1.getEgysegOnPosition(i+1) == null && p2.getEgysegOnPosition(i+1) == null){
+            if(p1.getEloEgysegOnPosition(i+1) == null && p2.getEloEgysegOnPosition(i+1) == null){
                 if(getTavolsag(e, i+1) <= maxTav){
                     jok.add(i+1);
                 } 
@@ -210,60 +215,60 @@ public class Tavolsag {
         int y = pos.getY();
         int x = pos.getX();
 
-        if(p1.getEgysegOnPosition(y, x) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y, x));
+        if(p1.getEloEgysegOnPosition(y, x) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y, x));
         }
-        if(y-1 >= 0 && x-1 >= 0 &&  p1.getEgysegOnPosition(y-1, x-1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y-1, x-1));
+        if(y-1 >= 0 && x-1 >= 0 &&  p1.getEloEgysegOnPosition(y-1, x-1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y-1, x-1));
         }
-        if(y-1 >= 0 &&  p1.getEgysegOnPosition(y-1, x) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y-1, x));
+        if(y-1 >= 0 &&  p1.getEloEgysegOnPosition(y-1, x) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y-1, x));
         }
-        if(y-1 >= 0 && x+1 <= 11 && p1.getEgysegOnPosition(y-1, x+1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y-1, x+1));
+        if(y-1 >= 0 && x+1 <= 11 && p1.getEloEgysegOnPosition(y-1, x+1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y-1, x+1));
         }
-        if(x-1 >= 0 &&  p1.getEgysegOnPosition(y, x-1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y, x-1));
+        if(x-1 >= 0 &&  p1.getEloEgysegOnPosition(y, x-1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y, x-1));
         }
-        if(x+1 <= 11 &&  p1.getEgysegOnPosition(y, x+1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y, x+1));
+        if(x+1 <= 11 &&  p1.getEloEgysegOnPosition(y, x+1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y, x+1));
         }
-        if(y+1 <= 9 &&  p1.getEgysegOnPosition(y+1, x) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y+1, x));
+        if(y+1 <= 9 &&  p1.getEloEgysegOnPosition(y+1, x) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y+1, x));
         }
-        if(y+1 <= 9 && x-1 >= 0  && p1.getEgysegOnPosition(y+1, x-1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y+1, x-1));
+        if(y+1 <= 9 && x-1 >= 0  && p1.getEloEgysegOnPosition(y+1, x-1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y+1, x-1));
         }
-        if(y+1 <= 9 && x+1 <= 11 && p1.getEgysegOnPosition(y+1, x+1) != null){
-            szomszedok.add(p1.getEgysegOnPosition(y+1, x+1));
+        if(y+1 <= 9 && x+1 <= 11 && p1.getEloEgysegOnPosition(y+1, x+1) != null){
+            szomszedok.add(p1.getEloEgysegOnPosition(y+1, x+1));
         }
         if(p2 != null){
-            if(p2.getEgysegOnPosition(y, x) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y, x));
+            if(p2.getEloEgysegOnPosition(y, x) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y, x));
             }
-            if(y-1 >= 0 && x-1 >= 0 &&  p2.getEgysegOnPosition(y-1, x-1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y-1, x-1));
+            if(y-1 >= 0 && x-1 >= 0 &&  p2.getEloEgysegOnPosition(y-1, x-1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y-1, x-1));
             }
-            if(y-1 >= 0 &&  p2.getEgysegOnPosition(y-1, x) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y-1, x));
+            if(y-1 >= 0 &&  p2.getEloEgysegOnPosition(y-1, x) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y-1, x));
             }
-            if(y-1 >= 0 && x+1 <= 11 && p2.getEgysegOnPosition(y-1, x+1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y-1, x+1));
+            if(y-1 >= 0 && x+1 <= 11 && p2.getEloEgysegOnPosition(y-1, x+1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y-1, x+1));
             }
-            if(x-1 >= 0 &&  p2.getEgysegOnPosition(y, x-1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y, x-1));
+            if(x-1 >= 0 &&  p2.getEloEgysegOnPosition(y, x-1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y, x-1));
             }
-            if(x+1 <= 11 &&  p2.getEgysegOnPosition(y, x+1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y, x+1));
+            if(x+1 <= 11 &&  p2.getEloEgysegOnPosition(y, x+1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y, x+1));
             }
-            if(y+1 <= 9 &&  p2.getEgysegOnPosition(y+1, x) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y+1, x));
+            if(y+1 <= 9 &&  p2.getEloEgysegOnPosition(y+1, x) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y+1, x));
             }
-            if(y+1 <= 9 && x-1 >= 0  && p2.getEgysegOnPosition(y+1, x-1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y+1, x-1));
+            if(y+1 <= 9 && x-1 >= 0  && p2.getEloEgysegOnPosition(y+1, x-1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y+1, x-1));
             }
-            if(y+1 <= 9 && x+1 <= 11 && p2.getEgysegOnPosition(y+1, x+1) != null){
-                szomszedok.add(p2.getEgysegOnPosition(y+1, x+1));
+            if(y+1 <= 9 && x+1 <= 11 && p2.getEloEgysegOnPosition(y+1, x+1) != null){
+                szomszedok.add(p2.getEloEgysegOnPosition(y+1, x+1));
             }
         }
         

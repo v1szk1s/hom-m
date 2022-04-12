@@ -64,7 +64,7 @@ public class Gep extends Player{
         Player ellenseg = this.equals(csatater.getP1())? csatater.getP2():csatater.getP1();
         
         if(e.tudTamadni(csatater.getP1())){
-            e.tamad(e.getTamadhatoEgysegek(csatater, this).get(0));
+            e.tamad(e.getTamadhatoEgysegek(ellenseg).get(0));
             return;
         }
         if(getHos().tudCselekedni()){
@@ -87,20 +87,31 @@ public class Gep extends Player{
             }
 
         }
-
-        Tavolsag tav = new Tavolsag(csatater.getP1(), csatater.getP2());
+        
+        Tavolsag tav = new Tavolsag(this, ellenseg);
         //if()
         List<Egyseg> kozelbenVan = tav.getEgysegInRange(e, e.getSebesseg(), 2);
         //e.move()
-        if(kozelbenVan.size() > 0 && kozelbenVan.get(0).getUresMezok(ellenseg) > 0){
+        List<Integer> xd = new ArrayList<>();
+        if(kozelbenVan.size() > 0){
             for(var v:kozelbenVan.get(0).getUresMezoPosok(ellenseg)){
+                xd.add(Position.convertToSzam(v));
+            }
+            //csatater.refresh(xd);
+            //Display.waitForInput();
+        }
+
+
+        if(kozelbenVan.size() > 0 && kozelbenVan.get(0).getUresMezok(this) > 0){
+            for(var v:kozelbenVan.get(0).getUresMezoPosok(this)){
                 if(tav.getTavolsag(e, Position.convertToSzam(v)) <= e.getSebesseg()){
-                    e.setPos(v);
+                    e.helyez(v);
                     return;
                 }
             }
         }
-        List<Integer> hovaLephet = tav.getUresekInRange(e, e.getSebesseg());
+        List<Integer> hovaLephet = tav.getUresekInRange(e, ellenseg);
+
         int hovaLepjen = -1;
         int legkozelebbiRange = Integer.MAX_VALUE;
         for(var i:hovaLephet){
@@ -112,7 +123,7 @@ public class Gep extends Player{
                 }
             }
         }
-        e.setPos(Position.convertToPos(hovaLepjen));
+        e.helyez(Position.convertToPos(hovaLepjen));
     }
 
 

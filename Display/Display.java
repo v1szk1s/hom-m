@@ -40,6 +40,7 @@ public class Display{
         for(var v:p.getHos().getVarazslatok()){
             System.out.println(margo + "\t- " + v.getNev());
         }
+        System.out.println("\n" + margo + "Folytatashoz nyomj enter!");
     }
 
     public static int egysegShop(Player player){
@@ -48,25 +49,24 @@ public class Display{
         while (true){
     
             clear();
+            printHeader(player);
             String msg = "Melyik egysegbol szeretnel venni?\n";
             System.out.println("\n".repeat(topMargo));
             System.out.printf("%s%s\n", " ".repeat(balMargo-(msg.length()/2)), msg);
-            printHeader(player);
-
     
-            String margo = " ".repeat(30);
+            //String margo = " ".repeat(30);
             List<Egyseg> egysegek= Arrays.asList(new Foldmuves(), new Ijasz(), new Griff());
 
             for (int i = 0; i < egysegek.size(); i++) {
                 
-                System.out.printf("%s%d. ",margo, i+1);
+                System.out.printf(margo + (i+1) + ". ");
                 for(int j = 0; j < egysegek.get(i).info().length; j++){
                     if(j == 0){      
-                        margo = "";
+                        System.out.println(egysegek.get(i).info()[j]);
                     }else{
-                        margo = " ".repeat(30);
+                        System.out.println(margo + egysegek.get(i).info()[j]);
                     }
-                    System.out.printf("%s%s\n", margo, egysegek.get(i).info()[j]);
+                    
                 }
                 System.out.println(Color.RESET);
                 System.out.println(margo + "Maximum ennyit tudsz venni: " + player.maxMennyitVehet(egysegek.get(i)) + " db");
@@ -128,11 +128,12 @@ public class Display{
         String errMsg = "";
         while (true){
             clear();
+            printHeader(player);
             String msg = "Melyik varázslatot szeretnéd megvenni?\n";
             System.out.println("\n".repeat(topMargo));
             System.out.printf("%s%s\n", " ".repeat(balMargo-(msg.length()/2)), msg);
 
-            printHeader(player);
+            
 
             
     
@@ -230,11 +231,12 @@ public class Display{
         while (true){
             
             clear();
+            printHeader(player);
             String msg = "Melyik tulajdonsagot szeretned fejleszteni?\n";
             System.out.println("\n".repeat(topMargo));
             System.out.printf("%s%s\n", " ".repeat(balMargo-(msg.length()/2)), msg);
 
-            printHeader(player);
+
             String tulAr = String.format("%sTulajdonsag ar: %d\n", " ".repeat(balMargo-27), player.getTulajdonsagAr());
             System.out.printf("%s%s\n", tulAr, " ".repeat(balMargo - (tulAr.length()/2)));
             for (int i = 0; i < hos.getTulStr().length; i++) {
@@ -273,16 +275,23 @@ public class Display{
     }
 
     public static void printHeader(Player player){
+        System.out.println();
         String margo = " ".repeat((int)((float)balMargo*1.5));
         System.out.printf("%sArany:  %d\n", margo, player.getArany());
         if(player.getHos().getMana() > 0){
-            System.out.println(margo + "Mana: " + player.getHos().getMana() + " │ " + Color.BLUE + "|".repeat(player.getHos().getMana()/2) + Color.RESET + " ".repeat((player.getHos().getMaxMana()-player.getHos().getMana())/2) + " │");
+            System.out.println(margo + "Mana: " + player.getHos().getMana() + " │" + Color.BLUE + "|".repeat(player.getHos().getMana()/2) + Color.RESET + " ".repeat((player.getHos().getMaxMana()-player.getHos().getMana())/2) + "│");
         }
-        if(player.getEgysegek() != null){
+        //int maxEgysegSzam = 5;
+        if(player.getEgysegek().size() > 0){
             for(var e:player.getEgysegek()){
                 System.out.println(margo + e.getNev() + ":\t" + e.getMennyiseg());
+                //System.out.println("\n".repeat(maxEgysegSzam-player.getEgysegek().size()));
             }
+        }else{
+            //System.out.println("\n".repeat(maxEgysegSzam-player.getEgysegSzam()));
         }
+        
+        
 
     }
 
@@ -303,16 +312,17 @@ public class Display{
 
     public static void gameOver(){
         animate(new String[]{"Game", " over"});
-
-        sc.nextLine();
+        Display.waitForInput();
     }
 
     public static void draw(){
         animate("That's a draw");
+        Display.waitForInput();
     }
 
     public static void win(){
         animate("You won!");
+        Display.waitForInput();
     }
 
     public static void waitForInput(){

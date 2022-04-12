@@ -46,6 +46,7 @@ public class Csatater {
         }
         while(true){
             if(p1.isMindenkiElhelyezve()){
+
                 return 0;
             }
             showPalya(elsoSorok);
@@ -63,7 +64,7 @@ public class Csatater {
                 String[] t = most.split(" ");
 
                 if("q".equals(t[0].toLowerCase()) ||"exit".equals(t[0].toLowerCase()) || "quit".equals(t[0].toLowerCase()) ){
-                    return 1;
+                    return -2;
                 }else if( ("t".equals(most.toLowerCase()) || "tovabb".equals(t[0].toLowerCase()) || "n".equals(t[0].toLowerCase())) &&  !p1.isMindenkiElhelyezve()){
                     errMsg = Info.error("Nincs mindenki elhelyezve!");
                 }else if("t".equals(most.toLowerCase()) || "tovabb".equals(t[0].toLowerCase()) || "n".equals(t[0].toLowerCase())){
@@ -124,7 +125,7 @@ public class Csatater {
 
                 if(j == 11){
                     System.out.print("│");
-                    System.out.print(margo + (i == 0?p1.getInfo(1) + p1.getInfo(2):"") + (i == 1?p1.getInfo(9) + p1.getInfo(10):""));   //pinfo
+                    System.out.print(margo + (i == 0?p1.getInfo(1) /*+ p1.getInfo(2)*/:"") + (i == 1?p1.getInfo(9)/* + p1.getInfo(10)*/:""));   //pinfo
 
                    
                     System.out.print((i == 3?p2.getInfo(0):""));// + p2.getInfo(1):"") + (i == 3?p2.getInfo(8) + "\t" + p2.getInfo(9):""));
@@ -158,9 +159,9 @@ public class Csatater {
             
             //System.out.print("│" + margo);
             System.out.print((i == 9?Log.get(2):"") + (i == 8?Log.get(6):"") + (i == 7?Log.get(10):""));
-            System.out.print((i == 0?p1.getInfo(3) + p1.getInfo(4):"") + (i == 1?p1.getInfo(11) + "\t" + p1.getInfo(12):""));
+            System.out.print((i == 0?p1.getInfo(2):""));// + p1.getInfo(4):"") + (i == 1?p1.getInfo(11) + "\t" + p1.getInfo(12):""));
             
-                System.out.print((i == 3?p2.getInfo(2) + p2.getInfo(3):"") + (i == 4?p2.getInfo(9) + p2.getInfo(10):""));
+                System.out.print((i == 3?p2.getInfo(2):""));// + p2.getInfo(3):"") + (i == 4?p2.getInfo(9) + p2.getInfo(10):""));
             
             System.out.println();
 
@@ -183,9 +184,9 @@ public class Csatater {
                 }
             }
 
-            System.out.print((i == 0?p1.getInfo(5) + "\t" + p1.getInfo(6):""));
+            System.out.print((i == 0?p1.getInfo(3) + "\t" + p1.getInfo(6):""));
            
-                System.out.print((i == 3?p2.getInfo(4) + "\t" + p2.getInfo(5):"") + (i == 4?p2.getInfo(11) + "\t" + p2.getInfo(12):""));
+                System.out.print((i == 3?p2.getInfo(3):""));// + "\t" + p2.getInfo(5):"") + (i == 4?p2.getInfo(11) + "\t" + p2.getInfo(12):""));
             
             System.out.print((i == 9?Log.get(1):"") + (i == 8?Log.get(5):"") + (i == 7?Log.get(9):""));
             System.out.println();
@@ -193,9 +194,9 @@ public class Csatater {
                 System.out.print(elvalaszto);
 
                 System.out.print(margo + (i == 8?Log.get(4):"") + (i == 7?Log.get(8):""));
-                System.out.print((i == 0?p1.getInfo(7) + "\t" + p1.getInfo(8):""));
+                System.out.print((i == 0?p1.getInfo(4):""));// + "\t" + p1.getInfo(8):""));
                 
-                    System.out.print((i == 3?p2.getInfo(6) + "\t" + p2.getInfo(7):"") + (i == 4?p2.getInfo(13) + "\t" + p2.getInfo(14):""));
+                    System.out.print((i == 3?p2.getInfo(4):""));// + "\t" + p2.getInfo(7):"") + (i == 4?p2.getInfo(13) + "\t" + p2.getInfo(14):""));
                 
                 System.out.println();
             }

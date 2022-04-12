@@ -1,5 +1,6 @@
 package Egysegek;
 
+import Display.Color;
 import Jatekosok.Player;
 /**
  * Foldmuves egyseg osztalya.
@@ -29,6 +30,6 @@ public class Foldmuves extends Egyseg{
 
     public String[] info(){
 
-        return new String[]{nev, "ar: " + ar, "sebzes: 1-1" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
+        return new String[]{ Color.BOLD + Color.BROWN + nev + Color.RESET , "ar: " + ar, "sebzes: 1-1" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
     }
 }

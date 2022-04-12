@@ -1,5 +1,6 @@
 package Egysegek;
 
+import Display.Color;
 import Jatekosok.Player;
 /**
  * Ijasz egyseg osztalya
@@ -27,7 +28,7 @@ public class Ijasz extends Egyseg {
 
     public String[] info(){
 
-        return new String[]{nev, "ar: " + ar, "sebzes: 2-4" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
+        return new String[]{Color.BOLD + Color.BRIGHT_BLUE +  nev + Color.RESET, "ar: " + ar, "sebzes: 2-4" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
     }
 
 }

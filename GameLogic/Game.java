@@ -27,32 +27,34 @@ public class Game {
 
     public void play(){
         while(playKor()){
+            if(p1.isLost() && p2.isLost()){
+                Log.log("Vege a jateknak, dontetlen lett, a folytatashoz: press any key", true);
+                csatater.refresh();
+                Display.waitForInput();
+                Display.draw();
+                return;
+            }
+            if(p1.isLost()){
+                Log.log("Bena vagy. Vesztettel. folytatashoz: press any key", true);
+                csatater.refresh();
+                Display.waitForInput();
+                Display.gameOver();
+                return;
+            }
+            if(p2.isLost()){
+                Log.log("Nyertel, nem is olyan rossz. folytatashoz: press any key", true);
+                csatater.refresh();
+                Display.waitForInput();
+                Display.win();
+                return;
+            }
             Log.log("--------------------- Kor vege ---------------------");
+            Log.log("Nyomj entert a folytatashoz");
         }
     }
 
     private boolean playKor(){
-        if(p1.isLost() && p2.isLost()){
-            Log.log("Vege a jateknak, dontetlen lett, a folytatashoz: press any key", true);
-            csatater.refresh();
-            Display.waitForInput();
-            Display.draw();
-            return false;
-        }
-        if(p1.isLost()){
-            Log.log("Bena vagy. Vesztettel. folytatashoz: press any key", true);
-            csatater.refresh();
-            Display.waitForInput();
-            Display.gameOver();
-            return false;
-        }
-        if(p2.isLost()){
-            Log.log("Nyertel, nem is olyan rossz. folytatashoz: press any key", true);
-            csatater.refresh();
-            Display.waitForInput();
-            Display.win();
-            return false;
-        }
+        
         List<Egyseg> allEgyseg = new ArrayList<Egyseg>();
         allEgyseg.clear();
         allEgyseg.addAll(p1.getEloEgysegek());
@@ -62,18 +64,18 @@ public class Game {
 
         Log.log(Csatater.getKor() + ". Kor");
         Log.log("Ebben a sorrendben lesz a harc:");
-        
+        csatater.refresh();
+        Display.sleep(1000);
         for(var v:allEgyseg){
             Log.log(v.getPlayer().getNev() + ": " + v.getNev());
         }
-        
-        Log.log("Nyomj entert a folytatashoz");
-        csatater.refresh();
-        Display.waitForInput();
 
         for(var e:allEgyseg){
             if(!e.isEl()){
                 continue;
+            }
+            if(p1.isLost() || p2.isLost()){
+                break;
             }
             if(e.getPlayer() instanceof Jatekos){
                 if(e.getEletero() == 0){
@@ -113,7 +115,8 @@ public class Game {
                     return mozog(e);
                 
                 case 2:
-                    return hosTamad();
+                    hosTamad();
+                    return -1;
                     
                 case 3:
                     hosVarazsol();
@@ -133,15 +136,17 @@ public class Game {
 
     private int tamad(Egyseg e){
         if(e.tudTamadni(p2) == false){
-            Log.log("Ezzel az egyseggel nem tudsz tamadni!", true);
+            if(e.isTavolsagi()){
+                Log.log("Nem merek tamadni, tul kozel enemy!");
+            }
+            Log.log("Nincs a kozelben senki...", true);
             return -1;
         }
-        ArrayList<Integer> hovaJo = new ArrayList<>();
+        List<Integer> hovaJo; 
         if(e.isTavolsagi()){
-           for(var v:p2.getEgysegek()){
-               hovaJo.add(v.getNumPos());
-           }
+           hovaJo = p2.getEloEgysegPosok();
         }else{
+            hovaJo = new ArrayList<>();
             for(var v:e.getSzomszedok(p2)){
                 hovaJo.add(v.getNumPos());
             }
@@ -184,10 +189,7 @@ public class Game {
             return -1;
         }
         csatater.refresh();
-        ArrayList<Integer> mostJo = new ArrayList<>();
-        for(var v:p2.getEgysegek()){
-            mostJo.add(v.getNumPos());
-        }
+        List<Integer> mostJo = p2.getEloEgysegPosok();
         int valasz = -1;
         while(valasz == -1){
             csatater.refresh(mostJo);

@@ -1,5 +1,6 @@
 package Egysegek;
 
+import Display.Color;
 import Jatekosok.Player;
 /**
  * Griff egyseg osztalya
@@ -25,6 +26,6 @@ public class Griff extends Egyseg{
     }
 
     public String[] info(){
-        return new String[]{nev, "ar: " + ar, "sebzes: 5-10" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
+        return new String[]{Color.BOLD + Color.BRIGHT_ORANGE + nev + Color.RESET, "ar: " + ar, "sebzes: 5-10" + "\teletero: " + eletero, "sebesseg: " + sebesseg + "\tkezdemenyezes: " + kezdemenyezes};
     }
 }

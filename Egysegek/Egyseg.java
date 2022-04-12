@@ -10,6 +10,7 @@ import Display.Position;
 import GameLogic.Tavolsag;
 import Jatekosok.Player;
 import Log.Log;
+
 /**
  * A jatekban szereplo egysegek ososztalya.
  * Itt sok hasznos funkcio talalhato, ez kezeli a tamadast, vissza tamadast, es rengeteg szukseges dolgot ami a szamitashokhoz kellhet.
@@ -73,6 +74,7 @@ public abstract class Egyseg implements Veheto {
 
     public boolean helyez(Position pos){
         if(pos.getY() >= 0 && pos.getY() <= 9 && pos.getX() >= 0 &&  pos.getX() <= 11){
+            Log.log(kie.getNev() + " " + getNev() + " lepett: " + Position.convertToSzam(this.pos) + "->" + Position.convertToSzam(pos));
             this.pos = pos;
             return true;
         }
@@ -126,7 +128,8 @@ public abstract class Egyseg implements Veheto {
     }
 
     public void addEletero(int num){
-        setEletero(Math.min((eletero+num), maxElet));
+        //Log.log("num: " + num + "eletero: " + eletero);
+        setEletero(Math.min((osszElet+num), maxElet));
     }
 
     public void sebez(int num){
@@ -180,7 +183,8 @@ public abstract class Egyseg implements Veheto {
         int vegsoSebzes = Math.round(sebzes);
         kit.setEletero(kit.getEletero()-vegsoSebzes);
         if(kritikus){
-            Log.log(getPlayer().getNev() + " " + getNev() + ":" + Color.RED_BACKGROUND + " Kritikus talalat!" + Color.RESET + Color.sebzesColor() + vegsoSebzes + " sebzest" + Color.RESET + " okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " " + kit.getNev());
+            Log.log(getPlayer().getNev() + " " + getNev() + ":" + Color.RED_BACKGROUND + " Kritikus talalat!");
+            Log.log(Color.RESET + Color.sebzesColor() + vegsoSebzes + " sebzest" + Color.RESET + " okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " " + kit.getNev());
         }else {
             Log.log(getPlayer().getNev() + " " + getNev() + ": " + Color.sebzesColor() + vegsoSebzes + " sebzest" + Color.RESET + " okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " " + kit.getNev());
         }
@@ -196,8 +200,9 @@ public abstract class Egyseg implements Veheto {
         if(korAmikorVisszatamadt == Csatater.getKor()){
             return;
         }
-        if(!(this instanceof Griff)){
-            korAmikorVisszatamadt = Csatater.getKor();
+        korAmikorVisszatamadt = Csatater.getKor();
+        if(this instanceof Griff){
+            korAmikorVisszatamadt = -1;
         }
 
         korAmikorVisszatamadt = Csatater.getKor();
@@ -228,101 +233,101 @@ public abstract class Egyseg implements Veheto {
 
     /**
      * Visszadja az adott egyseg ellenseges szomszedait  
-     * @param p Ellenseges player
+     * @param ellenseg Ellenseges ellenseg.ayer
      * @return  osszes szomszedos ellenseges egyseg
      */
-    public List<Egyseg> getSzomszedok(Player p){
+    public List<Egyseg> getSzomszedok(Player ellenseg){
         List<Egyseg> szomszedok = new ArrayList<>();
         int y = pos.getY();
         int x = pos.getX();
         // System.out.println(y+ " " + x);
-        // System.out.println(p.getEgysegOnPosition(4, 10));
+        // System.out.println(ellenseg.getEloEgysegOnPosition(4, 10));
 
-        if(y-1 >= 0 && x-1 >= 0 &&  p.getEgysegOnPosition(y-1, x-1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y-1, x-1));
+        if(y-1 >= 0 && x-1 >= 0 &&  ellenseg.getEloEgysegOnPosition(y-1, x-1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y-1, x-1));
         }
-        if(y-1 >= 0 &&  p.getEgysegOnPosition(y-1, x) != null){
-            szomszedok.add(p.getEgysegOnPosition(y-1, x));
+        if(y-1 >= 0 &&  ellenseg.getEloEgysegOnPosition(y-1, x) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y-1, x));
         }
-        if(y-1 >= 0 && x+1 <= 11 && p.getEgysegOnPosition(y-1, x+1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y-1, x+1));
+        if(y-1 >= 0 && x+1 <= 11 && ellenseg.getEloEgysegOnPosition(y-1, x+1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y-1, x+1));
         }
-        if(x-1 >= 0 &&  p.getEgysegOnPosition(y, x-1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y, x-1));
+        if(x-1 >= 0 &&  ellenseg.getEloEgysegOnPosition(y, x-1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y, x-1));
         }
-        if(x+1 <= 11 &&  p.getEgysegOnPosition(y, x+1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y, x+1));
+        if(x+1 <= 11 &&  ellenseg.getEloEgysegOnPosition(y, x+1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y, x+1));
         }
-        if(y+1 <= 9 &&  p.getEgysegOnPosition(y+1, x) != null){
-            szomszedok.add(p.getEgysegOnPosition(y+1, x));
+        if(y+1 <= 9 &&  ellenseg.getEloEgysegOnPosition(y+1, x) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y+1, x));
         }
-        if(y+1 <= 9 && x-1 >= 0  && p.getEgysegOnPosition(y+1, x-1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y+1, x-1));
+        if(y+1 <= 9 && x-1 >= 0  && ellenseg.getEloEgysegOnPosition(y+1, x-1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y+1, x-1));
         }
-        if(y+1 <= 9 && x+1 <= 11 && p.getEgysegOnPosition(y+1, x+1) != null){
-            szomszedok.add(p.getEgysegOnPosition(y+1, x+1));
+        if(y+1 <= 9 && x+1 <= 11 && ellenseg.getEloEgysegOnPosition(y+1, x+1) != null){
+            szomszedok.add(ellenseg.getEloEgysegOnPosition(y+1, x+1));
         }
         
         return szomszedok;
     }
-    public int getUresMezok(Player p2){
+    public int getUresMezok(Player ellenseg){
         int x = pos.getX();
         int y = pos.getY();
         int uresek = 0;
-        if(y-1 >= 0 && x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y-1, x-1)) == null && p2.getEgysegOnPosition(new Position(y-1, x-1)) == null)){
+        if(y-1 >= 0 && x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y-1, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x-1)) == null)){
             uresek++;
         }
-        if(y-1 >= 0 && (kie.getEgysegOnPosition(new Position(y-1, x)) == null && p2.getEgysegOnPosition(new Position(y-1, x)) == null)){
+        if(y-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y-1, x)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x)) == null)){
             uresek++;
         }
-        if(y-1 >= 0 && x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y-1, x+1)) == null && p2.getEgysegOnPosition(new Position(y-1, x+1)) == null)){
+        if(y-1 >= 0 && x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y-1, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x+1)) == null)){
             uresek++;
         }
-        if(x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y, x-1)) == null && p2.getEgysegOnPosition(new Position(y, x-1)) == null)){
+        if(x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y, x-1)) == null)){
             uresek++;
         }
-        if(x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y, x+1)) == null && p2.getEgysegOnPosition(new Position(y, x+1)) == null)){
+        if(x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y, x+1)) == null)){
             uresek++;
         }
-        if(y+1 <= 9 && (kie.getEgysegOnPosition(new Position(y+1, x)) == null && p2.getEgysegOnPosition(new Position(y+1, x)) == null)){
+        if(y+1 <= 9 && (kie.getEloEgysegOnPosition(new Position(y+1, x)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x)) == null)){
             uresek++;
         }
-        if(y+1 <= 9 && x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y+1, x-1)) == null && p2.getEgysegOnPosition(new Position(y+1, x-1)) == null)){
+        if(y+1 <= 9 && x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y+1, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x-1)) == null)){
             uresek++;
         }
-        if(y+1 <= 9 && x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y+1, x+1)) == null && p2.getEgysegOnPosition(new Position(y+1, x+1)) == null)){
+        if(y+1 <= 9 && x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y+1, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x+1)) == null)){
             uresek++;
         }
         return uresek;
     }
 
-    public List<Position> getUresMezoPosok(Player p2){
+    public List<Position> getUresMezoPosok(Player ellenseg){
         List<Position> lista = new ArrayList<>();
         int x = pos.getX();
         int y = pos.getY();
 
-        if(y-1 >= 0 && x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y-1, x-1)) == null && p2.getEgysegOnPosition(new Position(y-1, x-1)) == null)){
+        if(y-1 >= 0 && x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y-1, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x-1)) == null)){
             lista.add(new Position(y-1, x-1));
         }
-        if(y-1 >= 0 && (kie.getEgysegOnPosition(new Position(y-1, x)) == null && p2.getEgysegOnPosition(new Position(y-1, x)) == null)){
+        if(y-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y-1, x)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x)) == null)){
             lista.add(new Position(y-1, x));
         }
-        if(y-1 >= 0 && x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y-1, x+1)) == null && p2.getEgysegOnPosition(new Position(y-1, x+1)) == null)){
+        if(y-1 >= 0 && x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y-1, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y-1, x+1)) == null)){
             lista.add(new Position(y-1, x+1));
         }
-        if(x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y, x-1)) == null && p2.getEgysegOnPosition(new Position(y, x-1)) == null)){
+        if(x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y, x-1)) == null)){
             lista.add(new Position(y, x-1));
         }
-        if(x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y, x+1)) == null && p2.getEgysegOnPosition(new Position(y, x+1)) == null)){
+        if(x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y, x+1)) == null)){
             lista.add(new Position(y, x+1));
         }
-        if(y+1 <= 9 && (kie.getEgysegOnPosition(new Position(y+1, x)) == null && p2.getEgysegOnPosition(new Position(y+1, x)) == null)){
+        if(y+1 <= 9 && (kie.getEloEgysegOnPosition(new Position(y+1, x)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x)) == null)){
             lista.add(new Position(y+1, x));
         }
-        if(y+1 <= 9 && x-1 >= 0 && (kie.getEgysegOnPosition(new Position(y+1, x-1)) == null && p2.getEgysegOnPosition(new Position(y+1, x-1)) == null)){
+        if(y+1 <= 9 && x-1 >= 0 && (kie.getEloEgysegOnPosition(new Position(y+1, x-1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x-1)) == null)){
             lista.add(new Position(y+1, x-1));
         }
-        if(y+1 <= 9 && x+1 <= 11 && (kie.getEgysegOnPosition(new Position(y+1, x+1)) == null && p2.getEgysegOnPosition(new Position(y+1, x+1)) == null)){
+        if(y+1 <= 9 && x+1 <= 11 && (kie.getEloEgysegOnPosition(new Position(y+1, x+1)) == null && ellenseg.getEloEgysegOnPosition(new Position(y+1, x+1)) == null)){
             lista.add(new Position(y+1, x+1));
         }
         return lista;
@@ -342,16 +347,12 @@ public abstract class Egyseg implements Veheto {
      * @param p aki meghivta
      * @return
      */
-    public List<Egyseg> getTamadhatoEgysegek(Csatater csatater, Player akiMeghivja){
-        if(!tudTamadni(akiMeghivja)){
-            new ArrayList<Egyseg>();
+    public List<Egyseg> getTamadhatoEgysegek(Player ellenfel){
+        if(isTavolsagi){
+            return ellenfel.getEloEgysegek();
         }
-        Player p = akiMeghivja.equals(csatater.getP1())? csatater.getP2():csatater.getP1();
-        if(!isTavolsagi){
-            return getSzomszedok(p);
-        }
-        Tavolsag tav = new Tavolsag(akiMeghivja, p);
-        return tav.getEgysegInRange(this, 999, 2);
+
+        return getSzomszedok(ellenfel);
        
     }
 
