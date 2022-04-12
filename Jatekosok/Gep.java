@@ -61,13 +61,19 @@ public class Gep extends Player{
         
         // Log.log(getNev() + " gondolkozik...");
         // csatater.refresh();
-        // //Display.sleep((long)(Math.random() * 1000 + 1000));
+        Display.sleep((long)(Math.random() * 1000 + 1000));
 
         Player ellenseg = this.equals(csatater.getP1())? csatater.getP2():csatater.getP1();
         
-        if(e instanceof Ijasz && e.tudTamadni(ellenseg) == false){
-            e.helyez(e.getSzomszedok(ellenseg).get((int)(Math.random()*e.getSzomszedok(ellenseg).size())).getNumPos());
-        }
+        // if(e instanceof Ijasz && e.tudTamadni(ellenseg) == false){
+        //     for(var v:e.getSzomszedok(ellenseg)){
+        //         if(ellenseg.getEgysegOnPosition(v.getNumPos()) == null){
+        //             e.helyez(v.genu)
+        //         }
+        //     }
+        //     return;
+            
+        // }
 
 
         if(e.tudTamadni(csatater.getP1())){

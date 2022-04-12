@@ -46,6 +46,9 @@ public class Gyogyit extends Varazslat{
                 return -1;
             }
             valasz = IO.menuSzamos("Mely csapatodat szeretned gyogyitani?", getHos().getPlayer().getEloEgysegPosok());
+            if(valasz == -2){
+                return -1;
+            }
         }
         
         //StringBuilder builder = new StringBuilder();

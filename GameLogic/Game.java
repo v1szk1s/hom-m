@@ -64,11 +64,12 @@ public class Game {
 
         Log.log(Csatater.getKor() + ". Kor");
         Log.log("Ebben a sorrendben lesz a harc:");
-        csatater.refresh();
-        Display.sleep(1000);
+
         for(var v:allEgyseg){
             Log.log(v.getPlayer().getNev() + ": " + v.getNev());
         }
+        csatater.refresh();
+        Display.sleep(1000);
 
         for(var e:allEgyseg){
             if(!e.isEl()){

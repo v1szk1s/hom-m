@@ -66,7 +66,7 @@ public class Feltamasztas extends Varazslat{
         getHos().getPlayer().getHalottEgysegOnPosition(valasz).addEletero(getSzorzo()*getHos().getVarazsero());
         
         getHos().koltMana(getManaCost());
-        Log.log(getHos().getPlayer().getHalottEgysegOnPosition(valasz) + " egyseg feltamasztasa!");
+        Log.log(getHos().getPlayer().getEgysegOnPosition(valasz) + " egyseg feltamasztasa!");
         return 0;
     }
 

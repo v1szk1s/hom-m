@@ -186,7 +186,7 @@ public abstract class Egyseg implements Veheto {
         int vegsoSebzes = Math.round(sebzes);
         kit.setEletero(kit.getEletero()-vegsoSebzes);
         if(kritikus){
-            Log.log(getPlayer().getNev() + " " + getNev() + ":" + Color.RED_BACKGROUND + " Kritikus talalat!");
+            Log.log(getPlayer().getNev() + " " + getNev() + ": " + Color.RED_BACKGROUND + "Kritikus talalat!" + Color.RESET);
             Log.log(Color.RESET + Color.sebzesColor() + vegsoSebzes + " sebzest" + Color.RESET + " okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " " + kit.getNev());
         }else {
             Log.log(getPlayer().getNev() + " " + getNev() + ": " + Color.sebzesColor() + vegsoSebzes + " sebzest" + Color.RESET + " okozott Meghalt: " + (mennyi - kit.getMennyiseg()) + " " + kit.getNev());

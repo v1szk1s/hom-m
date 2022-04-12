@@ -51,9 +51,11 @@ public class Villamcsapas extends Varazslat{
     public void gepVarazsol(Egyseg e){
         this.getHos().setKorAmikorCsinaltValamit(Csatater.getKor());
         int sebzes = getHos().getVarazsero() * getSzorzo();
+        int mennyi = e.getMennyiseg();
         e.sebez(sebzes);
         getHos().koltMana(getManaCost());
         Log.log( getHos().getPlayer().getNev() + " Villamcsapas: " + sebzes + " sebzes okozasa " + " " + e.getNev() + " "+ e.getPlayer().getNev()+"egysegere!");
+        Log.log("Meghalt: " + (mennyi - e.getMennyiseg()) + " " + e.getNev());
         return;
     }
 
