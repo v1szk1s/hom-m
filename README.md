@@ -4,13 +4,11 @@
 
 A játék futtatásához Java SE Development Kit 17 szükséges (Itt tudod letolteni: https://www.oracle.com/java/technologies/downloads/#java17 )
 
-# !!!  Fontos  !!!
+# Fontos
 - Kérlek a játékot csak cmd, powershell (Ezt nem szeretem, mert alapértelmezetten kék, de ha nem zavar a ríkító szín akkor ott is működik), vagy terminálból indítsd. Véletlenül sem IDE-ből, különben a játék nem tudja clearelni a képernyőt. Pls.
 
 ### Windows
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
+# fontos hozzáadni: -encoding utf-8  -at különben nem fogja jól megjeleníteni, mert ilyen jó a windows 
 
     A kicsomagolt mappában találsz egy r.bat nevű file-t. Ha duplán rákattintasz akkor indul is a játék.
     Ha a pálya megjelenítése rossz, az valószínűleg azért van, mert tűl nagy a betűméret. Ha nem jó Ctrl+Görgő -vel tudod kicsinyíteni. Ha úgy nem tudod, akkor jobb click és cmd beállításokon belül.
@@ -20,10 +18,6 @@ A játék futtatásához Java SE Development Kit 17 szükséges (Itt tudod letol
     - javac -encoding utf-8 *.java
     - java Main
 - Ha továbbra sem sikerült elindítani a játékot -> ssh - val tudod futtatni az egyetem szerverén. Erröl lentebb részeletes leírás  
-
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
-# !!!!!!!!! FONTOS HOZZÁADNI: -encoding utf-8  -AT KÜLÖNBEN NEM FOGJA JÓL MEGJELENÍTENI, MERT ILYEN JÓ A WINDOWS !!!!!!
 
 ### Linux
 A kicsomagolt mappában találsz egy r.sh-nevű file-t. Ha ezt futtatod terminálban akkor indul is a játék.
